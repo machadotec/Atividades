@@ -104,7 +104,16 @@ class TicketList extends TPage
         $prioridade_id    = new TDataGridColumn('prioridade->nome', 'Prioridade', 'right', 80); //get_prioridade()->nome
 
         $status_ticket_id->setTransformer(array($this, 'retornaStatus'));
-        $solicitante_id->setTransformer(array($this, 'retornaCliente'));
+        try
+        {
+              TTransaction::open('tecbiz');
+              $solicitante_id->setTransformer(array($this, 'retornaCliente'));
+              TTransaction::close();        
+        }
+        catch (Exception $e)
+        {
+              new TMessage('info', 'error');
+        }
         $orcamento_horas->setTransformer(array('StringsUtil', 'formatHoras'));
         $data_ultimo_pgto->setTransformer(array('StringsUtil', 'formatDateBR'));
 
@@ -444,21 +453,21 @@ class TicketList extends TPage
     public function retornaCliente($campo, $object, $row)
     {
          
-         try
-         {
-             TTransaction::open('tecbiz');
+         //try
+         //{
+             //TTransaction::open('tecbiz');
              
              $cliente = new Pessoa($object->solicitante_id);
              $campo = $cliente->pessoa_nome;
                           
-             TTransaction::close();
+             //TTransaction::close();
              
              return $campo;
-         }
-         catch(Exception $e)
-         {
-             new TMessage('error', '<b>Error</b> ' . $e->getMessage());
-         }
+         //}
+         //catch(Exception $e)
+         //{
+           //  new TMessage('error', '<b>Error</b> ' . $e->getMessage());
+         //}
          
     }
     

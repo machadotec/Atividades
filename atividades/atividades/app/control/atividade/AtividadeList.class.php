@@ -105,7 +105,17 @@ class AtividadeList extends TPage
         $ticket_id           = new TDataGridColumn('ticket->titulo', 'Ticket', 'right', 200); // get_ticket()->titulo
         
         // transformers
-        $colaborador_id->setTransformer(array($this, 'retornaPessoa'));
+        try
+        {
+            TTransaction::open('tecbiz');
+            $colaborador_id->setTransformer(array($this, 'retornaPessoa'));
+            TTransaction::close();  
+        }
+        catch (Exception $e)
+        {
+            new TMessage('info', 'error');
+        } 
+        
         $hora_qte->setTransformer(array($this, 'calculaDiferenca'));
         $data_atividade->setTransformer(array('StringsUtil', 'formatDateBR'));
         //exemplo de uso de classe para jogar funcoes
@@ -454,21 +464,21 @@ class AtividadeList extends TPage
     public function retornaPessoa($campo, $object, $row)
     {
          
-         try
-         {
-             TTransaction::open('tecbiz');
+         //try
+         //{
+           //  TTransaction::open('tecbiz');
              
              $cliente = new Pessoa($object->colaborador_id);
              $campo = $cliente->pessoa_nome;
              
-             TTransaction::close();
+          //   TTransaction::close();
              
              return $campo;
-         }
-         catch(Exception $e)
-         {
-             new TMessage('error', '<b>Error</b> ' . $e->getMessage());
-         }
+         //}
+         //catch(Exception $e)
+         //{
+         //    new TMessage('error', '<b>Error</b> ' . $e->getMessage());
+         //}
          
     }
     
