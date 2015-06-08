@@ -1,0 +1,38 @@
+<?php
+/**
+ * Ponto Active Record
+ * @author  <your-name-here>
+ */
+class Pessoa extends TRecord
+{
+    const TABLENAME = 'tbz_pessoas';
+    const PRIMARYKEY= 'pessoa_codigo';
+    const IDPOLICY =  'serial'; // {max, serial}
+    const CACHECONTROL = 'TAPCache';
+    
+    private $descricao_tipo;
+    private $cidade_nome;
+    private $origem_nome;
+    
+    /**
+     * Constructor method
+     */
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('pessoa_nome');
+
+        parent::addAttribute('origem');
+        parent::addAttribute('codigo_cadastro_origem');
+
+        parent::addAttribute('email1');
+
+        parent::addAttribute('tipo_pessoa_id');
+        parent::addAttribute('user');
+        
+    }
+   
+
+
+    
+}

@@ -1,0 +1,320 @@
+http://www.adianti.com/framework-changelog
+
+2.0.0 (2015-01-05) "Like a rolling stone" release
+=================================================
+- A new Adianti Studio Pro is being released with new features. Check out the Adianti Studio Pro page;
+- A new template to build new systems, with responsive features is available. Check out the Template II page;
+- A new sample spp, that shows a blog backend, is available. Check out the blog page;
+- A new version of Library app, is available. Check out the Library page;
+- A new version of Changeman app is available. Check out the Changeman page;
+- A new component was created: TDropDown. It creates a drop down menu. Check out the tutor application.
+- A new component was created: TInputDialog. It creates a quick input dialog. Check out the tutor application.
+- A new component was created: TCalendar. It's a calendar. Check out the tutor application.
+- A new component was created: TColor. It's a color picker. Check out the tutor application.
+- A new component was created: TExpander. It creates a button that expand its content. Check out the tutor application.
+- A new component was created: TMultiSearch. It allows to search values dynamically from an array. Check out the tutor application.
+- A new component was created: TDBMultiSearch. It extends TMultiSearch, allowing to search within a table. Check out the tutor application.
+- A new component was created: TDBEntry. Allows autocomplete from a database table. Check out the tutor application.
+- A new sample was created to show how to get informations from the active transaction. Check out the tutor application.
+- A new sample was created to show input dialogs. Check out the tutor application.
+- A new sample was created to show new CSS classes and popover. Check out the tutor application.
+- A new sample was created to show expander in forms. Check out the tutor application.
+- A new sample was created to show action groups in datagrids. Check out the tutor application.
+- A new sample was created to show column groups inside datagrids. Check out the tutor application.
+- A new sample was created to show datagrid details. Check out the tutor application.
+- A new sample was created to show how to hide datagrid actions. Check out the tutor application.
+- A new sample was created to show how to use popovers in datagrids. Check out the tutor application.
+- A new sample was created to show how to use input dialogs in datagrids. Check out the tutor application.
+- A new sample was created to show how to use the calendar. Check out the tutor application.
+- A new sample was created to show how to use the dropdown. Check out the tutor application.
+- A new sample was created to show how to use the bread crumb. Check out the tutor application.
+- A new sample was created to show how to show source-code. Check out the tutor application.
+- A new sample was created to show how to use forms in new windows. Check out the tutor application.
+- A new sample was created to show how to create a product catalog. Check out the tutor application.
+- A new sample was created to show how to create an agenda. Check out the tutor application.
+- A new sample was created to show how to create a sales form. Check out the tutor application.
+- Restructuring of location and naming of classes. The changes does not affect the applications. Follow the migration docs;
+- Ex: lib/adianti/util/TAdiantiLoader.class.php => lib/adianti/core/AdiantiCoreLoader.php;
+- Ex: lib/adianti/widget/web/general/TCoreApplication.class.php => lib/adianti/core/AdiantiCoreApplication.php
+- It was created a cache for class path, to speed up the load (AdiantiCoreLoader::loadClassMap());
+- A developer can now define an absolute path for a class, to speed up its loading (AdiantiCoreLoader::setClassPath());
+- The class header docs (tag @package) were updated;
+- Namespaces are now used in all framework classes;
+- The WEB and GTK versions of the framework were separated to improve the organization;
+- Bootstrap was updated to 3.2;
+- JQuery was updated to 2.1.1;
+- Font-awesome 4.2 was integrated inside the framework. Ex: FormButtonStyleView; 
+- Javascript and CSS were all minified;
+- Javascript and CSS are now preloaded in the first access (libraries.html), making the navigation more fluid;
+- Many JavaScript calls were removed from the components, and replaced by calling JavaScript functions preloaded by components.js or components.min.js as tcombo_enable_field (), to enable a combo;
+- If the developer needs to create its own Javascript, he must write it in app/lib/include/application.js;
+- If the developer needs to create its own CSS, he must write it in app/templates/theme1/application.css;
+- Created init.php, with the framework initialization commands, used in engine.php, index.php and others;
+- Created cmd.php, that allows to execute any framework method by command line;
+- Now its possible to define popover for any framework component (Ex: FormButtonStyleView);
+- TWindow classes does not regiter URL actions anymore;
+- Form posts does not register URL actions, just in tutor application (Adianti.onBeforePost);
+- Implemented new Javascritp events, that allow the users to define actions for:
+- onBeforeLoad, onAfterLoad, onBeforePost; onAfterPost;
+- Many improvements were performed in the processing of Ajax requests returns, what makes possible now to use TMessage inside the onExitAction. Ex: FormInteractionsView:
+- engine.php from template was improved for security reasons (AdiantiFileUploader executed only when logged);
+- Added support for window over window. Ex: TWindow that opens from another TWindow;
+- The last public attributes (id) in classes like TDate, TEntry were removed. It was created methods like getId() and setId() to provide that feature;
+- In accordance with the PSR-3, the TTransaction LoggerAwareInterface class now implements the interface. and TLogger's classes now implement LoggerInterface;
+- Added native support for Prepared statements for all framework operations. To enable that, just add prep = "1" in the configuration file (.INI) of database. See the method list that support prepared statements: TRepository::load(), TRepository::delete(), TRepository::count(), TRecord::load(), TRecord::store(), e TRecord::delete();
+- The Active Record cache mechanism was improved. Now, in the Active Record classes, instead of using OBJECTCACHE = TRUE, you should use CACHECONTROL = 'TAPCache', or another cache class that implements the AdiantiRegistryInterface interface;
+- A new sample of usage of between with criteria was added; 
+- A new sample of usage of NOESC: with criteria was added; 
+- A new sample of usage of subselect with criteria was added; 
+- The method TTransaction::getDatabaseInfo() was implemented. It returns informations about the current transaction;
+- A new parameter (loadAggregates) was added in the TRecord::getObjects($criteria = NULL, $loadAggregates = TRUE);
+- TDBSeekButton now accepts a criteria as parameters, that set a pre-filter for the searched data. Check out the tutor application;
+- TImage class was changed to support natively in the method setImage(), CSS classes from Glyphicons and Font Awesome. Check out the tutor application;
+- Implemented the TButton::create() method, which creates a button and has set its action and icon;
+- A new library for autocomplete is in usage for TEntry::setCompletion. Check out the tutor application;
+- The library used for TDate was changed from jquery-ui-datepicker to bootstrap-datepicker;
+- New additional parameters were created in constructor for TMenuBar and TMenu to define the CSS classes used to render the menu structure. This feature was used in Template II;
+- Implemented the method TWindow::setModal(), that makes the window modal;
+- Implemented the TVBox::pack() and THBox::pack() that create a box, and automatically pack the method arguments;
+- Implemented the method TQuickForm::addQuickFields(), that allows to add side by side fields in a quick form. Check out the tutor application;
+- Implemented the methods TForm::getChild(), TCheckGroup::getLayout(), TRadioGroup::getLayout(), and TText::getSize(), that returns the information previously defined by their setters methods;
+- Implemented the possibility to use a proportion in the method TWindow::setSize(0.8, 0.8), that applies 80% of screen width and height;
+- Implemented a log that throws the SQL commands from framework in the standard output: TLoggerSTD;
+- Implemented the possibility to create a TInputDialog based on a TQuickForm. Check out the tutor application;
+- TStandardList now can have many filter fields, by using addFilterField();
+- New methods for TElement, framework base class to create new components;
+- mproved the CSS style for alternative datagrids: Check out the tutor application;
+- Now, it's possible to use icons from font-awesome and glyphicons inside datagrids. Check out the tutor application;
+- Implemented the method TDataGrid::setGroupColumn(), that creates a group column inside datagrids. Check out the tutor application;
+- mplemented the method TDataGridAction::setDisplayCondition(), that hides an action inside a datagrid under a certain condition. Check out the tutor application;
+- Implemented the method TDatagrid::enablePopover(), that enables a popover for a datagrid row. Check out the tutor application;
+- New methods created for datagrids (getRowIndex, getRow, insert);
+- Implemented the method TTreeView::expandTo(), that expand the tree view to some level;
+- Improved TMessage, that executes the button action even when the user clicks out of the dialog;
+- Now its possible to use headers and footers with the class TTableWriterPdf; 
+- mplemented the method TQuickForm::addRow(), that adds a TTableRow in a quick form;
+- When using a THidden inside a QuickForm, does not create a label (TLabel) for the row;
+- Now its possble to change the TLabel class CSS ->{'class'} = 'xyz';
+- Disabled the translate engine for THtmlRenderer by default. When required, use the method THtmlRenderer::enableTranslation() to enable, because the performance is better with the translation off;
+- Implemented the method TDBMultiSearch::setOperator(), to define the search operator for TDBMultiSearch;
+- Implemented __adianti_message(), __adianti_question() functions in Javascript;
+- Improved the sample DecoratedForms;
+- Implemented TVBox::addColSet() and THBox::addRowSet();
+- Implemented TCombo::setDefaultOption();
+- Demonstrated how to keep a hierarchical combo filled even after post: FormInteractionsView;
+- Created TScript class, to allow create Javascript code at runtime by the create() method;
+- If the datagrid action has not a field defined in setField(), an exception is thrown;
+- In the TDatagrid class, when the field passed to setField() did not exist, an exception is thrown;
+- Improved the TPageNavigation. Added the following controls: If you have not called setAction(), throws an exception; If you have not called setCount(), setLimit(), etc, show an empty page navigation;
+- TForm::getData() throws an exception if the class passed as parameter does not exist or could not be loaded;
+- If the control class cannot be found, show a better exception;
+- In THtmlRenderer, throws exception when the developer forget to declare the end of section; 
+- In TUIBuilder, when the user did not fill all the properties (database, model, key, value) for TDB's classes, the rendering was not working. Now a exception is shown;
+- Always use try/catch around THtmlRenderer. Ex: TemplateViewAdvancedView;
+- TCPFValidator was passing even when strlen(cpf) >11. Fixed;
+- Improvements in TUIBuilder. When a button action was not defined, it was not shown. Now, an exception is shown;
+- When a TFrame had not content, a Warning was showing. Fixed;
+- Fixed the implementation of setEditable() for TRadioGroup, TCheckGroup, TCombo, TSelect and others (TDB*);
+- Fixed a bug in TRecord when using SERIAL passing the ID with some value. An error "Object not in prerequisite state" occured. Fixed;
+- Fixed a bug in TUIBuilder when the declared form sized was smaller the the real one. It did not filled the space properly;
+
+1.0.3 (2014-05-15) "Simply the best" release. In honor of Ayrton Senna
+======================================================================
+- A new Adianti Studio Pro is being released with new features. Check out the Adianti Studio Pro home page;
+- Now, Adianti Studio Pro comes with a new tool for design PDF reports. Check out the Adianti Studio Pro home page;
+- A new tutor application with new samples is available. Check out the Tutor home page;
+- It was released a new sample application that deals with permission control by user and groups. Check out the Template ERP;
+- A new TSortList was created to allow the user to sort values. Check out the tutor application (Presentation -> Forms -> Sort List);
+- A new TSelect component was created to allow the user to select multiple values. It was also created the method TSelect::disableMultiple(), que turns off the multiple selection. Check out the tutor application (Presentation -> Forms -> Static selections);
+- A new TDBSelect component was created as a wrapper over TSelect to show values directly from database. Check out the tutor application (Presentation -> Forms -> Automatic database selections);
+- A new TDBSeekButton component was created as an easy way to create standard seek buttons. Check out the tutor application (Presentation -> Forms -> Seek button);;
+- A new TBreadCrumb component was created, to provide a simple way to create bread crumbs. Check out the tutor application (Presentation -> Page Transitions -> Static Multi Step Form II);
+- A new TXMLBreadCrumb component was created, to provide a simple way to create bread crumbs based on the location of the current class, inside menu.xml. All samples of tutor application, now use this component;
+- A new TVBox container was created to provide a simple way to organize elements vertically without tables. Check out the tutor application (Presentation -> Containers -> Vertical Box);
+- A new THBox container was created to provide a simple way to organize elements horizontally without tables. Check out the tutor application (Presentation -> Containers -> Horizontal Box);
+- A new sample was created to show how to make database connections with no configuration file (INI). Check out the tutor application (Persistence -> Setup -> Manual connection);
+- A new sample was created to show how to find the first and last ID from an Active Record (TRecord::getFirstID() and TRecord::getLastID()). Check out the tutor application (Persistence -> Objects -> First and Last ID);
+- A new sample was created to show how to create an Active Record from array and vice-versa (TRecord::toArray() and fromArray()). Check out the tutor application (Persistence -> Objects -> Array conversion);
+- A new sample was created to show how to load objects with the new method TRecord::getObjects(). Check out the tutor application (Persistence -> Colections -> Collection get objects);
+- A new sample was created to show how to use the new methods for persistence of compositions loadComposite(), saveComposite(), and deleteComposite(). Check out the tutor application (Persistence -> Relationships -> Object Simple Composition);
+- A new sample was created to show how to use the new methods for persistence of aggregations loadAggregate(), and saveAggregate(). Check out the tutor application (Persistence -> Relationships -> Object Simple Aggregation);
+- A new sample was created to show the usage of horizontal boxes. Check out the tutor application (Presentation -> Containers -> Horizontal Box);
+- A new sample was created to show the usage of vertical boxes. Check out the tutor application (Presentation -> Containers -> Vertical Box);
+- A new sample was created to show how to create multiple column tables. Check out the tutor application (Presentation -> Containers -> Table Columns);
+- A new sample was created to show how to create tables with merged cells. Check out the tutor application (Presentation -> Containers -> Table Multi Cell);
+- A new sample was created to show how to enable/disable and clear form fields during the execution (without reloading). Check out the tutor application (Presentation -> Forms -> Enable/disable interactions);
+- A new sample was created to show how to enable the form action button under certain conditions. Check out the tutor application (Presentation -> Forms -> Conditional submission);
+- A new sample was created to show how to create datagrids with custom CSS styles. Check out the tutor application (Presentation -> Datagrid -> Stylized Datagrids);
+- A new sample was created to show how to create input fields in datagrids. Check out the tutor application (Presentation -> Datagrid -> Datagrid with input fields);
+- A new sample was created to show the new TSortList component, that allows the user to sort values. Check out the tutor application (Presentation -> Forms -> Sort List);
+- A new sample was created to show how to format a datagrid column based on another column. Check out the tutor application (Presentation -> Datagrid -> Datagrid transformers II);
+- A new sample was created to show an static multi step form with tabs. Check out the tutor application (Presentation -> Page transitions -> Static Multi Step Form);
+- A new sample was created to show an static multi step form without tabs. Check out the tutor application (Presentation -> Page transitions -> Static Multi Step Form II);
+- A new sample was created to show an static multi step form built dynamically. Check out the tutor application (Presentation -> Page transitions -> Dynamic Multi Step Form);
+- A new sample was created to show a multi step screen with post among different forms. Check out the tutor application (Presentation -> Page transitions -> Multi Step Multi Form);
+- A new sample was created to show how to create PDF documents designed by the new Studio PDF Designer tool. This new sample contains forms (rectangles, ellipses), and text replacement; Check out the tutor application (Presentation -> Reports -> Designed PDF shapes);
+- A new sample was created to show how to create PDF documents designed by the new Studio PDF Designer tool. This sample demonstrates the creation of a tabular report; Check out the tutor application (Presentation -> Reports -> Designed PDF report);
+- A new sample was created to show how to create PDF documents designed by the new Studio PDF Designer tool. This sample demonstrates the creation of a Brazilian fiscal document; Check out the tutor application (Presentation -> Reports -> Designed PDF NFE);
+- A new sample was created to show how to edit records in a paginated datagrid. Check out the tutor application (Organization -> Complex Views -> Product massive update);
+- A new sample was created to show how to make dynamic filtering in a form. Check out the tutor application (Organization -> Complex Views -> Dynamic filtering);
+- A new sample was created to show how to create a Point of Sales (POS) screen. Check out the tutor application (Organization -> Complex Views -> POS form);
+- A new sample was created to show how to use pieces of HTML to show the sales for a customer. Check out the tutor application (Organization -> Complex Views -> Customer Sales);
+- The checkout sample was improved with a total. Check out the tutor application (Organization -> Complex Views -> Checkout form);
+- The Master/Detail sample, that had tabs in the previous version, was restructured in separated pages. Check out the tutor application (Organization -> Complex Views -> Master/Detail forms);
+- Information and error dialogs were changed to use Bootstrap;
+- Improvements were made in the layout (CSS) of components TDataGrid, TMultiField, TDate and TSeekButton;
+- Improvements were made in the layout (CSS) of forms, by the creation of new styles (tform, tformtitle, e tformaction), and by the inline attribution of these styles to the form elements. Check out the tutor application (Organization -> Standard Controls -> Standard form); 
+- Ex: $this->form->class = 'tform'; // CSS style
+- Javascript error messages are now shown using jQuery dialog, not alert();
+- It was created the method TCoreApplication::registerPage(), that allows to register a page in the URL. This method will be used for friendly URL's;
+- It was created the method TElement::clearChildren(), that allows to remove the container's content;
+- Now, when the user create a datagrid action without image (icon), this is shown as a button by default. Check out the tutor application (Organization -> Complex views -> Master/Detail forms);
+- The TFile component was totally rewritten to use HTML5 controls (Credits: Nataniel Rabaioli);
+- The support for TSelect and TDBSelect components was added in TUIBuilder;
+- The methods TForm::delField() and TForm::delFields() were implemented. They allows to remove a field (or all) from the form handler;
+- TForm now can receive attributes dynamically in Web. 
+- Ex: $this->form->class = 'my-css-form-class';
+- TButton now can receive attributes dynamically in Web. 
+- Ex: $button->class = 'btn-success';
+- The method TForm::sendData(), now change also the content of selection fields (TCombo);
+- Now it's possible to use properties in the format "city->name" in datagrid columns. The framework run through the related objects of the Active Record. Check out the tutor application (Organization -> Complex View -> Complete customers datagrid);
+- Now it's possible to define required fields in a multifield object, before to add them. It is enabled by the 5th parameter from TMultiField::addField(). Check out the tutor application (Presentation -> Forms -> Multi field);
+- It was created the method TMultiField::setOrientation(), that allows to define the fields orientation (horizontal, vertical). Check out the tutor application (Presentation -> Forms -> Multi field);
+- The method TNotebook::getCurrentPage() was implemented. It returns the current TNotebook page;
+- Now, the action defined by TSeekButton::setExitAction(), is also executed in the onSelect event of the lookup window. Check out the tutor application (Organization -> Complex Views -> POS form);
+- The method TQuickForm::addQuickField() now accepts a new additional parameter (validator);
+- The methods TStandardFormList::setDefaultOrder() and TStandardList::setDefaultOrder() were implemented. They allow to define a standard order for listings.
+- The method TStandardList::setCriteria() was implemented. This method allow to define a filter, even in standard lists;
+- Standard seeks (TStandardSeek) now have a default order, defined by primary key of searched record;
+- The methods loadComposite(), deleteComposite(), saveComposite(), loadAggregate(), and saveAggregate(), that allows to deal with composition and aggregation relationships in a simple way, were implemented in TRecord class;
+- The between was implemented in filters: new TFilter('field' , 'BETWEEN', 1, 2);
+- Criado segundo parâmetro booleano na TRecord::__construct() e na TRepository::load, para indicar se quer chamar o método load() sobrecarregado do Active Record deve ser chamado durante a carga (carregando objetos agregados). Isto pode ser usado para carregar informações de objetos associados sem carregar seus agregados: 
+- Ex: TRecord: public function __construct($id = NULL, $callObjectLoad = TRUE)
+- Performance improvements were made in the standard controllers (TStandardFormList, TStandardList, TStandardSeek) in order to not load aggregated objects in the listing: 
+- Ex: $objects = $repository->load($criteria, FALSE);
+- Performance improvements were made in components TDBCombo, TDBSortList, TDBRadioGroup, TDBSelect, TDBCheckGroup, in order to not load aggregated objects: 
+- Ex: $objects = $repository->load($criteria, FALSE);
+- The methods TRadioGroup::setChangeAction() and TCheckGroup::setChangeAction() were implemented. They allows to define an action when the user change the value of a radio or check. Check out the tutor application (Presentation -> Forms -> Enable/disable interactions);
+- The methods enableField(), disableField() and clearField(), that allows to enable, disable and clear a field dynamically (without reloading) were implemented in these classes: TCombo, TDate, TEntry, TDBCombo, TRadioGroup, TDBRadioGroup, TCheckGroup, TDBCheckGroup, TText, TFile, TPassword, TSeekButton, THtmlEditor, TSpinner, TSlider, TComboCombined, TSortList e TSelect. Check out the tutor application (Presentation -> Forms -> Enable/disable interactions);
+- The method TNotebook::setTabAction() was implemented. It allows to define an action to be executed when the user clicks over a TNotebook tab;
+- Form validations now are processed all at once;
+- Now it's possible to replace empty variables in THtmlRenderer;
+- The method TNotebook::setTabsVisibility() was implemented. It allows to hide the notebook tabs;
+- The method TDataGridColumn::setTransformer() now also receives the entire Active Record object, what allows to format one field based on another field. Check out the tutor application (Presentation -> Datagrid -> Datagrid transformers II);
+- The method TWindow::setPosition() was implemented. It allows to define an absolute position for TWindow windows;
+- The method TTable::addRowSet( $obj1, $obj2) was implemented. It allows to add a row with many cells at once in a table. Check out the tutor application (Presentation -> Containers -> Table Columns);
+- The method TTableRow::addMultiCell($obj1, $obj2, $obj3) was implemented. It allows to add a merged cell with many contents in one table row. Check out the tutor application (Presentation -> Containers -> Table Multi Cell);
+- The sample about TFrame component was improved to demonstrate the creation of a button to show/hide a frame. Check out the tutor application (Presentation -> Containers -> Frame). Dirct link;
+- It was improved the navigation between classes. Now, POST requests also changes the URL state (pushState). In the previous version, just GET requests updated the URL state;
+- It was created a method to enable/disable a TButton at runtime: enableField(), disableField();
+- The method TStandardFormList::onEdit() now reloads the datagrid during editing, but keeping at the same page;
+- Now it's possible to pass a criteria (TCriteria) for a TDBCombo, in the 7th parameter of its constructor;
+- Now it's possible to open transactions just passing database informations as an array as parameter, no config (INI): TTransaction::open(NULL, $data);
+- Now it's possible to create expressions without escape in filters, what allows to create a filter comparing two columns. Ex: $criteria->add(new TFilter('code', '<>', 'NOESC:last_code'));
+- Now it's possible to change properties from fields (TEntry, TPassword, TText) using direct attribution. Ex: $entry->onblur = '...'; That was already possible with another elements like TTable, TTableRow, etc;
+- Datagrids (TDataGrid) and buttons (TButton) were changed to search by icons first in app/images, and after in the framework folder;
+- It was made available a new JavaScript callback called Adianti.onLoadClass to schedule JS events everytime a new class is loaded througu GET or POST by the framework. The usage of this callback can be understood seeing the file app/templates/theme1/layout.html from tutor;
+- Actions (TAction) passed as parameters for methods like setChangeAction() and setExitAction() now must be declared as static, otherwise an Exception will be thrown;
+- In all classes with setActiveRecord(), now it's checked if the class passed as parameter is really a TRecord subclass, otherwise an Exception will be thrown;
+- The TRepository() constructor must receive a TRecord subclass, otherwise an Exception will be thrown;
+- An Active Record cannot have an attribute called data, because it's a reserved name. Everytime somebody try to define an attribute with this name, an Exception will be thrown;
+- Objects with setExitAction() and setChangeAction() methods now check if these objects were passed as parameter to TForm::setFields(). Otherwise, an Exception will be thrown (You must pass the field () as a parameter to TForm::setFields()');
+- The method TTransaction::setLogger() now throw Exception when there is no active transaction;
+- The transaction inside TStandardSeek now closes after to return the fields. This way, now it's possible to return to the parent form, an related attribute;
+- Some TMultifield bugs were fixeds. These bugs were related to the columns width and the update of values when using the TComboCombined component;
+- It was fixed a TMultifield bug related to encoding of the accented chars;
+- The TRequiredValidator was fixed to deal with empty Radios/Checks;
+- It was fixed a TLabel bug with styles. Sometimes the styles were not updated in the page;
+- Accented chars in menu.xml were not working in Windows, causing exception;
+- The TRequiredValidator was failing to validate values with white spaces;
+- Fixed bugs when opening files using TPage::openFile() on Windows (Ex: PDF reports).
+
+
+
+1.0.2 (2013-10-15) "Eight days a week" release
+==============================================
+- A new Adianti Studio Pro is being released with new features. Check out the Adianti Studio Pro home page;
+- A new tutor application with new samples is available. Check out the Tutor home page;
+- A new component was created to display trees (TTreeView). Check out the tutor application (Presentation -> Forms -> Tree View);
+- A new sample was created to show how to build Master/Detail forms. This form allows to register a project and many product backlog items inside the project. Check out the tutor application (Organization -> Complex Views -> Master/Detail forms);
+- A new sample was created to show how to build a checkout screen. This screen allows the user to select items from one datagrid and transfer these items to another datagrid, using just the session information. Check out the tutor application (Organization -> Complex Views -> Checkout form);
+- A new sample was created, to show the usage of HTML templates and CSS styles to decorated framework objects, in this case, a form. Check out the tutor application (Presentation -> Forms -> Decorated forms);
+- A new sample was created, to show the usage of the HTML editing component (THtmlEditor); Check out the tutor application (Presentation -> Forms -> HTML Editor);
+- A new sample was created, to show how to use the complete MVC separation in the framework, without the need to create the application view inside the construtor method of page controllers; Check out the tutor application (Presentation -> Forms -> Reusable Forms);
+- It was improved the size of message and question dialogs;
+- Now it's possible to create scrollable datagrids, with a fixed header. To do that, it's needed to execute the methods: TDataGrid::makeScrollable(), to enable the scrolling and also TDataGrid::setSize(), to define its size. Check out the tutor application (Presentation -> Datagrid -> Scrollable Datagrids);
+- The TSeekButton component now also accepts to define an exit action (setExitAction()), besides its default search action (setAction()), that is also executed when the user leaves the field;
+- It was added to the TEntry component, the possibility to define a mask for numeric values, by using the method TEntry::setNumericMask($decimals, $decimalsSeparator, $thousandSeparator); Check out the tutor application (Presentation -> Forms -> Decorated Forms);
+- It was added to the TMessage classe, the possibility to add an action to the close button. Thanks to the Victor Feitoza. To do that, it was added a third parameter to the constructor method. __construct($type, $message, TAction $action = NULL). Check out the tutor application (Presentation -> Dialogs -> Error Dialog);
+- The sack library (used in lookups) was removed and replaced by native jQuery calls. It was also removed from templates (libraries.html);
+- It was created a simplified way to count objects from database, using fluent interface. Check out the tutor application (Persistence -> Collections -> Collection simple count);
+- It was created a simplified way to load objects from database, using fluent interface. Check out the tutor application (Persistence -> Collections -> Collection simple load);
+- It was created a simplified way to delete objects from database, using fluent interface. Check out the tutor application (Persistence -> Collections -> Collection simple delete);
+- The engine.php file (The web engine) was simplified. Many parts of this file (responsible by deciding the class and the method to be called) were passed to the TCoreApplication class, an internal framework class. The file is smaller, but the developer still can customize its behavior, adding validation rules inside the run() method, where all the requests pass through.
+- It was created a better way to show exceptions that are not catched by the developer inside the controller classes. These exceptions are handled inside the run() method in TCoreApplication, what is invoked from engine.php. By standard, the framework now started to show a more complete information (trace) about the exception, to make easier to find the errors. In the end of the engine.php file, there is a call to TApplication::run(TRUE). In the boolean parameter (TRUE), we define if the exceptions must be shown with the complete trace (TRUE) or not (FALSE).
+- Inside the page controller classes, the exception are handled totally by developer, that usually use the TMessage class to show the error messages. To find the problems easier, it was created a class for debug exceptions. this way, during development, instead of simply use the TMessage class, the developer can use: new TExceptionView($e); where $e is the exception object. The framework will provide a complete debug of the thrown exception.
+- The APPLICATION_NAME constant, that is used to separate the content of session variables according to the application name, now has its content define from the application configuration file (application.ini). Before, this constant was defined both in engine.php and index.web.php, and many developers were changing its content just in one place, causing a wrong behavior;
+- Datagrid actions now are executed keeping the pagination parameters. This way, when deleting a record from a datagrid, the user stay at the same page. To make this aproach work, some changes are needed:
+	In the case you still uses an engine.php from previous version, you must pass the URL parameters ($_GET) when executing the method show() over the page $page->show( $_GET ). In the new version of engine.php (that uses the TCoreApplication class), its enabled by default;
+	Everytime the developer rewrite the show() method in some page and make a call to onReload() method, he should now pass a new parameter: $this->onReload( func_get_arg(0) );
+	All the delete() methods from datagrids, that call onReload() must add a new parameter to the execution, that represent the URL parameters, this way: $this->onReload( $param );
+- It was created some new CSS classes: tdatagrid_head and tdatagrid_body, for those ones that want to manipulate the datagrid appearance.
+- The TAdiantiLoader class, responsible by class loading, was changed to also load classes from app/view directory;
+- Catchable Fatal Errors (Type hinting) now are treated as exceptions, with a better debug (set_error_handler);
+- Some validations were added:
+	If the developer passes NULL to the method TTableRow::addCell(), an exception will be thrown;
+	The TForm::setFields() method will just accept a parameter of type array. Otherwise, an exception will be thrown;
+	The TQuickForm::addQuickAction() method now accepts just a TAction object as parameter. Otherwise, an exception will be thrown;
+	When instantianting a TAction object, it is checked if the parameter is a valid PHP callback. Otherwise, an exception will be thrown;
+	The addCell() method from TTableWriter* classes, new check if the style parameter was previously registered. Otherwise, an exception will be thrown;
+	It is not allowed to add a datagrid item without call createModel() method before. In this case, an exception will be thrown;
+	It is not allowed to create a datagrid column or action after the call of createModel(). In this case, an exception will be thrown;
+	It is not allowed to add 2 fields with the same name in a form by TForm::addField(). In this case, an exception will be thrown;
+	All the widgets now implement the interface IAdiantiWidget, what allows a more consistency in forms;
+	The TForm::setFields() method was changed to accept just widgets (IWidget) in the elements of the array passed as parameter;
+- Bug fixes
+	Mysql Connections, that were set to ISO encoding, now are using UTF-8 by default. When is needed to use Mysql with ISO encoding, it will be needed to add "char = ISO" inside the database configuration file;
+	When using the serial strategy for ID increment in PostgreSQL, the ID of object was not being registered after executing the store() method. This bug was fixed;
+	The TMultiField component had a scrolling bug when using many items. This bug was fixed.
+
+
+
+1.0.1 (2013-06-15) "Do You Want to Know a Secret" release
+=========================================================
+- The persistence layer now supports SQL Server;
+- The persistence layer now supports Oracle;
+- A new Adianti Studio Pro is being released with new features. Check out the Adianti Studio Pro home page;
+- A new tutor application with new samples is available;
+- A new resource is available to deal with form interactions dynamically. Check out the tutor application (Presentation -> Forms -> Dynamic interactions);
+- A new group of libraries for chart generation is available. Check out the tutor application (Presentation -> Charts/Reports -> Line/Bar/Pie chart);
+- A new datagrid with top filtering and CSV exporting is available. Check out the tutor application (Organization -> Complex Views -> Complete customers datagrid);
+- A new inline datagrid editing is now available. Check out the tutor application (Organization -> Complex Views -> Inline editing datagrid);
+- A new component (TSpinner) is available. Check out the tutor application (Presentation -> Forms -> Custom Forms);
+- A new component (TSlider) is available. Check out the tutor application (Presentation -> Forms -> Custom Forms);
+- A new tooltip resource ($widget->setTip()) is avaliable. Check out the tutor application (Presentation -> Forms -> Custom Forms);
+- A new validator (TNumericValidator) is available. Check out the tutor application (Presentation -> Forms -> Form validation);
+- A new sample demonstrates how to create a new framework component in application space. Check out the tutor application (Presentation -> Web specific -> Creating new components);
+- A new sample demonstrates how to create window containers. Check out the tutor application (Presentation -> Containers -> Window);
+- A new sample demonstrates how to modify datagrid columns. Check out the tutor application (Presentation -> Datagrid -> Datagrid column transformers);
+- A new sample demonstrates how to make datagrids with checkbuttons. Check out the tutor application (Presentation -> Datagrid -> Datagrids with Checkbutton);
+- A new sample demonstrates how to make datagrids actions open a new window. Check out the tutor application (Presentation -> Datagrid -> Datagrids with new Window);
+- A new sample demonstrates how to filter and order a databrid by an associated information. Check out the tutor application (Organization -> Complex Views -> Complete customers datagrid);
+- The site documentation now explains how to create new components (http://www.adianti.com/framework-extensibility);
+- The site documentation now explains how to create new validators (http://www.adianti.com/framework-extensibility);
+- All the /lib folder for your application must be updated. Take care to not to overwrite the /app folder (your application);
+- All the needed JS and CSS files are now encapsulated in "libraries.html", that must be refered inside the template using {LIBRARIES} keyword. This keyword is replaced by the "libraries.html" content inside "index.web.php";
+- Many external libraries used by the framework were updated (jquery-1.8.3, jquery-ui-1.9.2), and some others were included. Make sure you have imported the libraries.html in your application using the {LIBRARIES} keyword inside the template;
+- TButton now uses bootstrap css styles;
+- TMessage and TQuestion now uses jquery dialogs; 
+- The referential integrity is now turned on by default in SQLite;
+- Some styles were improved and taken off from the source code (seek lib/adianti/include/tdatagrid/tdatagrid.css);
+- New methods:
+    The __construct method for TDBCheckGroup, TDBCombo and TDBRadioGroup now receives a fifth element that is the column for ordering;
+    The setOperator() method for TStandardList was created, to define wich operator will be used for filtering in standard list controllers;
+    The disableDefaultClick() method for TDataGrid was created to optionally turn off the default click action in datagrid rows.
+
+
+
+1.0 (2012-11-10) "Twist and Shout" release
+==========================================
+Initial public release.
