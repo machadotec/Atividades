@@ -77,7 +77,7 @@ class AtividadeForm extends TPage
         $colaborador_nome->setEditable(FALSE);
         $colaborador_nome->setValue($logado->pessoa_nome);
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
-        $ticket_id                      = new TDBCombo('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo');
+        $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo');
                                    
         $horario = explode(':', $hora_padrao);
 
@@ -119,7 +119,10 @@ class AtividadeForm extends TPage
         $descricao->setSize(300, 80);
         $colaborador_id->setSize(200);
         $tipo_atividade_id->setSize(200);
+        $ticket_id->setMinLength(0);
+        $ticket_id->setMaxSize(1);
         $ticket_id->setSize(300);
+        $ticket_id->setOperator('ilike');
         
         // validações
         $hora_fim->addValidation('Hora Fim', new TRequiredValidator);
@@ -276,13 +279,25 @@ class AtividadeForm extends TPage
             $object = $this->form->getData('Atividade');
 
             $object->data_atividade ? $object->data_atividade = $string->formatDate($object->data_atividade) : null;
+            
+            $arraySwap = $object->ticket_id; 
+                        
+            $object->ticket_id = key($object->ticket_id);           
                         
             $this->form->validate(); // form validation
             $object->store(); // stores the object
 
-            $object->data_atividade ? $object->data_atividade = $string->formatDateBR($object->data_atividade) : null;
+            $object = $object->toArray();
+            $object['ticket_id'] = $arraySwap;
+
+            $object->ticket_id = $arraySwap;
             
-            $this->form->setData($object); // keep form data
+            $atividade = new Atividade;
+            $atividade->fromArray($object);
+            
+            $atividade->data_atividade ? $atividade->data_atividade = $string->formatDateBR($atividade->data_atividade) : null;
+            
+            $this->form->setData($atividade); // keep form data
             TTransaction::close(); // close the transaction
             
             // shows the success message
@@ -314,36 +329,48 @@ class AtividadeForm extends TPage
             {
                 $key=$param['key'];  // get the parameter $key
                 TTransaction::open('atividade'); // open a transaction
-                $object = new Atividade($key); // instantiates the Active Record
+                /*$object = new Atividade($key); // instantiates the Active Record
+                
+                $ticket_id = $object->ticket_id;
+                
+                $object = $object->toArray();
+
+                $Ticket = new Ticket($atividade->ticket_id);
+
+                $object['ticket_id'] = array($ticket_id => $Ticket->titulo);
+*/
+                $atividade = new Atividade($key);
+                //$atividade->fromArray($object);
+                $atividade->ticket_id = array($atividade->ticket_id => $atividade->ticket->titulo);
                 
                 // criar metodo de preenchimento de horas
-                $HoraEntrada = new DateTime($object->hora_inicio);
-                $HoraSaida   = new DateTime($object->hora_fim);
+                $HoraEntrada = new DateTime($atividade->hora_inicio);
+                $HoraSaida   = new DateTime($atividade->hora_fim);
                 $diffHoras = $HoraSaida->diff($HoraEntrada)->format('%H:%I:%S');
-                $horas = explode(':', $object->hora_fim);
+                $horas = explode(':', $atividade->hora_fim);
                 
-                $object->qtde_horas      = $horas[0];
-                $object->qtde_minutos    = $horas[1];
+                $atividade->qtde_horas      = $horas[0];
+                $atividade->qtde_minutos    = $horas[1];
                 TCombo::disableField('form_Atividade', 'qtde_horas');
                 TCombo::disableField('form_Atividade', 'qtde_minutos');
-                $object->tempo_atividade = $diffHoras;
+                $atividade->tempo_atividade = $diffHoras;
                 
-                $ultimaAtividade = Atividade::retornaUltimaAtividade( $object->colaborador_id );
+                $ultimaAtividade = Atividade::retornaUltimaAtividade( $atividade->colaborador_id );
                 
                 if($key <> $ultimaAtividade)
                 {
                     TButton::disableField('form_Atividade', 'delete');
                 }
                 
-                $object->data_atividade ? $object->data_atividade = $string->formatDateBR($object->data_atividade) : null;
+                $atividade->data_atividade ? $atividade->data_atividade = $string->formatDateBR($atividade->data_atividade) : null;
                 
                 TTransaction::open('tecbiz');
-                $colaborador = new Pessoa($object->colaborador_id);
+                $colaborador = new Pessoa($atividade->colaborador_id);
                 TTransaction::close();
                 
-                $object->colaborador_nome = $colaborador->pessoa_nome;
+                $atividade->colaborador_nome = $colaborador->pessoa_nome;
                 
-                if($logado->pessoa_codigo <> $object->colaborador_id)
+                if($logado->pessoa_codigo <> $atividade->colaborador_id)
                 {
                     TButton::disableField('form_Atividade', 'save');
                     TButton::disableField('form_Atividade', 'delete');
@@ -351,7 +378,7 @@ class AtividadeForm extends TPage
                 
                 TButton::disableField('form_Atividade', 'atividade');
                 
-                $this->form->setData($object); // fill the form
+                $this->form->setData($atividade); // fill the form
                 TTransaction::close(); // close the transaction
             }
             else

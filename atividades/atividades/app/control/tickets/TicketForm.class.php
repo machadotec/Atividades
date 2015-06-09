@@ -21,19 +21,18 @@ class TicketForm extends TPage
         
         $table = new TTable;
         $table->style = 'width: 540px';
-      //  $tablePagamento = new TTable;
-      //  $tablePagamento->style = 'width: 540px';
+        $tablePagamento = new TTable;
+        $tablePagamento->style = 'width: 540px';
         
-      //  $notebook = new TNotebook(600, 650);
-        $this->form->add($table);
-        
+        $notebook = new TNotebook(600, 650);
+      /*  
         // add a row for the form title
         $row = $table->addRow();
         $row->class = 'tformtitle'; // CSS class
         $row->addCell( new TLabel('Cadastro de Tickets') )->colspan = 2;
-        
-        //$notebook->appendPage('Ticket - Cadastramento', $table);
-        //$notebook->appendPage('Ticket - Orçamento / Pagamento', $tablePagamento);
+        */
+        $notebook->appendPage('Ticket - Cadastramento', $table);
+        $notebook->appendPage('Ticket - Orçamento / Pagamento', $tablePagamento);
        
         // create the form fields
         $id                             = new THidden('id');
@@ -185,23 +184,23 @@ class TicketForm extends TPage
         $table->addRowSet( new TLabel(''), $id );
         
         // notebook Pagamento
-        $table->addRowSet( $label_responsavel = new TLabel('Responsável:'), $responsavel_id );
+        $tablePagamento->addRowSet( $label_responsavel = new TLabel('Responsável:'), $responsavel_id );
         $label_responsavel->setFontColor('#FF0000');
-        $table->addRowSet( new TLabel('Data Prevista:'), $data_prevista );
-        $table->addRowSet( new TLabel('Data Validade:'), $data_validade );
-        $table->addRowSet( new TLabel('Data Aprovação:'), $data_aprovacao );     
-        $table->addRowSet( new TLabel('Qte Horas:'), $orcamento_horas );
-        $table->addRowSet( new TLabel('Valor Hora:'), $orcamento_valor_hora );
-        $table->addRowSet( new TLabel('Valor Desconto:'), $valor_desconto );
-        $table->addRowSet( new TLabel('Valor Total:'), $valor_total );
-        $table->addRowSet( new TLabel('Forma de Pgto:'), $forma_pagamento );
+        $tablePagamento->addRowSet( new TLabel('Data Prevista:'), $data_prevista );
+        $tablePagamento->addRowSet( new TLabel('Data Validade:'), $data_validade );
+        $tablePagamento->addRowSet( new TLabel('Data Aprovação:'), $data_aprovacao );     
+        $tablePagamento->addRowSet( new TLabel('Qte Horas:'), $orcamento_horas );
+        $tablePagamento->addRowSet( new TLabel('Valor Hora:'), $orcamento_valor_hora );
+        $tablePagamento->addRowSet( new TLabel('Valor Desconto:'), $valor_desconto );
+        $tablePagamento->addRowSet( new TLabel('Valor Total:'), $valor_total );
+        $tablePagamento->addRowSet( new TLabel('Forma de Pgto:'), $forma_pagamento );
       
         // creates a frame
         $frame = new TFrame;
         $frame->oid = 'frame-measures';
         $frame->setLegend('Pagamentos:');
         
-        $row=$table->addRow();
+        $row=$tablePagamento->addRow();
         $cell=$row->addCell($frame);
         $cell->colspan=2;
         
@@ -235,6 +234,8 @@ class TicketForm extends TPage
         $this->form->addField($list_button);
         $this->form->addField($enviar_email);
         
+        
+        /*
         $buttons_box = new THBox;
         $buttons_box->add($save_button);
         $buttons_box->add($new_button);
@@ -246,10 +247,10 @@ class TicketForm extends TPage
         $row = $table->addRow();
         $row->class = 'tformaction'; // CSS class
         $row->addCell($buttons_box)->colspan = 2;
+        */
         
+       //TButton::disableField('form_Ticket', 'save');
         
-       // TButton::disableField('form_Ticket', 'save');
-        /*
         $subtable = new TTable;
         $row = $subtable->addRow();
         $row->addCell($save_button);
@@ -264,7 +265,7 @@ class TicketForm extends TPage
         $row->class = 'tformtitle'; // CSS class
         $row->addCell( new TLabel('Cadastro de Ticket') )->colspan = 2;
         
-        */
+        
         
         $change_action = new TAction(array($this, 'onCalculaValorTotal'));
         $orcamento_horas->setExitAction($change_action);
@@ -284,12 +285,13 @@ class TicketForm extends TPage
         $change_valor = new TAction(array ($this, 'onCalculaValorParcial'));
         $valor_pagamento->setExitAction($change_valor);
         
-        /*
+        
         $vbox = new TVBox;
         $vbox->add($pretable);
-        $vbox->add($this->form);
+        $vbox->add($notebook);
         $vbox->add($subtable);
-        */
+        
+        $this->form->add($vbox);
                 
         parent::add($this->form);
     }

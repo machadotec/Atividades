@@ -105,16 +105,8 @@ class AtividadeList extends TPage
         $ticket_id           = new TDataGridColumn('ticket->titulo', 'Ticket', 'right', 200); // get_ticket()->titulo
         
         // transformers
-        try
-        {
-            TTransaction::open('tecbiz');
             $colaborador_id->setTransformer(array($this, 'retornaPessoa'));
-            TTransaction::close();  
-        }
-        catch (Exception $e)
-        {
-            new TMessage('info', 'error');
-        } 
+        
         
         $hora_qte->setTransformer(array($this, 'calculaDiferenca'));
         $data_atividade->setTransformer(array('StringsUtil', 'formatDateBR'));
@@ -356,19 +348,28 @@ class AtividadeList extends TPage
             $objects = $repository->load($criteria, FALSE);
             
             $this->datagrid->clear();
-            if ($objects)
-            {
-                
-                
-                // iterate the collection of active records
-                foreach ($objects as $object)
+            
+             try
+             {
+                 TTransaction::open('tecbiz');
+             
+
+                if ($objects)
                 {
-                    
-                    
-                    // add the object inside the datagrid
-                    $this->datagrid->addItem($object);
+                    // iterate the collection of active records
+                    foreach ($objects as $object)
+                    {
+                        // add the object inside the datagrid
+                        $this->datagrid->addItem($object);
+                    }
                 }
-            }
+                
+                 TTransaction::close();
+             }
+             catch(Exception $e)
+             {
+                 new TMessage('error', '<b>Error</b> ' . $e->getMessage());
+             }
             
             // reset the criteria for record count
             $criteria->resetProperties();

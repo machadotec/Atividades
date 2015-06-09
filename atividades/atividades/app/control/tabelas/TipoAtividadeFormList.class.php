@@ -39,10 +39,9 @@ class TipoAtividadeFormList extends TPage
         // creates a DataGrid
         $this->datagrid = new TQuickGrid;
         $this->datagrid->setHeight(320);
-        
 
         // creates the datagrid columns
-        $nome = $this->datagrid->addQuickColumn('Tipo de atividade:', 'nome', 'left', 200);
+        $nome = $this->datagrid->addQuickColumn('Tipo de atividade:', 'nome', 'left');
         
         // create the datagrid actions
         $edit_action   = new TDataGridAction(array($this, 'onEdit'));
@@ -70,6 +69,8 @@ class TipoAtividadeFormList extends TPage
         
         // create the page container
         $container = TVBox::pack( $this->form, $this->datagrid, $this->pageNavigation);
+        $container->style = 'width:80%;max-width:800px';
+        $this->datagrid->style = 'width:100%';
         parent::add($container);
     }
 

@@ -104,16 +104,9 @@ class TicketList extends TPage
         $prioridade_id    = new TDataGridColumn('prioridade->nome', 'Prioridade', 'right', 80); //get_prioridade()->nome
 
         $status_ticket_id->setTransformer(array($this, 'retornaStatus'));
-        try
-        {
-              TTransaction::open('tecbiz');
+
               $solicitante_id->setTransformer(array($this, 'retornaCliente'));
-              TTransaction::close();        
-        }
-        catch (Exception $e)
-        {
-              new TMessage('info', 'error');
-        }
+
         $orcamento_horas->setTransformer(array('StringsUtil', 'formatHoras'));
         $data_ultimo_pgto->setTransformer(array('StringsUtil', 'formatDateBR'));
 
@@ -240,7 +233,7 @@ class TicketList extends TPage
 
 
         if (isset($data->titulo) AND ($data->titulo)) {
-            $filter = new TFilter('titulo', 'like', "%{$data->titulo}%"); // create the filter
+            $filter = new TFilter('titulo', 'ilike', "%{$data->titulo}%"); // create the filter
             TSession::setValue('TicketList_filter_titulo',   $filter); // stores the filter in the session
         }
 
@@ -349,15 +342,28 @@ class TicketList extends TPage
             $objects = $repository->load($criteria, FALSE);
             
             $this->datagrid->clear();
-            if ($objects)
-            {
-                // iterate the collection of active records
-                foreach ($objects as $object)
+            
+             try
+             {
+                 TTransaction::open('tecbiz');
+             
+
+                if ($objects)
                 {
-                    // add the object inside the datagrid
-                    $this->datagrid->addItem($object);
+                    // iterate the collection of active records
+                    foreach ($objects as $object)
+                    {
+                        // add the object inside the datagrid
+                        $this->datagrid->addItem($object);
+                    }
                 }
-            }
+                
+                 TTransaction::close();
+             }
+             catch(Exception $e)
+             {
+                 new TMessage('error', '<b>Error</b> ' . $e->getMessage());
+             }
             
             // reset the criteria for record count
             $criteria->resetProperties();
@@ -453,22 +459,9 @@ class TicketList extends TPage
     public function retornaCliente($campo, $object, $row)
     {
          
-         //try
-         //{
-             //TTransaction::open('tecbiz');
-             
              $cliente = new Pessoa($object->solicitante_id);
              $campo = $cliente->pessoa_nome;
-                          
-             //TTransaction::close();
-             
              return $campo;
-         //}
-         //catch(Exception $e)
-         //{
-           //  new TMessage('error', '<b>Error</b> ' . $e->getMessage());
-         //}
-         
     }
     
     public function retornaStatus($campo, $object, $row)
