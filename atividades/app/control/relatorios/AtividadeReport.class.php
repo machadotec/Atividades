@@ -224,7 +224,7 @@ class AtividadeReport extends TPage
                     }
                     $array[$ind] += $string->time_to_sec($row['total']); 
                 }
-                asort($array);
+                ksort($array);
                 // add a header row
                 $tr->addRow();
                 $tr->addCell('', 'center', 'header');
@@ -250,7 +250,7 @@ class AtividadeReport extends TPage
                     $tr->addRow();
                     $tr->addCell($seq, 'center', $style);
                     $tr->addCell(utf8_decode($nome), 'left', $style);
-                    $tr->addCell(gmdate("H:i:s", $value), 'right', $style);
+                    $tr->addCell($string->sec_to_time($value), 'right', $style);
                     $tr->addCell(round(($value/$string->time_to_sec($total))*100) .'%', 'right', $style);
                     $seq++;                    
                     $colour = !$colour;

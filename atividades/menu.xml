@@ -47,7 +47,7 @@
                 <action>TestCitySeek</action>
             </menuitem>    
             <menuitem label='Relatorio'>
-                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <icon>fa:fa fa-line-chart fa-fw blue</icon>
                 <action>AtividadeReport</action>
             </menuitem>    
         </menu>

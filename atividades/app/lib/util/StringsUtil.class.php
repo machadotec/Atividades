@@ -45,6 +45,15 @@ class StringsUtil
         return $hours * 3600 + $minutes * 60 + $seconds;
     }
     
+    function sec_to_time($seconds)
+    {
+        $hours = floor($seconds / 3600);
+        $mins = floor(($seconds - ($hours*3600)) / 60);
+        $secs = floor($seconds % 60);
+        
+        return $hours.':'.$mins.':'.str_pad($secs, 2, "0", STR_PAD_LEFT);
+    }
+    
     function array_meses()
     {
         $meses = array(
