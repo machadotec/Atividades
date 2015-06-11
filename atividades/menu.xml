@@ -1,0 +1,88 @@
+<menu>
+    <menuitem label='Administration'>
+        <menu>
+              <menuitem label='Programs'>
+                  <icon>fa:file-code-o fa-fw green</icon>
+                  <action>SystemProgramList</action>
+              </menuitem>
+              <menuitem label='Groups'>
+                  <icon>fa:users fa-fw blue</icon>
+                  <action>SystemGroupList</action>
+              </menuitem>
+              <menuitem label='Users'>
+                  <icon>fa:user fa-fw blue</icon>
+                  <action>SystemUserList</action>
+              </menuitem>
+        </menu>
+    </menuitem>
+    
+    <menuitem label='Cadastros gerais'>
+        <menu>
+            <menuitem label='Ponto'>
+                <icon>fa:fa fa-clock-o fa-fw blue</icon>
+                <action>PontoFormList</action>
+            </menuitem>
+            <menuitem label='Cadastro de Tickets'>
+                <icon>fa:fa fa-ticket fa-fw blue</icon>
+                <action>TicketList</action>
+            </menuitem>
+            <menuitem label='Cadastro de Atividades'>
+                <icon>fa:fa fa-wrench fa-fw blue</icon>
+                <action>AtividadeList</action>
+            </menuitem>
+            <menuitem label='Cadastro de DRs'>
+                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <action>RequisitoDesenvolvimentoList</action>
+            </menuitem>           
+            <menuitem label='teste'>
+                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <action>CommonPage</action>
+            </menuitem>
+            <menuitem label='teste seek'>
+                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <action>FormSeekButtonView</action>
+            </menuitem> 
+            <menuitem label='teste seek 2'>
+                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <action>TestCitySeek</action>
+            </menuitem>    
+            <menuitem label='Relatorio'>
+                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <action>AtividadeReport</action>
+            </menuitem>    
+        </menu>
+    </menuitem>
+    
+    <menuitem label='Tabelas de apoio'>
+        <menu>
+            <menuitem label='Tipos de Atividades'>
+                <icon></icon>
+                <action>TipoAtividadeFormList</action>
+            </menuitem>
+            <menuitem label='Tipos de Tickets'>
+                <icon></icon>
+                <action>TipoTicketFormList</action>
+            </menuitem>
+            <menuitem label='Tipos de Prioridades'>
+                <icon></icon>
+                <action>PrioridadeFormList</action>
+            </menuitem>
+             <menuitem label='Sistemas'>
+                <icon></icon>
+                <action>SistemaFormList</action>
+            </menuitem>   
+            
+            <menuitem label='Status Ticket'>
+                <icon></icon>
+                <action>StatusTicketFormList</action>
+            </menuitem>         
+                            
+       </menu>                   
+    </menuitem>
+    
+    <menuitem label='Logout'>
+       <icon></icon>
+           <action>LoginForm#method=onLogout#static=1</action>
+    </menuitem>
+    
+</menu>

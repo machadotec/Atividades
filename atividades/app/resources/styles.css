@@ -1,0 +1,55 @@
+.formtitle
+{
+    position: relative;
+    padding: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    color: #FFF;
+    background: #939393;
+    text-shadow:0 1px 0 #000000;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.formfield
+{
+    background: #F5EBDD;
+    border: 1px solid #A0A0A0;
+    border-radius: 3px 3px 3px 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+    height: 24px;
+    z-index: 1;
+}
+
+.sectiontitle
+{
+    position: relative;
+    padding: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFF;
+    background: #9EAACD;
+    text-shadow:0 1px 0 #000000;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.customform
+{
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size:14px;
+    width: 700px;
+    background-color: #FAFAFA;
+    -moz-box-shadow: 3px 3px 3px #BABABA;
+    -webkit-box-shadow: 3px 3px 3px #BABABA;
+    box-shadow: 3px 3px 3px #BABABA;
+    border:1px solid #B7B7B7;
+}
+
+.customform td
+{
+    padding-left:2px;
+}
