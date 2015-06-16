@@ -29,7 +29,8 @@ class TicketForm extends TPage
         $notebook->appendPage('Ticket - Orçamento / Pagamento', $tablePagamento);
        
         // create the form fields
-        $id                             = new THidden('id');
+        $id                             = new TEntry('id');
+        $id->setEditable(FALSE);
         $titulo                         = new TEntry('titulo');
         $origem                         = new TCombo('origem');
         $combo_origem = array();
@@ -97,8 +98,7 @@ class TicketForm extends TPage
         $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
         $solicitante_nome               = new TEntry('solicitante_nome');
         $solicitante_nome->setEditable(FALSE);
-        
-                
+                        
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
@@ -159,6 +159,7 @@ class TicketForm extends TPage
         
         // add one row for each form field
         // notebook Cadastramento
+        $table->addRowSet( new TLabel('Ticket:'), $id );
         $table->addRowSet( $label_solicitante = new TLabel('Solicitante:'), array($solicitante_id, $solicitante_nome) );
         $label_solicitante->setFontColor('#FF0000');
         $table->addRowSet( new TLabel('Data:'), $data_cadastro );
@@ -174,7 +175,6 @@ class TicketForm extends TPage
         $table->addRowSet( new TLabel('Observação:'), $observacao );
         $table->addRowSet( new TLabel('DR.:'), $nome_dtr );
         $table->addRowSet( new TLabel(''),  $gerar_dr );
-        $table->addRowSet( new TLabel(''), $id );
         
         // notebook Pagamento
         $tablePagamento->addRowSet( $label_responsavel = new TLabel('Responsável:'), $responsavel_id );

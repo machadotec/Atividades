@@ -85,6 +85,7 @@ class Ticket extends TRecord
         return $retorno; 
         
     }
+    
     public function getNaoUsados()
     {
         $conn = TTransaction::get();

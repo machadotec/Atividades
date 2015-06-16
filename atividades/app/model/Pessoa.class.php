@@ -42,6 +42,27 @@ class Pessoa extends TRecord
         
     }
    
+    public function getPessoasEntidade($entcodent)
+    {
+        
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter('origem', '=', 1) );
+        $criteria->add(new TFilter('codigo_cadastro_origem', '=', $entcodent) );
+            
+        $repository = new TRepository('Pessoa');
+        $tickets = $repository->load($criteria);
+        
+        $retorno[] = '0';
+            
+        foreach ($tickets as $row)
+        {
+            $retorno[] = $row->pessoa_codigo;
+        }
+            
+        return $retorno; 
+        
+    }
+   
     public function get_origem_nome()
     {
         // loads the associated object

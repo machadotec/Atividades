@@ -43,6 +43,9 @@ class TicketList extends TPage
         $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_search_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
         $solicitante_nome               = new TEntry('solicitante_nome');
         $solicitante_nome->setEditable(FALSE);
+        $criteria = new TCriteria;
+        $criteria->add( new TFilter('enttipent', '=', 1));
+        $entcodent                      = new TDBComboMultiValue('entcodent', 'tecbiz', 'Entidade', 'entcodent', array(0 => 'entcodent', 1 => 'entrazsoc'), 'entcodent', $criteria);
         $status_ticket_id               = new TDBCombo('status_ticket_id', 'atividade', 'StatusTicket', 'id', 'nome');
         $data_ultimo_pgto               = new TDate('data_ultimo_pgto');
         $data_ultimo_pgto->setMask('dd/mm/yyyy');
@@ -53,6 +56,7 @@ class TicketList extends TPage
         $titulo->setSize(274);
         $solicitante_id->setSize(50);
         $solicitante_nome->setSize(200);
+        $entcodent->setSize(274);
         $status_ticket_id->setSize(100);
         $data_ultimo_pgto->setSize(100);
         $prioridade_id->setSize(100);
@@ -61,11 +65,12 @@ class TicketList extends TPage
         $table->addRowSet( new TLabel('ID:'), $id );
         $table->addRowSet( new TLabel('Titulo:'), $titulo );
         $table->addRowSet( new TLabel('Cliente:'), array($solicitante_id, $solicitante_nome) );
+        $table->addRowSet( new TLabel('Entidade:'), $entcodent );
         $table->addRowSet( new TLabel('Data Pgto:'), $data_ultimo_pgto );
         $table->addRowSet( new TLabel('Status:'), $status_ticket_id );
         $table->addRowSet( new TLabel('Prioridade:'), $prioridade_id );
 
-        $this->form->setFields(array($id,$titulo,$solicitante_id,$solicitante_nome,$status_ticket_id,$data_ultimo_pgto,$prioridade_id));
+        $this->form->setFields(array($id,$titulo,$solicitante_id,$solicitante_nome,$entcodent,$status_ticket_id,$data_ultimo_pgto,$prioridade_id));
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Ticket_filter_data') );
@@ -220,6 +225,7 @@ class TicketList extends TPage
         TSession::setValue('TicketList_filter_id',   NULL);
         TSession::setValue('TicketList_filter_titulo',   NULL);
         TSession::setValue('TicketList_filter_solicitante_id',   NULL);
+        TSession::setValue('TicketList_filter_entidade_id',   NULL);
         TSession::setValue('TicketList_filter_status_ticket_id',   NULL);
         TSession::setValue('TicketList_filter_data_ultimo_pgto',   NULL);
         TSession::setValue('TicketList_filter_prioridade_id',   NULL);
@@ -241,6 +247,22 @@ class TicketList extends TPage
             TSession::setValue('TicketList_filter_solicitante_id',   $filter); // stores the filter in the session
         }
 
+        if (isset($data->entcodent) AND ($data->entcodent)) {
+            
+            try
+            {
+                TTransaction::open('tecbiz');
+                $solicitantes = Pessoa::getPessoasEntidade($data->entcodent);
+                TTransaction::close();
+            }
+            catch (Exception $e)
+            {
+                new TMessage('error', $e->getMessage());
+            }
+            
+            $filter = new TFilter('solicitante_id', 'IN', ($solicitantes)); // create the filter
+            TSession::setValue('TicketList_filter_entidade_id',   $filter); // stores the filter in the session
+        }
 
         if (isset($data->status_ticket_id) AND ($data->status_ticket_id)) {
             $filter = new TFilter('status_ticket_id', '=', "$data->status_ticket_id"); // create the filter
@@ -310,31 +332,29 @@ class TicketList extends TPage
                 $criteria->add(TSession::getValue('TicketList_filter_id')); // add the session filter
             }
 
-
             if (TSession::getValue('TicketList_filter_titulo')) {
                 $criteria->add(TSession::getValue('TicketList_filter_titulo')); // add the session filter
             }
-
 
             if (TSession::getValue('TicketList_filter_solicitante_id')) {
                 $criteria->add(TSession::getValue('TicketList_filter_solicitante_id')); // add the session filter
             }
 
+            if (TSession::getValue('TicketList_filter_entidade_id')) {
+                $criteria->add(TSession::getValue('TicketList_filter_entidade_id')); // add the session filter
+            }
 
             if (TSession::getValue('TicketList_filter_status_ticket_id')) {
                 $criteria->add(TSession::getValue('TicketList_filter_status_ticket_id')); // add the session filter
             }
 
-
             if (TSession::getValue('TicketList_filter_data_ultimo_pgto')) {
                 $criteria->add(TSession::getValue('TicketList_filter_data_ultimo_pgto')); // add the session filter
             }
 
-
             if (TSession::getValue('TicketList_filter_prioridade_id')) {
                 $criteria->add(TSession::getValue('TicketList_filter_prioridade_id')); // add the session filter
             }
-
             
             // load the objects according to criteria
             $objects = $repository->load($criteria, FALSE);
@@ -443,6 +463,7 @@ class TicketList extends TPage
         TSession::setValue('TicketList_filter_id',   NULL);
         TSession::setValue('TicketList_filter_titulo',   NULL);
         TSession::setValue('TicketList_filter_solicitante_id',   NULL);
+        TSession::setValue('TicketList_filter_entidade_id',   NULL);
         TSession::setValue('TicketList_filter_status_ticket_id',   NULL);
         TSession::setValue('TicketList_filter_data_ultimo_pgto',   NULL);
         TSession::setValue('TicketList_filter_prioridade_id',   NULL);
