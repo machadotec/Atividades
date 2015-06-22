@@ -34,8 +34,8 @@ class TicketList extends TPage
         
         // create the form fields
         $id                             = new TEntry('id');
+        $id->setMask('99999');
         $titulo                         = new TEntry('titulo');
-        
         $criteria = new TCriteria;
         $newparam['order'] = 'pessoa_nome';
         $newparam['direction'] = 'asc';

@@ -66,6 +66,26 @@ class Ticket extends TRecord
         
     }
 
+    public function getTicketsCliente($cliente)
+    {
+        
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter('solicitante_id', 'IN', $cliente) );
+            
+        $repository = new TRepository('Ticket');
+        $tickets = $repository->load($criteria);
+        
+        $retorno[] = '0';
+            
+        foreach ($tickets as $row)
+        {
+            $retorno[] = $row->id;
+        }
+            
+        return $retorno; 
+        
+    }
+
     public function getTicketsSolicitante($solicitante_id)
     {
         

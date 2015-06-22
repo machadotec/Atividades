@@ -320,7 +320,7 @@ Cliente: '.$cliente.' Solicitante/Dpto: '.$responsavel;
             
             $designer = new TPDFDesigner;
             $designer->fromXml('app/reports/kanban.pdf.xml');
-            $designer->replace('{ID_DTR}', $desenvolvimento->id.'/'.$data[0]);
+            $designer->replace('{ID_DTR}', $desenvolvimento->ticket_id.'/'.$data[0]);
             $designer->replace('{CADASTRO}', $string->formatDateBR($desenvolvimento->data_cadastro));
             $designer->replace('{INICIO}', date('d/m/Y'));
             $designer->replace('{PREVISTA}', $data_prevista);

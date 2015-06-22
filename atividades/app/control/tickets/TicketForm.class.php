@@ -90,15 +90,15 @@ class TicketForm extends TPage
         $nome_dtr                       = new TEntry('nome_dtr');
         $nome_dtr->setEditable(FALSE);
         
-        $criteria = new TCriteria;
-        $newparam['order'] = 'pessoa_nome';
-        $newparam['direction'] = 'asc';
-        $criteria->setProperties($newparam); // order, offset
-        
-        $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
-        $solicitante_nome               = new TEntry('solicitante_nome');
+        //-----------------------------------------
+        $solicitante_id   = new TSeekButton('solicitante_id');
+        $solicitante_nome = new TEntry('solicitante_nome');
+		$obj = new TicketPessoaSeek;
+        $action = new TAction(array($obj, 'onReload'));
+        $solicitante_id->setAction($action);      
         $solicitante_nome->setEditable(FALSE);
-                        
+		
+        // ===========================================     
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
@@ -629,6 +629,7 @@ class TicketForm extends TPage
             }
             
             $this->form->validate(); // form validation
+                  
             $object->store(); // stores the object
             
             $saldo = $object->valor_total - $object->valor_total_pago;

@@ -34,6 +34,7 @@ class RequisitoDesenvolvimentoList extends TPage
      
         // create the form fields
         $id                             = new TEntry('ticket_id');
+        $id->setMask('99999');
         $titulo                         = new TEntry('titulo');
         $data_cadastro                  = new TDate('data_cadastro');
         $data_cadastro->setMask('dd/mm/yyyy');

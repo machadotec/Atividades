@@ -1,0 +1,1519 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: atividade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE atividade (
+    id integer NOT NULL,
+    data_atividade date,
+    hora_inicio time without time zone,
+    hora_fim time without time zone,
+    descricao text,
+    colaborador_id integer,
+    tipo_atividade_id integer,
+    ticket_id integer
+);
+
+
+ALTER TABLE public.atividade OWNER TO postgres;
+
+--
+-- Name: atividade_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE atividade_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.atividade_id_seq OWNER TO postgres;
+
+--
+-- Name: atividade_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE atividade_id_seq OWNED BY atividade.id;
+
+
+--
+-- Name: ponto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE ponto (
+    id integer NOT NULL,
+    data_ponto date,
+    hora_entrada time without time zone,
+    hora_saida time without time zone,
+    colaborador_id integer
+);
+
+
+ALTER TABLE public.ponto OWNER TO postgres;
+
+--
+-- Name: ponto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE ponto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ponto_id_seq OWNER TO postgres;
+
+--
+-- Name: ponto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE ponto_id_seq OWNED BY ponto.id;
+
+
+--
+-- Name: prioridade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE prioridade (
+    id integer NOT NULL,
+    nome text
+);
+
+
+ALTER TABLE public.prioridade OWNER TO postgres;
+
+--
+-- Name: prioridade_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE prioridade_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.prioridade_id_seq OWNER TO postgres;
+
+--
+-- Name: prioridade_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE prioridade_id_seq OWNED BY prioridade.id;
+
+
+--
+-- Name: requisito_desenvolvimento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE requisito_desenvolvimento (
+    id integer NOT NULL,
+    titulo text,
+    data_cadastro date,
+    rotina text,
+    objetivo text,
+    entrada text,
+    processamento text,
+    saida text,
+    ticket_id integer
+);
+
+
+ALTER TABLE public.requisito_desenvolvimento OWNER TO postgres;
+
+--
+-- Name: requisito_desenvolvimento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE requisito_desenvolvimento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.requisito_desenvolvimento_id_seq OWNER TO postgres;
+
+--
+-- Name: requisito_desenvolvimento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE requisito_desenvolvimento_id_seq OWNED BY requisito_desenvolvimento.id;
+
+
+--
+-- Name: sistema; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sistema (
+    id integer NOT NULL,
+    nome text
+);
+
+
+ALTER TABLE public.sistema OWNER TO postgres;
+
+--
+-- Name: sistema_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sistema_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sistema_id_seq OWNER TO postgres;
+
+--
+-- Name: sistema_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sistema_id_seq OWNED BY sistema.id;
+
+
+--
+-- Name: status_ticket; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE status_ticket (
+    id integer NOT NULL,
+    nome text
+);
+
+
+ALTER TABLE public.status_ticket OWNER TO postgres;
+
+--
+-- Name: status_ticket_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE status_ticket_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.status_ticket_id_seq OWNER TO postgres;
+
+--
+-- Name: status_ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE status_ticket_id_seq OWNED BY status_ticket.id;
+
+
+--
+-- Name: system_group; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_group (
+    id integer NOT NULL,
+    name character varying(100)
+);
+
+
+ALTER TABLE public.system_group OWNER TO postgres;
+
+--
+-- Name: system_group_program; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_group_program (
+    id integer NOT NULL,
+    system_group_id integer NOT NULL,
+    system_program_id integer NOT NULL
+);
+
+
+ALTER TABLE public.system_group_program OWNER TO postgres;
+
+--
+-- Name: system_program; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_program (
+    id integer NOT NULL,
+    name character varying(100),
+    controller character varying(100)
+);
+
+
+ALTER TABLE public.system_program OWNER TO postgres;
+
+--
+-- Name: system_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_user (
+    id integer NOT NULL,
+    name character varying(100),
+    login character varying(100),
+    password character varying(100),
+    email character varying(100),
+    frontpage_id integer NOT NULL
+);
+
+
+ALTER TABLE public.system_user OWNER TO postgres;
+
+--
+-- Name: system_user_group; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_user_group (
+    id integer NOT NULL,
+    system_user_id integer NOT NULL,
+    system_group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.system_user_group OWNER TO postgres;
+
+--
+-- Name: system_user_program; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_user_program (
+    id integer NOT NULL,
+    system_user_id integer NOT NULL,
+    system_program_id integer NOT NULL
+);
+
+
+ALTER TABLE public.system_user_program OWNER TO postgres;
+
+--
+-- Name: ticket; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE ticket (
+    id integer NOT NULL,
+    titulo text,
+    origem character(1),
+    solicitacao_descricao text,
+    providencia text,
+    orcamento_horas interval,
+    orcamento_valor_hora numeric(9,2),
+    valor_desconto numeric(9,2),
+    valor_total numeric(9,2),
+    data_ultimo_pgto date,
+    valor_ultimo_pgto numeric(9,2),
+    valor_total_pago numeric(9,2),
+    data_cadastro date,
+    data_prevista date,
+    data_validade date,
+    data_aprovacao date,
+    observacao text,
+    solicitante_id integer,
+    responsavel_id integer,
+    tipo_ticket_id integer,
+    sistema_id integer,
+    status_ticket_id integer,
+    prioridade_id integer,
+    forma_pagamento text
+);
+
+
+ALTER TABLE public.ticket OWNER TO postgres;
+
+--
+-- Name: ticket_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE ticket_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ticket_id_seq OWNER TO postgres;
+
+--
+-- Name: ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE ticket_id_seq OWNED BY ticket.id;
+
+
+--
+-- Name: tipo_atividade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_atividade (
+    id integer NOT NULL,
+    nome text
+);
+
+
+ALTER TABLE public.tipo_atividade OWNER TO postgres;
+
+--
+-- Name: tipo_atividade_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_atividade_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_atividade_id_seq OWNER TO postgres;
+
+--
+-- Name: tipo_atividade_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_atividade_id_seq OWNED BY tipo_atividade.id;
+
+
+--
+-- Name: tipo_ticket; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_ticket (
+    id integer NOT NULL,
+    nome text
+);
+
+
+ALTER TABLE public.tipo_ticket OWNER TO postgres;
+
+--
+-- Name: tipo_ticket_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_ticket_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_ticket_id_seq OWNER TO postgres;
+
+--
+-- Name: tipo_ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_ticket_id_seq OWNED BY tipo_ticket.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY atividade ALTER COLUMN id SET DEFAULT nextval('atividade_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ponto ALTER COLUMN id SET DEFAULT nextval('ponto_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY prioridade ALTER COLUMN id SET DEFAULT nextval('prioridade_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requisito_desenvolvimento ALTER COLUMN id SET DEFAULT nextval('requisito_desenvolvimento_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sistema ALTER COLUMN id SET DEFAULT nextval('sistema_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY status_ticket ALTER COLUMN id SET DEFAULT nextval('status_ticket_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ticket ALTER COLUMN id SET DEFAULT nextval('ticket_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_atividade ALTER COLUMN id SET DEFAULT nextval('tipo_atividade_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_ticket ALTER COLUMN id SET DEFAULT nextval('tipo_ticket_id_seq'::regclass);
+
+
+--
+-- Data for Name: atividade; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY atividade (id, data_atividade, hora_inicio, hora_fim, descricao, colaborador_id, tipo_atividade_id, ticket_id) FROM stdin;
+339	2015-06-18	10:30:00	11:00:00	cadastro de contrato	8	9	36
+174	2015-06-01	09:40:00	10:00:00	Zerando limite ETD cartao empresarial	11	5	59
+188	2015-06-01	17:00:00	18:50:00	Cartão Empresarial\r\n-Gerando limites\r\n-Agendamento de envio de e-mail	11	5	59
+193	2015-06-02	10:30:00	11:50:00	-importaçao associado\r\n- envio de -mail mkt do saldo	11	11	59
+200	2015-06-03	09:30:00	10:25:00	indicador de envios\r\nacerto de e-mails	11	5	59
+209	2015-06-08	13:30:00	14:35:00	Lançamentos cartão empresarial	11	5	59
+243	2015-06-10	10:20:00	12:50:00	Limites cartao empresarial	11	5	60
+257	2015-06-10	15:20:00	16:35:00	Gerando lista de e-mail e saldo para importaçao para o dinamize	11	11	60
+310	2015-06-16	11:00:00	11:30:00	cadastro de contrato 	8	9	21
+259	2015-06-09	08:00:00	12:30:00	VISITA AFUMI	21	5	28
+313	2015-06-16	13:45:00	16:35:00	Programação	14	3	345
+316	2015-06-16	14:00:00	14:30:00	Nr.Autorização, Estorno autorização, extratos.	105	5	301
+319	2015-06-16	17:40:00	18:05:00	cadastro de contrato	8	9	56
+322	2015-06-11	14:10:00	16:55:00	Suporte POS problema no pop	21	5	301
+325	2015-06-17	13:15:00	13:45:00	cadastro de contrato	8	9	5
+328	2015-06-15	14:00:00	17:00:00	Repasse Piraju - conferência.	9	5	36
+331	2015-06-17	14:00:00	16:00:00	Programação	14	3	309
+334	2015-06-18	10:10:00	10:30:00	cadastro de contrato	8	9	21
+337	2015-06-17	14:30:00	15:30:00	Liberação da execução do arquivo lcto de lotes oriundo do Fechamento Padrão	2	3	352
+342	2015-06-18	09:15:00	11:55:00	Programação (desvincular ao ecs de controle e sim ao tipo de ecs que pode ser normal ou fechamento)	14	3	309
+345	2015-06-17	14:30:00	17:30:00	biblioteca .rtf to .docx	1	3	318
+181	2015-06-01	13:55:00	15:30:00	suporte a relatórios de estornos ass:1313	12	5	21
+348	2015-06-12	14:00:00	15:45:00	Suporte ECS	21	5	301
+189	2015-06-01	13:30:00	15:00:00	Suporte VERA - Associados, extratos	21	5	21
+351	2015-06-16	14:00:00	16:00:00	 Suporte POS Ecs POP	21	5	301
+354	2015-06-17	13:00:00	14:20:00	Suprote POS ECS Pop	21	5	301
+182	2015-06-01	15:30:00	17:54:00	Suporte ass: Caroline Campos e ao Ctas a pagar encerrado  - Novo	12	5	28
+194	2015-06-01	15:00:00	17:30:00	Credenciamento ECS Pirajú	105	9	36
+357	2015-06-18	14:30:00	16:30:00	Identificação oriegm pessoa no cadastro ticket	2	3	318
+359	2015-06-19	10:30:00	12:25:00	Publicação e testes	14	4	313
+362	2015-06-19	14:15:00	16:30:00	biblioteca phpword	1	3	318
+365	2015-06-19	11:30:00	11:50:00	Suporte configuração POS ecs 1979	21	5	301
+368	2015-06-19	11:00:00	11:30:00	Geração arquivo som status PP (produção)	2	4	327
+201	2015-06-03	10:35:00	11:15:00	Suporte ref. POS, fechamento, contas a pagar com erro, associado exonerado, troca de matrículas, etc...	12	5	28
+371	2015-06-19	17:30:00	18:30:00	Alteração envio e retorno arquivo cfe mudança efetuadas nas matriculas dos associados.	2	3	355
+206	2015-06-03	14:00:00	15:00:00	Credenciamentos	105	9	58
+207	2015-06-03	15:00:00	16:00:00	Credenciamentos	105	9	3
+208	2015-06-03	16:00:00	17:00:00	Códigos Internos	105	9	28
+232	2015-06-08	09:00:00	09:30:00	Credenciamento	105	9	28
+233	2015-06-08	09:30:00	10:00:00	Credenciamento	105	9	39
+234	2015-06-09	09:00:00	10:00:00	Credenciamento	105	9	28
+235	2015-06-09	10:00:00	10:30:00	Credenciamento	105	9	39
+236	2015-06-09	10:30:00	11:30:00	Credenciamento	105	9	58
+237	2015-06-09	11:30:00	12:30:00	Credenciamento	105	9	20
+238	2015-06-09	08:50:00	09:20:00	problema pos, testes e informações para realizar a troca..	9	5	56
+241	2015-06-09	17:00:00	17:30:00	Credenciamento	105	9	56
+242	2015-06-10	09:00:00	09:30:00	Credenciamento	105	9	32
+249	2015-06-08	11:45:00	13:00:00	Suporte ECS	21	5	\N
+250	2015-06-09	08:00:00	12:00:00	\N	12	5	28
+251	2015-06-09	13:00:00	18:59:00	\N	12	5	28
+261	2015-06-10	17:10:00	18:00:00	importaçao e envio de saldo	11	11	60
+268	2015-06-10	18:00:00	18:59:00	LANÇAMENTOS cartao empresarial	11	5	60
+271	2015-06-11	10:00:00	11:00:00	indicador de resposta do e-mail mkt	11	11	60
+260	2015-06-09	14:00:00	18:59:00	VISITA AFUMI	21	5	\N
+262	2015-06-10	16:30:00	17:30:00	Credenciamento	105	9	28
+290	2015-06-12	15:00:00	16:45:00	Lançamentos cartao empresarial	11	5	136
+298	2015-06-15	10:20:00	11:30:00	gerando limites 	11	5	136
+307	2015-06-15	16:30:00	17:30:00	preparaçao e envio de e-mail mkt	11	11	136
+311	2015-06-16	09:00:00	11:30:00	Programação	14	3	339
+314	2015-06-16	09:30:00	12:15:00	script para backup diario da base de dados	1	3	318
+317	2015-06-16	14:45:00	16:00:00	vinculos ecs 9020 etd's	8	9	313
+320	2015-06-16	15:00:00	16:00:00	analize do retorno do e-mail para atualizaçao dos dados do ECS	11	11	60
+323	2015-06-17	09:10:00	11:30:00	vinculos ecs 9020 etd's	8	9	313
+329	2015-06-16	16:00:00	18:10:00	suporte pos - problema pop - troca de configuração	9	5	301
+332	2015-06-17	13:45:00	14:00:00	cadastro de contrato	8	9	45
+335	2015-06-16	14:40:00	17:30:00	Testes e programação identificação origem no cadastro ticket (ambbiente teste)	2	3	318
+326	2015-06-17	08:55:00	12:20:00	Programação	14	3	350
+270	2015-06-11	09:00:00	09:30:00	Geração/Envio Arquivo Remessa RH	105	5	28
+338	2015-06-17	15:30:00	17:30:00	testes lcto em lote para ecs 3000,9000,9025,9030,1500 oriundos e nao oriundos do fp	2	4	309
+340	2015-06-18	09:45:00	10:30:00	Solicitação/Cancelamento Cartões, Log operações.	105	5	28
+274	2015-06-11	10:30:00	11:00:00	Credenciamento	105	9	17
+343	2015-06-18	14:30:00	15:20:00	Programação	14	3	350
+346	2015-06-18	15:51:00	17:17:00	Programação	14	3	350
+349	2015-06-15	10:15:00	11:30:00	Suporte ECS	21	5	301
+352	2015-06-17	08:30:00	10:20:00	Suporte POS pop ECS	21	5	301
+355	2015-06-18	14:00:00	14:30:00	Suporte POS ecs 1789	21	5	301
+358	2015-06-19	08:15:00	10:15:00	Publicação e testes de publicação	14	3	313
+360	2015-06-19	11:45:00	12:00:00	cadastro de contrato	8	9	20
+363	2015-06-19	14:25:00	16:25:00	Correção da restrição de bloqueio por período com base no segmento.	14	3	1
+283	2015-06-11	09:28:00	10:30:00	orientação para geração arquivo de envio de densconto	12	5	28
+284	2015-06-11	11:08:00	12:05:00	orientação para confecção de cartão, troca de POS e recurso exclusivo	12	5	14
+285	2015-06-11	14:05:00	15:29:00	suporte referente a compra de cartão, sugestão de cliente e NF	12	5	5
+286	2015-06-12	09:30:00	10:00:00	Credenciamento	105	9	58
+287	2015-06-12	14:30:00	15:30:00	Credenciamento	105	9	36
+372	2015-06-22	10:20:00	10:35:00	cadastro de contrato	8	9	34
+297	2015-06-15	09:00:00	10:30:00	Credenciamento	105	9	28
+308	2015-06-15	17:00:00	17:30:00	Credenciamento	105	9	39
+309	2015-06-15	17:30:00	18:00:00	Credenciamento	105	9	21
+220	2015-06-08	15:30:00	17:10:00	Fechamento do processo da DTR. Publicação / teste de peiublicação e atualização documento kanban,e DTM08 - Manual Tecnico	2	6	326
+175	2015-06-01	13:30:00	14:30:00	publicação e testes	1	3	316
+176	2015-06-01	09:15:00	10:00:00	Testes cadastramento Ponto.	2	4	318
+177	2015-06-01	14:00:00	14:30:00	Geração do arquivo para testes na CEF cfe ultima resposta (via email) do cliente (ASED/CEF)	2	4	327
+178	2015-06-01	14:45:00	15:30:00	Formatação Kanban , DTR Ticket	2	6	326
+179	2015-06-01	11:45:00	12:10:00	\N	12	10	328
+180	2015-06-01	15:00:00	17:00:00	inclusao de colunas de historicos de suporte e cartao	1	3	311
+183	2015-06-01	16:00:00	18:00:00	Testes da versão alterada apos sugetsões do Pablo referente (cache, datas etc)..\r\nFormtação de outras duvidas junto com Gustavo sobre o framework, e enviado ao Pablo	2	4	318
+190	2015-06-01	17:00:00	18:00:00	Formtação de outras duvidas junto com Jacare sobre o framework, e enviado ao Pablo	1	4	318
+191	2015-06-02	09:00:00	09:30:00	\N	1	3	330
+192	2015-06-02	10:00:00	10:30:00	\N	1	3	330
+221	2015-06-08	17:00:00	18:15:00	melhorias	1	3	318
+222	2015-06-03	14:00:00	18:55:00	TES POS!	21	4	301
+223	2015-06-09	09:00:00	12:15:00	melhorias no sistema junto com pablo	1	3	318
+224	2015-06-09	09:30:00	12:30:00	Publicação (utilizando GIT)	14	3	340
+226	2015-06-09	14:00:00	16:00:00	melhorias sistema atividade	1	3	318
+244	2015-06-05	10:05:00	12:00:00	Teste comunicação LYRA, pos UGHINI, BELSHOP.	21	4	301
+227	2015-06-09	16:00:00	17:30:00	testes automatizados no selenium	1	4	318
+195	2015-06-02	09:35:00	12:00:00	Pesquisa Pessoas alteração cfe solicitação Oseias	2	3	326
+196	2015-06-02	14:40:00	16:30:00	Pesquisa avançada Pessoas alteração cfe solicitação Oseias	2	3	326
+197	2015-06-02	17:10:00	18:20:00	Pesquisa Pessoas alteração cfe solicitação Oseias	2	3	326
+198	2015-06-02	15:00:00	15:30:00	Teste relatorio DTR 011	9	4	311
+199	2015-06-02	15:30:00	18:12:00	\N	1	3	318
+225	2015-06-09	14:30:00	16:30:00	Publicação (utilizando GIT)	14	3	307
+255	2015-06-10	12:00:00	12:20:00	Esboço de dr definição	2	6	342
+202	2015-06-03	09:30:00	11:30:00	Testes/Configuraçõe VM velocidade de acesso banco externo tecbiz (classes tickets e atividades)	2	4	318
+203	2015-06-03	14:30:00	15:40:00	Testes/Configuraçõe VM velocidade de acesso banco externo tecbiz (classes tickets e atividades)	2	4	318
+204	2015-06-03	13:30:00	17:30:00	ajustes	1	3	318
+205	2015-06-03	14:15:00	14:30:00	Suporte TecBiz autorizador externo	9	5	301
+210	2015-06-03	09:20:00	11:50:00	Suporte ECS	21	5	301
+211	2015-06-08	15:00:00	16:20:00	Alterações na instruçao de trabalho de acordo com suguestões da Fernanda	11	6	334
+212	2015-06-08	13:15:00	16:32:00	Atualização do processo para nova metodologia	12	6	333
+213	2015-06-08	11:30:00	12:45:00	Programação	14	3	339
+214	2015-06-08	14:10:00	16:55:00	Programação	14	3	339
+215	2015-06-08	11:00:00	12:30:00	Melhorias de perfornance	1	3	318
+216	2015-06-08	14:00:00	16:00:00	melhorias de layout	1	3	318
+217	2015-06-08	16:00:00	17:00:00	publicação, testes e manualização	1	3	311
+218	2015-06-08	09:50:00	12:00:00	Alteração pesquisa avançada cadastro Pessoas	2	3	326
+219	2015-06-08	14:00:00	15:20:00	Pesquisa Avançada cadastro Pessoas	2	3	326
+228	2015-06-09	11:00:00	12:20:00	Revisão das rotinas para publicação	2	6	307
+229	2015-06-09	15:00:00	16:40:00	Revisão e geração dp arquivo teste para CEF cfe a ultima validação.	2	4	327
+230	2015-06-09	16:40:00	17:20:00	Publicação / teste.	2	4	307
+231	2015-06-09	15:00:00	17:30:00	Alteraçao e revisão do documento	11	6	334
+240	2015-06-09	15:30:00	16:30:00	Suportes ECS nr. Extratos, Nr.Autorização, reimpressão comprovantes.	105	5	301
+245	2015-06-05	12:30:00	12:50:00	Suporte ECS	21	5	301
+246	2015-06-05	13:30:00	15:00:00	Suporte POS, UGHINI e contato LYRA	21	4	301
+248	2015-06-08	09:20:00	11:30:00	Suporte POS, UGHINI, BELSHOP, MARISUL\r\n	21	4	301
+252	2015-06-10	08:50:00	10:30:00	\N	12	10	328
+254	2015-06-10	11:40:00	12:00:00	Esboço de dr definição	2	6	343
+253	2015-06-10	10:03:00	11:40:00	Teste (publicação) tratamento de matriculas iguais para fpg diferentes arquiovo de retorno	2	4	307
+258	2015-06-08	14:05:00	17:05:00	POS Ughini, Belshop, callcenter arbs	21	4	301
+263	2015-06-10	09:25:00	12:25:00	relatorios	1	3	318
+264	2015-06-10	14:25:00	18:00:00	relatorios	1	3	318
+265	2015-06-10	09:00:00	11:40:00	Teste de publicação - Restauração da base, criação de ambiente para testes.	14	3	307
+266	2015-06-10	14:15:00	17:35:00	Programação	14	3	345
+267	2015-06-10	10:30:00	11:30:00	Suporte ECS	21	5	301
+269	2015-06-10	13:30:00	17:00:00	POS TBZ Lyra conexão, e Ughini POS	21	4	301
+256	2015-06-10	14:30:00	17:30:00	Teste (publicação) tratamento de matriculas iguais para fpg diferentes arquiovo de retorno	2	4	307
+272	2015-06-11	09:00:00	12:00:00	finalização do relatorio	1	3	318
+273	2015-06-11	14:00:00	17:00:00	melhorias	1	3	318
+275	2015-06-11	09:30:00	11:00:00	Definição de DR	2	6	343
+276	2015-06-11	11:00:00	12:00:00	Definição DR	2	6	307
+277	2015-06-11	14:30:00	16:00:00	Definição DR	2	6	307
+278	2015-06-11	15:00:00	16:00:00	Teste erro relatorio exibicação fonte pagadora fechada juntamente com fpgs abertas..	9	4	347
+279	2015-06-11	08:50:00	09:50:00	Descrição do documento	14	6	345
+280	2015-06-11	09:50:00	12:30:00	Programação	14	3	345
+281	2015-06-11	14:10:00	16:00:00	Correção	14	3	347
+282	2015-06-12	08:20:00	09:20:00	Reunião para dúvidas referente a layout	14	8	339
+288	2015-06-12	10:00:00	12:30:00	melhorias no ticket	1	3	318
+289	2015-06-12	14:00:00	16:00:00	melhorias no ticket	1	3	318
+291	2015-06-12	16:00:00	17:00:00	\N	1	3	349
+292	2015-06-12	09:40:00	12:40:00	Programação	14	3	341
+293	2015-06-12	13:40:00	16:40:00	Programação	14	3	341
+294	2015-06-12	10:00:00	10:30:00	DTR definição	2	6	343
+295	2015-06-12	10:30:00	11:00:00	DTR - definição	2	6	342
+296	2015-06-12	15:00:00	17:00:00	Acerto na numeração de tickets. Desenvolvimento rotina para acertar cadastros tickets,atividades, dtrs.	2	3	318
+299	2015-06-15	09:15:00	11:30:00	testes	1	4	349
+300	2015-06-15	14:00:00	15:00:00	publicação e testes no servidor quente	1	3	349
+301	2015-06-15	09:11:00	12:11:00	Programação 	14	3	339
+302	2015-06-15	09:40:00	11:00:00	Geração arquivo quente (Produção na CEF) para teste de real desconto em conta.(Geração de arquivo de Retorno)	2	4	327
+303	2015-06-15	14:00:00	16:10:00	Publicação	14	3	309
+304	2015-06-15	16:30:00	17:00:00	Teste publicação	14	3	309
+305	2015-06-15	17:00:00	17:35:00	Manualização DTM008	14	6	309
+306	2015-06-15	14:40:00	17:15:00	Geração script para acerto de numeração de  tickets,atividades,DTrs	2	3	318
+312	2015-06-16	12:10:00	12:45:00	cadastro de contrato	8	9	10
+315	2015-06-16	14:00:00	17:00:00	script de backup diario da base de dados	1	3	318
+318	2015-06-16	17:00:00	17:40:00	vinculos ecs 9020 etd's	8	9	313
+321	2015-06-11	09:45:00	12:00:00	Suporte POS - problema pop	21	5	301
+247	2015-06-05	15:00:00	15:40:00	POS - Callcenter problema	21	4	2
+330	2015-06-17	10:00:00	16:00:00	Documentação POS 	105	6	100
+333	2015-06-16	10:00:00	12:00:00	Testes/Desenvolvimento identificação origem do solicitante no cadastramento Ticket	2	3	318
+336	2015-06-17	10:00:00	12:00:00	Identificação origem pessoa (solicitante) no cadastro teicket	2	3	318
+327	2015-06-17	09:30:00	11:30:00	analise dos relatorios, alteração para incluir data e hora, testes e publicação.	1	3	351
+341	2015-06-18	14:00:00	14:30:00	2a.via cartões, cartão dependente	105	5	28
+344	2015-06-18	15:20:00	15:45:00	cadastro de contrato	8	9	27
+347	2015-06-12	10:00:00	11:20:00	Suporte ECS	21	5	301
+350	2015-06-16	10:00:00	12:00:00	SUPORTE POS ecs's	21	5	301
+353	2015-06-17	10:30:00	11:35:00	Suporte ECS Belshop 3077 POS	21	5	14
+356	2015-06-18	09:40:00	11:40:00	testes finais de publicação, inclusive , recurso exclusivo da Afpuc, FP. lançamento em lote.	2	4	309
+361	2015-06-19	09:00:00	12:15:00	biblido phpword	1	3	318
+364	2015-06-19	09:00:00	10:30:00	Suporte ECS	21	5	301
+367	2015-06-19	10:00:00	11:00:00	Tickets origem pessoa	2	3	318
+370	2015-06-19	14:00:00	17:00:00	Tetses origem pessoa Tickets.	2	4	318
+373	2015-06-22	10:35:00	11:00:00	cadastro de contrato	8	9	58
+\.
+
+
+--
+-- Name: atividade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('atividade_id_seq', 373, true);
+
+
+--
+-- Data for Name: ponto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY ponto (id, data_ponto, hora_entrada, hora_saida, colaborador_id) FROM stdin;
+66	2015-06-01	08:38:00	\N	1
+67	2015-06-01	08:00:00	\N	9
+68	2015-06-01	08:49:00	\N	2
+69	2015-06-01	09:37:00	\N	11
+70	2015-06-01	08:00:00	\N	13
+71	2015-06-01	09:10:00	\N	12
+72	2015-06-01	09:30:00	\N	21
+73	2015-06-02	08:26:00	\N	1
+74	2015-06-02	08:25:00	\N	9
+75	2015-06-02	08:47:00	\N	2
+76	2015-06-02	10:00:00	\N	11
+77	2015-06-01	08:35:00	\N	105
+78	2015-06-03	09:23:00	\N	11
+79	2015-06-03	08:15:00	\N	1
+80	2015-06-02	09:13:00	\N	12
+81	2015-06-03	09:11:00	\N	12
+82	2015-06-03	08:13:00	\N	3
+83	2015-06-03	08:55:00	\N	2
+84	2015-06-03	08:12:00	\N	9
+85	2015-06-08	08:10:00	\N	3
+86	2015-06-08	08:32:00	\N	1
+87	2015-06-08	08:48:00	\N	2
+88	2015-06-08	08:58:00	\N	14
+89	2015-06-03	08:30:00	\N	105
+101	2015-06-08	08:00:00	\N	105
+90	2015-06-08	10:28:00	\N	9
+91	2015-06-08	09:08:00	\N	12
+92	2015-06-08	09:50:00	\N	11
+102	2015-06-10	08:25:00	\N	1
+94	2015-06-03	09:20:00	\N	21
+95	2015-06-09	08:09:00	\N	9
+96	2015-06-09	08:33:00	\N	1
+97	2015-06-09	08:18:00	\N	3
+98	2015-06-09	09:04:00	\N	14
+99	2015-06-09	09:47:00	\N	11
+100	2015-06-09	08:55:00	\N	2
+103	2015-06-10	08:18:00	\N	14
+104	2015-06-10	09:03:00	\N	2
+105	2015-06-09	08:36:00	\N	105
+106	2015-06-10	08:03:00	\N	9
+107	2015-06-10	08:34:00	\N	105
+108	2015-06-10	10:20:00	\N	11
+122	2015-06-12	08:14:00	\N	1
+110	2015-06-05	10:05:00	\N	21
+111	2015-06-08	09:20:00	\N	21
+112	2015-06-09	08:00:00	\N	12
+113	2015-06-10	08:50:00	\N	12
+114	2015-06-09	08:00:00	\N	21
+115	2015-06-10	10:00:00	\N	21
+116	2015-06-11	08:10:00	\N	9
+117	2015-06-11	08:35:00	\N	1
+118	2015-06-11	08:30:00	\N	3
+119	2015-06-11	08:44:00	\N	2
+120	2015-06-11	09:26:00	\N	11
+121	2015-06-11	08:49:00	\N	105
+123	2015-06-12	08:56:00	\N	2
+124	2015-06-12	08:12:00	\N	9
+125	2015-06-11	08:11:00	\N	14
+126	2015-06-12	08:20:00	\N	14
+127	2015-06-11	09:28:00	\N	12
+128	2015-06-12	08:41:00	\N	105
+129	2015-06-12	09:45:00	\N	11
+130	2015-06-15	08:11:00	\N	14
+131	2015-06-15	08:22:00	\N	1
+132	2015-06-11	09:30:00	\N	21
+133	2015-06-15	08:35:00	\N	105
+134	2015-06-15	09:20:00	\N	11
+135	2015-06-15	08:53:00	\N	2
+136	2015-06-16	08:29:00	\N	1
+137	2015-06-16	09:03:00	\N	2
+138	2015-06-16	08:30:00	\N	8
+139	2015-06-16	08:11:00	\N	14
+140	2015-06-16	08:28:00	\N	105
+141	2015-06-16	10:37:00	\N	11
+142	2015-06-12	09:40:00	\N	21
+143	2015-06-17	08:26:00	\N	8
+144	2015-06-17	08:06:00	\N	14
+145	2015-06-17	08:31:00	\N	1
+146	2015-06-17	10:40:00	\N	11
+147	2015-06-15	08:10:00	\N	9
+148	2015-06-16	08:10:00	\N	9
+149	2015-06-17	08:01:00	\N	9
+150	2015-06-17	08:31:00	\N	105
+151	2015-06-18	08:39:00	\N	8
+152	2015-06-18	08:19:00	\N	14
+153	2015-06-17	08:54:00	\N	2
+154	2015-06-18	09:14:00	\N	105
+155	2015-06-18	08:37:00	\N	1
+156	2015-06-15	09:30:00	\N	21
+157	2015-06-16	09:30:00	\N	21
+158	2015-06-17	08:30:00	\N	21
+159	2015-06-18	12:03:00	\N	21
+160	2015-06-18	09:07:00	\N	2
+161	2015-06-19	08:15:00	\N	14
+162	2015-06-19	08:19:00	\N	1
+163	2015-06-19	08:36:00	\N	8
+164	2015-06-19	08:10:00	\N	21
+165	2015-06-22	08:39:00	\N	1
+166	2015-06-19	09:01:00	\N	2
+167	2015-06-22	08:32:00	\N	8
+168	2015-06-18	08:00:00	\N	9
+169	2015-06-22	08:22:00	\N	14
+\.
+
+
+--
+-- Name: ponto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('ponto_id_seq', 169, true);
+
+
+--
+-- Data for Name: prioridade; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY prioridade (id, nome) FROM stdin;
+1	Alta
+2	Media
+3	Baixa
+\.
+
+
+--
+-- Name: prioridade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('prioridade_id_seq', 3, false);
+
+
+--
+-- Data for Name: requisito_desenvolvimento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY requisito_desenvolvimento (id, titulo, data_cadastro, rotina, objetivo, entrada, processamento, saida, ticket_id) FROM stdin;
+11	ETD - Resumo de contas a receber	2015-05-29	(a = 381c34)	incluir 2 colunas no relatório = Cartão e suporte	ETD - Resumo de contas a receber \r\n(a = 381c34)\r\n	Retirar da colunas outros os seguintes históricos:\r\nCartão = Histórico 009;\r\nSuporte= Históricos 018,019;	\N	311
+12	Alteração Cadastro Pessoas	2015-06-01	\N	Melhorar dados de pesquisa no modulo de pessoas	Tela do Cadastro Pessoas	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa 	Lista pesquisa tela de pesssoas, lista pesquisa avançada	326
+13	Auditor  identificar duplicidade e de lcts, autorizações.	2015-06-10	\N	Definição e programação script pata auditar lancamentos efetuados no extrato asssociado.	\N	\N	\N	343
+14	Definir forma de tratar retorno a maior que envio	2015-06-10	\N	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	\N	\N	\N	342
+15	Bloqueio ECS para autorizações	2015-06-11	Cadastro ECS / Restrições	Criar restrição para bloqueio de autorizações para estabelecimentos com situação de bloqueio referente a "Tarifa de manutenção anual" (TMA) igual a "Bloqueio Total". (B)	- Código de estabelecimento\r\n- Situação bloqueio TMA	Consultar a situação de bloqueio da TMA no cadastro de estabelecimento, caso situação igual a B não permitir a realização da autorização independente de qualquer outra restrição.	Mensagem de bloqueio.	345
+\.
+
+
+--
+-- Name: requisito_desenvolvimento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('requisito_desenvolvimento_id_seq', 16, false);
+
+
+--
+-- Data for Name: sistema; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY sistema (id, nome) FROM stdin;
+1	Sem sistema
+3	TecbizOnline
+4	Atividades
+2	Administrador - Tecbiz
+8	TEF
+\.
+
+
+--
+-- Name: sistema_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sistema_id_seq', 8, true);
+
+
+--
+-- Data for Name: status_ticket; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY status_ticket (id, nome) FROM stdin;
+1	Aberto
+2	Cancelado
+3	Em Andamento
+4	Fechado
+\.
+
+
+--
+-- Name: status_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('status_ticket_id_seq', 5, false);
+
+
+--
+-- Data for Name: system_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_group (id, name) FROM stdin;
+1	ADMIN
+2	usuarios
+3	tecbiz
+\.
+
+
+--
+-- Data for Name: system_group_program; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_group_program (id, system_group_id, system_program_id) FROM stdin;
+1	1	1
+2	1	2
+3	1	3
+4	1	4
+5	1	5
+6	1	6
+57	2	7
+58	2	8
+59	2	9
+60	2	10
+61	2	11
+62	2	12
+63	2	13
+64	2	14
+65	2	15
+66	2	16
+67	2	17
+68	2	18
+69	2	19
+70	2	20
+71	2	21
+72	2	12
+73	2	22
+74	2	24
+75	2	25
+76	3	8
+77	3	11
+78	3	20
+79	3	21
+80	3	22
+81	3	9
+82	3	10
+83	3	25
+\.
+
+
+--
+-- Data for Name: system_program; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_program (id, name, controller) FROM stdin;
+1	System Group Form	SystemGroupForm
+2	System Group List	SystemGroupList
+3	System Program Form	SystemProgramForm
+4	System Program List	SystemProgramList
+5	System User Form	SystemUserForm
+6	System User List	SystemUserList
+7	Common Page	CommonPage
+8	Cadastro de Ticket	TicketForm
+9	Cadastro de Atividades	AtividadeForm
+10	Listagem de Atividades	AtividadeList
+11	Listagem de Tickets	TicketList
+12	TestePage	TestePage
+13	Tipos de Atividades	TipoAtividadeFormList
+14	Listagem Tipo Pessoa	TipoPessoaList
+15	Listagem Sistema	SistemaList
+16	Tipos de Ticket	TipoTicketFormList
+17	Cadastro de Prioridades	PrioridadeFormList
+18	Cadastro Sistemas	SistemaFormList
+19	Cadastro Status Ticket	StatusTicketFormList
+20	Criação de DRs	RequisitoDesenvolvimentoForm
+21	Ponto	PontoFormList
+22	RequisitoDesenvolvimentoList	RequisitoDesenvolvimentoList
+23	Relatorio	AtividadeReport
+24	TicketFormAcerto	TicketFormAcerto
+25	TicketPessoaSeek	TicketPessoaSeek
+\.
+
+
+--
+-- Data for Name: system_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_user (id, name, login, password, email, frontpage_id) FROM stdin;
+2	User	user	ee11cbb19052e40b07aac0ca060c23ee	user@user.net	21
+6	Carla Roberta	carla	e10adc3949ba59abbe56e057f20f883e	qualidade@tecbiz.com.br	21
+8	Eunice Ferreira	eunice	d4bace5286ca829a792009b9d872cec9	credenciamento@tecbiz.com.br	21
+7	Fernanda Bulhões	fe	dc5e819e186f11ef3f59e6c7d6830c35	suporte@tecbiz.com.br	21
+9	Pablo	pablo	202cb962ac59075b964b07152d234b70	teste@teste.com	7
+10	Luis Eduardo	luis	c0bda1a5100fd850b5d236a81dd2e524	atendimento@tecbiz.com.br	21
+12	Mauricio Cardoso	mauricio	f9a06be8a0d606d4e9332975bc24d0bc	financeiro@tecbiz.com.br	21
+13	Marco Leal	marco leal	7bbfac75dbeed99c5e2c07479d16aab2	comercial2@tecbiz.com.br	21
+1	Administrator	admin	f2b1332aff709790cfa05a6f32ca5e74	admin@admin.net	6
+4	Peterson Nunes Pedroso	peterson	314eea43b4d96799ccc782f6ba0835b3	peterson@tecbiz.com.br	9
+3	Marcus Monti da Silva	marcus	e10adc3949ba59abbe56e057f20f883e	monti@tecbiz.com.br	21
+11	Henrique	henrique	244948ae796768a2cc9259a684ef058b	henriquemorethson@gmail.com	21
+14	Oseias	oseias	8226ac2b36ae53f0c0b5e98a34e06169	oseias@tecbiz.com.br	10
+5	Gustavo Emmel	gustavo	850af92f8d9903e7a4e0559a98ecc857	gustavo@tecbiz.com.br	21
+\.
+
+
+--
+-- Data for Name: system_user_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_user_group (id, system_user_id, system_group_id) FROM stdin;
+5	2	2
+9	6	3
+11	8	3
+12	7	3
+13	9	2
+14	10	3
+16	12	3
+17	13	3
+19	1	1
+21	4	2
+22	3	2
+23	11	2
+24	14	3
+25	5	2
+\.
+
+
+--
+-- Data for Name: system_user_program; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_user_program (id, system_user_id, system_program_id) FROM stdin;
+1	2	7
+2	2	8
+3	2	9
+4	2	10
+5	2	11
+6	2	12
+7	2	13
+8	2	14
+9	2	15
+10	2	16
+11	2	17
+12	2	18
+13	2	19
+14	2	20
+15	2	21
+17	4	23
+18	3	23
+19	11	23
+20	14	23
+21	5	23
+22	5	7
+\.
+
+
+--
+-- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_horas, orcamento_valor_hora, valor_desconto, valor_total, data_ultimo_pgto, valor_ultimo_pgto, valor_total_pago, data_cadastro, data_prevista, data_validade, data_aprovacao, observacao, solicitante_id, responsavel_id, tipo_ticket_id, sistema_id, status_ticket_id, prioridade_id, forma_pagamento) FROM stdin;
+3	ETD 003 - AFUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	\N	12	12	1	1	1	2	\N
+39	ETD 039 - ASMUT	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-09	\N	\N	\N	\N	12	12	1	1	1	2	\N
+58	ETD 058 - AFIC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	\N	12	12	1	1	1	2	\N
+5	ETD 005 - GSFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+1	ETD 001 - GSMCB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+2	ETD 002 - ARBS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+4	ETD 004 - ASHCLIN	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+6	ETD 006 - SSPM SAP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+7	ETD 007 - ASSERMIBA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+8	ETD 008 - AFFZB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+9	ETD 009 - AFPUC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+10	ETD 010 - ASSOBAND	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+11	ETD 011 - SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+12	ETD 012 - ASCOM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+13	ETD 013 - SBSHED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+28	ETD 028 - AFUMI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	12	12	1	1	1	2	\N
+21	ETD 021 - SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	12	12	1	1	1	2	\N
+36	ETD 036 - PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	\N	\N	\N	\N	12	12	1	1	1	2	\N
+14	ETD 014 - BELSHOP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+56	ETD 056 - AFU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	12	12	1	1	1	2	\N
+32	ETD 032 - ASED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	12	12	1	1	1	2	\N
+20	ETD 020 - AFUSC	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	12	12	1	1	1	2	\N
+15	ETD 015 - ASMV	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+18	ETD 018 - SIMSOL	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+19	ETD 019 - SPMG	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+22	ETD 022 - AFUSPE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+23	ETD 023 - SIMCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+25	ETD 025 - ASEMARGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+26	ETD 026 - ASSURFRGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+27	ETD 027 - SINDISMAR	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+29	ETD 029 - SIMPASSO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+31	ETD 031 - GSAFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+33	ETD 033 - ASSERJUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+34	ETD 034 - ASSOCIAMED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+35	ETD 035 - ABOJERIS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+37	ETD 037 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+38	ETD 038 - IBCM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+40	ETD 040 - ASGRACAS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+41	ETD 041 - AGASAI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+42	ETD 042 - UGEIRM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+43	ETD 043 - ASPROCERGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+44	ETD 044 - COFRS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+45	ETD 045 - ARCO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+46	ETD 046 - AFUSPA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+313	FP - Gerar valores creditos na ECS 9020	I	  Gerar valores de credito do ASSOCIADO em uma ECS especifica (9020)	Alteradas as rotinas para contemplar a nova regra	16:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-19	2015-06-01	\N	12	2	5	1	4	2	\N
+319	Auditoria de lançamentos de controle FP	I	Desenvolver rotina, metodologia e periodicidade de auditoria nos lançamentos de controle gerados pelo Fechamento (FP).	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	4	1	1	2	\N
+320	Contas a pagar	I	 TBZ movimentação contas a pagar encerrado (Avaliar criar tabela com %tx adm alterados): Publicar ADM e OnLine.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	5	3	1	2	\N
+17	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
+334	Cartão empresarial - Fluxo	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	2015-06-30	\N	\N	13	11	8	1	1	1	\N
+338	Acesso anos anteriores - ARCO	E	Cliente solicita acesso aos anos anteriores para consulta.	\N	01:00:00	50.00	\N	50.00	\N	0.00	0.00	2015-06-08	2015-06-08	2015-06-08	2015-06-08	\N	96	21	1	3	4	1	LANÇAMENTO: 2650638
+340	RELATÓRIO ASSOCIADOS AFPUC	E	 Cliente solicita relatório de associados liberados de todas as fontes pagadoras, no layout a seguir: Matricula / Nome / E-mail	Disponibilizado TecBiz OnLine, na tabela que exibe o resultados da pesquisa de associados.	01:00:00	45.00	0.00	45.00	\N	\N	\N	2015-06-09	2015-06-09	2015-06-09	2015-06-09	Inlcuso também os campos CPF, RG e E-mail2	107	12	1	3	4	2	LANÇAMENTO:2624232 MAIO/15
+307	Tratamento envio/retorno FP - TBZ	I	Associado com a mesma matricula em FPG's diferentes, FP está trocando os associados. Fazendo assim tratar o associado errado! \r\n  \r\n Exp: ETD 045, Matricula: 86845438	Rotinas envolvidas no processo:\r\npg_envio_retorno_rh.php\r\npg_fec_retorno_banco.php\r\npg_fec_retorno_rh.php\r\nsql3.php -> fp_estorno_tbz_envio_retorno \r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	12	2	3	3	4	2	\N
+316	ECS - Log acesso e banner autorizador externo pendências financeiras	I	 Alterar os sistemas Autorizador Externo ECS, Administrador e TecBiz online para: \r\n  \r\n 1 - Registrar log de acesso por parte dos estabelecimentos comerciais. \r\n 2 - Criar campo no cadastro de ECS para definir quantidade de acessos ao autorizador externo quando o ECS estiver em bloqueio total, este número será verificado em no momento do acesso ao AUTORIZADOR EXTERNO que exibirá uma tela com a mensagem de pendencia financeira e a quantidade de acessos restantes. Quando o mesmo não possuir mais acessos, a tela de aviso não possibilitará realizar autorizações.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	4	3	1	2	\N
+342	Definir forma de tratar retorno a maior que envio	I	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	Definir procedimento e mensagem a ser tratado na rotina de reotrno bancario e rh	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	\N	13	2	4	3	1	2	\N
+318	Modulo Atividades	I	 Modulo de Atividades para controlo Tickets , Ordem de Servi~ço , Atividades Registrada pelo Colaboradores Tercbiz	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	13	2	4	1	1	2	\N
+308	Alterar regra de geração de senha dinâmica.	I	Definir a alterar regra de geração de senha dinâmica.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	5	2	1	2	\N
+311	ETD - Resumo de contas a receber	I	incluir 2 colunas no relatório = Cartão e suporte	Tirar da coluna outros os seguintes históricos:\r\nCartão = Histórico 009;\r\nSuporte= Históricos 018,019;\r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	13	1	4	2	1	1	\N
+314	Cadastro de 2° limite associado 	E	  Cliente solicita a inclusão de um segundo campo de limite no cadastro dos associados referente ao cartão SONAE; \r\n E ao gerar o recurso exclusivo com o limite mensal do cartão da TecBiz, sera feito o abatimento deste limite informado com o valor disponibilizado pelo RH. \r\n \r\n Exemplo: Associado recebe do RH 1500 reais para limite mensal(LimiteRH);\r\n Em seu cadastro o associado utiliza um limite no cartão SONAE de 200 reais(LimiteSONAE);\r\n Ao gerar o recurso exclusivo do sistema da TecBiz será disponivel seu novo LimiteMensal = (LimiteRH - LimiteSONAE) ou seja LimiteMensal (1500 - 200), liberando apenas 1.300 reais de consumo mensal no cartão TBZ.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	85	12	1	3	1	2	\N
+321	Homologação Quero Quero	E	Homologação do TEF Quero-Quero.\r\n \r\n Configuração: "ok" 18/11/2014\r\n Arquivo de Conciliação: "aguardando T.I"	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	1	3	1	2	\N
+317	Listagem de associados inativos	E	Alterar listagem de associados inativos no TecBiz Online para a Entidade poder visualizar os associados cobrados e ter a opção de excluir os que estão inativos a mais de 12 meses.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	74	12	1	3	1	2	\N
+315	Alteração Layout arquivo envio banco 	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n segue contato do responsável desta alteração por parte da CEF \r\n Contato: Humberto: 96536998 \r\n hvinholesdecarvalho@gmail.com	\N	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	80	2	1	3	1	2	\N
+310	ETD 150 – Financeiro TBZ x Rede Conveniada	I	Definir ETD 150 como responsável pelo relacionamento financeiro das TecBiz com os Estabelecimentos comerciais. Definir históricos , relartórios e processos necessários para a administração de pendências e aprovisionamento de valores.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	4	2	1	2	\N
+305	Bloqueio de associado por período	E	Cliente solicita período de bloqueio para associado individual, o bloqueio irá consistir em data início e fim, estará disponível no cadastro do associado e terá desbloqueio automático ao final do período. \r\n Existirá também relatório de associados bloqueados pelo cadastro.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	45	12	1	3	1	2	\N
+306	Lançamento associado individual - melhoria	I	  Alterar o módulo de lançamento para associado individual para inserir os campos forma de pagamento e tipo de crédito, alteração do layout da tela para dar ficar mais compreensível a transação, deixando claro quem será debitado e creditado.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	12	12	3	3	1	2	\N
+322	Editar comprovante	E	 Cliente solicita as seguintes alterações no comprovante: \r\n  \r\n *Aumentar a quantidade de caracteres do campo comprovantes, para registrar acertos \r\n *Ter a opção de imprimir o comprovante com o campo observação, para ser utilizado como documento de negociação e o associado assinar; \r\n *Editar Obs. de autorizações encerradas, para utilizar em caso de renegociações. \r\n  \r\n Data solicitação: 15/09/2014	\N	16:00:00	45.00	\N	720.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	45	12	1	3	1	2	\N
+324	Relatório analítico	E	Cliente solicita novo relatório também semanal com as informações conforme o recurso exclusivo já disponivel(a=1e22a9) porém discriminado os valores por associado, exemplo: ASS 1= autorização, data,nome loja, valor total, valor parcelas.	\N	10:00:00	45.00	\N	450.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	55	12	1	3	1	2	\N
+301	ECS - Generico	I	XXXX	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+326	Alteração Cadastro Pessoas	I	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa 	Alterar a rotina :  pg_adm_pessoas; pg_adm_pesquisa_pessoas	\N	\N	\N	\N	\N	\N	\N	2015-06-01	2015-06-08	\N	\N	\N	13	2	5	2	1	1	\N
+327	Alteração Layout CEF arquivo envio banco ASED	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n	Configurar/Parametrizar este layout nas rotinas\r\nlayout_etd_banco e ;pg_fec_envio_banco Tabela :tbz_convenio_banco	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-06-01	2015-06-22	\N	\N	Segue contato do responsável desta alteração por parte da CEF Contato: Humberto: 96536998 	80	2	4	3	3	1	\N
+328	Atestado médico	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	13	12	7	1	1	1	\N
+333	Processo Ticket	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	\N	12	12	8	1	1	1	\N
+339	Arquivo de conciliação	E	Desenvolvimento de arquivo de conciliação conforme layout fornecido pelo cliente (similar ELO)	\N	\N	0.00	\N	0.00	\N	\N	\N	2015-06-08	2015-06-10	2015-06-10	2015-06-08	\N	108	14	4	3	3	1	\N
+345	Bloqueio ECS para autorizações	I	Cadastro ECS: Manutençao Anual em Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\nEsta rotina irá alterar status para bloqueado "Manuteção anual"	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	13	14	4	2	1	1	\N
+323	Arquivo associados bloqueados	E	 Cliente solicita que o arquivo que é enviado mensalmente no dia 1 ref. ao arquivo de bloqueio em lote, seja enviado ou disponibilizado no sistema via excel.\r\n solução:\r\n enviar em arquivo .xlsx(EXCEL) anexado via email no mesmo layout que é enviado via atualmente.\r\n Ticket reenviado dia 03/11/2014	\N	08:00:00	45.00	\N	360.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	73	12	1	3	1	2	\N
+312	Alteração de e-mails de destino TBZ	I	 Alteração de e-mails de destino da TecBiz:\r\n # Site\r\n Comercial E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br\r\n Rede E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n Usuário E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n \r\n # Sistema\r\n Solicitação de Convênios: credenciamento@tecbiz.com.br\r\n ECS Dados Cadastrais: suporte@tecbiz.com.br, credenciamento@tecbiz.com.br\r\n Questionário T.E.F: atendimento@tecbiz.com.br, suporte@tecbiz.com.br\r\n Contato ECS: suporte@tecbiz.com.br, oseias@tecbiz.combr e atendimento2@hotmail.com\r\n Fale diretoria: oseias@tecbiz.com.br, suporte@tecbiz.com.br\r\n Cartão Empresarial: oseias@tecbiz.com.br, suporte@tecbiz.com.br, henrique@tecbiz.com.br, \r\n \r\n Excluir os Emails Abaixo:\r\n \r\n carla@tecbiz.com.br - INATIVO\r\n cartoes@tecbiz.com.br - INATIVO\r\n clientes@tecbiz.com.br - INATIVO\r\n convenios@tecbiz.com.br - INATIVO (FORM. ALTERAÇÕES CADASTRO DE ECS)\r\n felipe@tecbiz.com.br - INATIVO\r\n tecnologia@tecbiz.com.br - INATIVO.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	12	12	5	1	1	2	\N
+332	Treinamento - AFPUC	E	Cliente solicita treinamento para funcionários que vão utilizar o sistema TecBiz online.	\N	03:00:00	45.00	\N	135.00	\N	\N	\N	2015-06-03	\N	\N	\N	\N	107	21	1	3	1	1	\N
+347	Exibição correta lista meses	I	Correção da exibição dos meses nos Ctas a Receber (aberto e fechado) exibindo o ultimo mês fechado da fonte selecionada, para meses fechados, e primeiro mês aberto referente a fonte selecionada para meses abertos.	Alteração realizada conforme constatação do erro.	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-11	2015-06-11	2015-06-11	2015-06-11	Construir relatório unificado, independente da situação do mês, onde será informado no resultado (relatório) a situação da fonte no mês selecionado.	9	14	6	3	1	1	\N
+331	Dados complementares dependente - AFUMI	E	Cliente solicita que seja inserido dois campos para o cadastro de dependente, são eles a data de nascimento e grau de parentesco (do dependente com o titular).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-03	\N	\N	\N	\N	12	12	4	3	1	2	\N
+309	Inibir lançamentos para ECS de fechamento	I	 Alterar os módulos de lançamento para associado individual e em lote para não permitir que sejam realizados lançamentos para estabelecimentos de fechamento/cobrança, ex: 3000, 9000, 9020, 1500 e outros.	\N	18:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-19	2015-06-01	\N	12	12	1	1	4	2	\N
+330	Alterações Manutenção Anual	I	No Cadastro ECS em Manutenção Anual  providenciar:\r\nem Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\n	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	2015-06-02	2015-06-02	2015-06-01	Item da ATA do dia 01/06	13	1	5	2	4	1	\N
+341	Extrato Associado POS	I	As cargas dos POS que possuem a opção "Extrato" não estão funcionando.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	4	1	\N
+343	Auditor  identificar duplicidade e de lcts, autorizações.	I	Definição e programação script pata auditar lancamentos efetuados no extrato asssociado.	Desenvolvimento de uma rotina a ser disparada apos encerramento da fpg para auditar lancamentos cfe regras:\r\nExecutar esta rotina após o dia de encerramento\r\nMontar array por associado com valor devido conforme seu extrato referente ao ultimo mês encerrado\r\nValor atributo valor_origem (Tbz_envio_retorno) deve ser igual ao valor array\r\nNo extrato atual do associado só poderá haver no maximo 2 lancamentos na ECS 3000\r\nUm  lancamento de debito e um lancamento de credito\r\nO valor do lancamento de debito (3000) + lancamento exedente margem (9000) deve ser igual ao valor do array do associado (vlr devido do ultimo enecerramento)\r\nValor debito lct 3000 deve ser igual ao valo do atributo envio_valor (tbz_envio_retorno)\r\nValor lct execedente margem (9000) deve ser igual ao valor da diferenca entre os  array & envio_valor (tbz_envio_retorno)\r\n	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	\N	13	2	1	1	1	1	\N
+348	Extrato associado - AFPUC	I	Cliente deseja que apareça o telefone para contato no relatório dos associados. (Telefone/Celular)	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-12	\N	\N	\N	\N	21	12	1	1	1	1	\N
+349	ESTORNO SENHA PADRÃO	I	Senha padrão não fará extorno no ecs	Quando um usuario de ECS se logar com senha padrão, será gravado na sessão e deverá ser inibido o botão de estorno.\r\nTodas as ações feitas no sistema online utilizando a senha padrão serão gravadas no log com um diferencial (SA) após a descrição da atividade	\N	\N	\N	\N	\N	\N	\N	2015-06-12	\N	\N	\N	/tecbiz/logica/controle/senha.php\r\n/tecbiz/logica/log/registro_log_geral.php\r\n/tecbiz/interface/web/acoes/pg_est_estorno_aut.php\r\n/tecbiz/interface/web/acoes/pg_logout.php	12	1	1	1	1	1	\N
+59	ETD0059 - Cartão Empresarial SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	11	11	1	1	1	1	\N
+60	ETD0060 - Cartao Empresarial SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	11	11	1	1	1	1	\N
+136	ETD0136 - Cartão Empresarial PIRAJU	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	11	11	1	1	1	1	\N
+350	Limitar limites de associado	I	Limitar a quantidade de caracteres nos campos de limite de associado.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-16	2015-06-19	\N	\N	\N	13	14	5	3	1	1	\N
+351	Data e hora de geração nos relatórios de contas e pagar e receber	i	Inserir no cabecalho e rodapé dos  relatórios de Ctas a pagar e a receber a data e hora da geração dos mesmos.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-17	2015-06-17	\N	\N	\N	13	14	5	2	1	1	\N
+352	Alteração recurso exclusivo AFPUC	E	Após publicação da DTR218 no qual inibi lançamentos de ECS 3000, cliente não consegue realizar os lançamentos via recurso exclusivo, alterar programa para permitir o lançamento quando for oriundo de tratamento de envio/retorno	\N	\N	\N	\N	0.00	\N	\N	\N	2015-06-18	\N	\N	\N	\N	107	9	1	3	1	1	\N
+353	Periodo de bloqueio e Alteração Encerramento - GSMCB	E	Cliente solicita período de bloqueio de volta do dia 18 ao dia 19 para fonte pagadora 1! E não quer trabalhar com o período de ajuste (Corta e encerra no mesmo dia).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	\N	35	21	1	1	1	1	\N
+354	Restrições por segmento - Administrador	I	Em restrições por segmento que traziam por default o campo "bloqueável: não" quando o mesmo não tinha restrição, gerando problema no período de bloqueio da ETD-01	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	\N	9	9	1	2	1	1	\N
+355	ASMV - Recurso exclusivo matricula/lçt 300	I	acertar o recurso exlusivo de envio e retorn rh com o 3000, de acordo com os lançamentos e também a matricula com 7 digitos	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	\N	58	2	1	1	1	1	\N
+\.
+
+
+--
+-- Name: ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('ticket_id_seq', 355, true);
+
+
+--
+-- Data for Name: tipo_atividade; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_atividade (id, nome) FROM stdin;
+3	Programação
+4	Testes
+5	Suporte
+1	Capacitação
+8	Reunião
+6	Documentação
+9	Credenciamento
+10	Atestado médico
+11	E-mail marketing
+\.
+
+
+--
+-- Name: tipo_atividade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_atividade_id_seq', 12, false);
+
+
+--
+-- Data for Name: tipo_ticket; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_ticket (id, nome) FROM stdin;
+1	Suporte
+3	Manutenção
+4	Implementação
+2	Cartão
+5	Alteração
+6	Correção
+7	Atestado médico
+8	Documentação
+\.
+
+
+--
+-- Name: tipo_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_ticket_id_seq', 9, false);
+
+
+--
+-- Name: atividade_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY atividade
+    ADD CONSTRAINT atividade_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ponto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY ponto
+    ADD CONSTRAINT ponto_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: prioridade_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY prioridade
+    ADD CONSTRAINT prioridade_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: requisito_desenvolvimento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY requisito_desenvolvimento
+    ADD CONSTRAINT requisito_desenvolvimento_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sistema_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sistema
+    ADD CONSTRAINT sistema_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: status_ticket_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY status_ticket
+    ADD CONSTRAINT status_ticket_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_group
+    ADD CONSTRAINT system_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_group_program_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_group_program
+    ADD CONSTRAINT system_group_program_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_program_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_program
+    ADD CONSTRAINT system_program_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_user_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_user_group
+    ADD CONSTRAINT system_user_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_user
+    ADD CONSTRAINT system_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_user_program_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_user_program
+    ADD CONSTRAINT system_user_program_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ticket_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY ticket
+    ADD CONSTRAINT ticket_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tipo_atividade_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_atividade
+    ADD CONSTRAINT tipo_atividade_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tipo_ticket_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_ticket
+    ADD CONSTRAINT tipo_ticket_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_group_program_fk_system_group_has_system_group1; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_group_program_fk_system_group_has_system_group1 ON system_group_program USING btree (system_group_id);
+
+
+--
+-- Name: system_group_program_fk_system_group_has_system_program1; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_group_program_fk_system_group_has_system_program1 ON system_group_program USING btree (system_program_id);
+
+
+--
+-- Name: system_user_fk_system_user_system_program1; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_user_fk_system_user_system_program1 ON system_user USING btree (frontpage_id);
+
+
+--
+-- Name: system_user_group_fk_system_user_has_system_group_system_group1; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_user_group_fk_system_user_has_system_group_system_group1 ON system_user_group USING btree (system_group_id);
+
+
+--
+-- Name: system_user_group_fk_system_user_has_system_group_system_user; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_user_group_fk_system_user_has_system_group_system_user ON system_user_group USING btree (system_user_id);
+
+
+--
+-- Name: system_user_program_fk_system_user_has_system_program_system_pr; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_user_program_fk_system_user_has_system_program_system_pr ON system_user_program USING btree (system_program_id);
+
+
+--
+-- Name: system_user_program_fk_system_user_has_system_program_system_us; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX system_user_program_fk_system_user_has_system_program_system_us ON system_user_program USING btree (system_user_id);
+
+
+--
+-- Name: atividade_ticket_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY atividade
+    ADD CONSTRAINT atividade_ticket_id_fk FOREIGN KEY (ticket_id) REFERENCES ticket(id);
+
+
+--
+-- Name: atividade_tipo_atividade_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY atividade
+    ADD CONSTRAINT atividade_tipo_atividade_id_fk FOREIGN KEY (tipo_atividade_id) REFERENCES tipo_atividade(id);
+
+
+--
+-- Name: fk_system_group_has_system_program_system_group1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_group_program
+    ADD CONSTRAINT fk_system_group_has_system_program_system_group1 FOREIGN KEY (system_group_id) REFERENCES system_group(id);
+
+
+--
+-- Name: fk_system_group_has_system_program_system_program1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_group_program
+    ADD CONSTRAINT fk_system_group_has_system_program_system_program1 FOREIGN KEY (system_program_id) REFERENCES system_program(id);
+
+
+--
+-- Name: fk_system_user_has_system_group_system_group1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_user_group
+    ADD CONSTRAINT fk_system_user_has_system_group_system_group1 FOREIGN KEY (system_group_id) REFERENCES system_group(id);
+
+
+--
+-- Name: fk_system_user_has_system_group_system_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_user_group
+    ADD CONSTRAINT fk_system_user_has_system_group_system_user FOREIGN KEY (system_user_id) REFERENCES system_user(id);
+
+
+--
+-- Name: fk_system_user_has_system_program_system_program1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_user_program
+    ADD CONSTRAINT fk_system_user_has_system_program_system_program1 FOREIGN KEY (system_program_id) REFERENCES system_program(id);
+
+
+--
+-- Name: fk_system_user_has_system_program_system_user1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_user_program
+    ADD CONSTRAINT fk_system_user_has_system_program_system_user1 FOREIGN KEY (system_user_id) REFERENCES system_user(id);
+
+
+--
+-- Name: fk_system_user_system_program1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY system_user
+    ADD CONSTRAINT fk_system_user_system_program1 FOREIGN KEY (frontpage_id) REFERENCES system_program(id);
+
+
+--
+-- Name: requisito_desenvolvimento_ticket_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requisito_desenvolvimento
+    ADD CONSTRAINT requisito_desenvolvimento_ticket_id_fk FOREIGN KEY (ticket_id) REFERENCES ticket(id);
+
+
+--
+-- Name: ticket_prioridade_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ticket
+    ADD CONSTRAINT ticket_prioridade_id_fk FOREIGN KEY (prioridade_id) REFERENCES prioridade(id);
+
+
+--
+-- Name: ticket_sistema_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ticket
+    ADD CONSTRAINT ticket_sistema_id_fk FOREIGN KEY (sistema_id) REFERENCES sistema(id);
+
+
+--
+-- Name: ticket_status_ticket_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ticket
+    ADD CONSTRAINT ticket_status_ticket_id_fk FOREIGN KEY (status_ticket_id) REFERENCES status_ticket(id);
+
+
+--
+-- Name: ticket_tipo_ticket_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ticket
+    ADD CONSTRAINT ticket_tipo_ticket_id_fk FOREIGN KEY (tipo_ticket_id) REFERENCES tipo_ticket(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

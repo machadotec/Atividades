@@ -32,12 +32,52 @@ class AtividadeReport extends TPage
         // define the form title
         $table->addRowSet( new TLabel('Indicadores por colaborador'), '' )->class = 'tformtitle';
         
-        // create the form fields
+        // cria array para popular as combos
+        TTransaction::open('tecbiz');
+           
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
-        $colaborador_id                 = new TDBCombo('colaborador_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
+        $newparam['order'] = 'pessoa_nome';
+        $newparam['direction'] = 'asc';
+        $criteria->setProperties($newparam); // order, offset
+           
+        $repo = new TRepository('Pessoa');
+        $pessoas = $repo->load($criteria);
+           
+        $arrayPessoas[-1] = 'TODOS COLABORADORES';
+        foreach($pessoas as $pessoa)
+        {
+            $arrayPessoas[$pessoa->pessoa_codigo] = $pessoa->pessoa_nome;
+        }
+           
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter("enttipent","=","1"));
+        $newparam['order'] = 'entcodent';
+        $newparam['direction'] = 'asc';
+        $criteria->setProperties($newparam); // order, offset
+           
+        $repo = new TRepository('Entidade');
+        $clientes = $repo->load($criteria);
+           
+        $arrayClientes[-1] = 'TODOS CLIENTES';
+        foreach($clientes as $cliente)
+        {
+            $arrayClientes[$cliente->entcodent] = str_pad($cliente->entcodent, 4, '0', STR_PAD_LEFT).' - '.$cliente->entrazsoc;
+        }
+        $arrayClientes[999] = 'ECS 999';
+           
+        TTransaction::close();
+        // fim dos array das combos
+        
+        // create the form fields
+        $colaborador_id                 = new TCombo('colaborador_id');
         $colaborador_id->setDefaultOption(FALSE);
+        $colaborador_id->addItems($arrayPessoas);
+        
+        $cliente_id                     = new TCombo('cliente_id');
+        $cliente_id->setDefaultOption(FALSE);
+        $cliente_id->addItems($arrayClientes);
         
         $mes_atividade                  = new TCombo('mes_atividade');
         
@@ -55,16 +95,19 @@ class AtividadeReport extends TPage
 
         // define the sizes
         $colaborador_id->setSize(250);
+        $cliente_id->setSize(250);
         $mes_atividade->setSize(250);
+        $ano_atividade->setSize(100);
         $output_type->setSize(100);
 
         // add one row for each form field
         $table->addRowSet( new TLabel('Colaborador:'), $colaborador_id );
+        $table->addRowSet( new TLabel('Cliente:'), $cliente_id );
         $table->addRowSet( new TLabel('Mês:'), $mes_atividade );
         $table->addRowSet( new TLabel('Ano:'), $ano_atividade );
         $table->addRowSet( new TLabel('Output:'), $output_type );
         
-        $this->form->setFields(array($colaborador_id,$mes_atividade,$ano_atividade,$output_type));
+        $this->form->setFields(array($colaborador_id,$cliente_id,$mes_atividade,$ano_atividade,$output_type));
         
         $output_type->addItems(array('html'=>'HTML', 'pdf'=>'PDF', 'rtf'=>'RTF'));;
         $output_type->setValue('html');
@@ -97,7 +140,22 @@ class AtividadeReport extends TPage
             
             $format  = $formdata->output_type;
             
-            $total = Atividade::retornaTotalAtividadesColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade);
+            $tickets = null;
+            if($formdata->cliente_id > 0)
+            {
+                
+                TTransaction::open('tecbiz');
+                $cliente = Pessoa::getPessoasEntidade($formdata->cliente_id);
+                TTransaction::close();
+                
+                TTransaction::open('atividade');
+                $retorno = Ticket::getTicketsCliente($cliente);
+                TTransaction::close();
+           
+                $tickets = implode(",",$retorno);
+            }
+            
+            $total = Atividade::retornaTotalAtividadesColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
             
             if ($total)
             {
@@ -131,17 +189,22 @@ class AtividadeReport extends TPage
                 $tr->addStyle('header', 'Times', '16', 'B',  '#4A5590', '#C0D3E9');
                 $tr->addStyle('footer', 'Times', '12', 'BI', '#4A5590', '#C0D3E9');
                 
-                TTransaction::open('tecbiz');
-                $colaborador = new Pessoa($formdata->colaborador_id);
-                TTransaction::close();
-                
+                $titulo = 'TODOS COLABORADORES';
+                if($formdata->colaborador_id > 0)
+                {
+                    TTransaction::open('tecbiz');
+                    $colaborador = new Pessoa($formdata->colaborador_id);
+                    $titulo = $colaborador->pessoa_apelido;
+                    TTransaction::close();
+                }
+                                
                 // report description
                 $tr->addRow();
                 $tr->addCell('', 'center', 'title');
-                $tr->addCell($colaborador->pessoa_apelido, 'center', 'title');
+                $tr->addCell($titulo, 'center', 'title');
                 $tr->addCell("{$string->array_meses()[$formdata->mes_atividade]}-{$formdata->ano_atividade}", 'center', 'title',2);
                 
-                $objects = Atividade::retornaAtividadesColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade);
+                $objects = Atividade::retornaAtividadesColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
                 
                 // add a header row
                 $tr->addRow();
@@ -175,7 +238,7 @@ class AtividadeReport extends TPage
                 $tr->addRow();
                 $tr->addCell($break, 'center', 'datai', 4);
                 
-                $objects = Atividade::retornaAtividadesSistemaColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade);
+                $objects = Atividade::retornaAtividadesSistemaColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
                 
                 // add a header row
                 $tr->addRow();
@@ -209,7 +272,7 @@ class AtividadeReport extends TPage
                 $tr->addRow();
                 $tr->addCell($break, 'center', 'datai', 4);
                 
-                $objects = Atividade::retornaAtividadesClienteColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade);
+                $objects = Atividade::retornaAtividadesClienteColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
                 TTransaction::open('tecbiz');
                 foreach ($objects as $row)
                 {
@@ -269,7 +332,7 @@ class AtividadeReport extends TPage
                 
                 // footer row
                 $tr->addRow();
-                $tr->addCell(date('Y-m-d h:i:s'), 'center', 'footer', 4);
+                $tr->addCell(date('d/m/Y H:i:s'), 'center', 'footer', 4);
                 // stores the file
                 
                 $var = rand(0, 1000);

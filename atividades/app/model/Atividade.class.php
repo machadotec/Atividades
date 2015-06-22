@@ -28,30 +28,56 @@ class Atividade extends TRecord
         parent::addAttribute('ticket_id');
     }
 
-    public function retornaTotalAtividadesColaborador($colaborador, $mes, $ano)
+    public function retornaTotalAtividadesColaborador($colaborador, $mes, $ano, $tickets)
     {
         
+        $tic = "";
+        if($tickets)
+        {
+            $tic = " and a.ticket_id IN ({$tickets}) ";
+        }
+        
+        $col = "";
+        if($colaborador > 0)
+        {
+            $col = " and a.colaborador_id = {$colaborador} ";
+ 
+        }
+        
         $conn = TTransaction::get();
+        
         $result = $conn->query("select sum((a.hora_fim - a.hora_inicio)) as total from atividade as a
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.colaborador_id = {$colaborador}
-                                ");
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}");
         
         foreach ($result as $row)
         {
             $data = $row['total'];
         }
-        
+
         return $data;
         
     }
 
-    public function retornaAtividadesColaborador($colaborador, $mes, $ano)
+    public function retornaAtividadesColaborador($colaborador, $mes, $ano, $tickets)
     {
+        
+        $tic = "";
+        if($tickets)
+        {
+            $tic = " and a.ticket_id IN ({$tickets}) ";
+        }
+        
+        $col = "";
+        if($colaborador > 0)
+        {
+            $col = " and a.colaborador_id = {$colaborador} ";
+ 
+        }
         
         $conn = TTransaction::get();
         $result = $conn->query("select a.tipo_atividade_id,t.nome, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a
                                 inner join tipo_atividade as t on a.tipo_atividade_id = t.id
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.colaborador_id = {$colaborador}
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
                                 group by tipo_atividade_id, nome
                                 order by nome
                                 ");
@@ -60,14 +86,27 @@ class Atividade extends TRecord
         
     }
     
-    public function retornaAtividadesSistemaColaborador($colaborador, $mes, $ano)
+    public function retornaAtividadesSistemaColaborador($colaborador, $mes, $ano, $tickets)
     {
+        
+        $tic = "";
+        if($tickets)
+        {
+            $tic = " and a.ticket_id IN ({$tickets}) ";
+        }
+                
+        $col = "";
+        if($colaborador > 0)
+        {
+            $col = " and a.colaborador_id = {$colaborador} ";
+ 
+        }
         
         $conn = TTransaction::get();
         $result = $conn->query("select t.sistema_id, s.nome, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a 
                                 inner join ticket as t on a.ticket_id = t.id
                                 inner join sistema as s on t.sistema_id = s.id
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.colaborador_id = {$colaborador}
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
                                 group by t.sistema_id, s.nome
                                 order by s.nome
                                 ");
@@ -76,13 +115,26 @@ class Atividade extends TRecord
         
     }
     
-    public function retornaAtividadesClienteColaborador($colaborador, $mes, $ano)
+    public function retornaAtividadesClienteColaborador($colaborador, $mes, $ano, $tickets)
     {
+                
+        $tic = "";
+        if($tickets)
+        {
+            $tic = " and a.ticket_id IN ({$tickets}) ";
+        }
+        
+        $col = "";
+        if($colaborador > 0)
+        {
+            $col = " and a.colaborador_id = {$colaborador} ";
+ 
+        }
         
         $conn = TTransaction::get();
         $result = $conn->query("select t.solicitante_id, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a 
                                 inner join ticket as t on a.ticket_id = t.id
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.colaborador_id = {$colaborador}
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
                                 group by solicitante_id
                                 ");
         
