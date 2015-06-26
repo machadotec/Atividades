@@ -83,6 +83,7 @@ class AtividadeReport extends TPage
         
         $mes_atividade->addItems($string->array_meses());
         $mes_atividade->setDefaultOption(FALSE);
+        $mes_atividade->setValue(date('m'));
         
         $ano_atividade                  = new TCombo('ano_atividade');
         $anos = array(
@@ -194,7 +195,7 @@ class AtividadeReport extends TPage
                 {
                     TTransaction::open('tecbiz');
                     $colaborador = new Pessoa($formdata->colaborador_id);
-                    $titulo = $colaborador->pessoa_apelido;
+                    $titulo = $colaborador->pessoa_nome;
                     TTransaction::close();
                 }
                                 

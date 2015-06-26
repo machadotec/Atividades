@@ -107,7 +107,6 @@ class TicketForm extends TPage
         $tipo_ticket_id                 = new TDBCombo('tipo_ticket_id', 'atividade', 'TipoTicket', 'id', 'nome');
         $tipo_ticket_id->setDefaultOption(FALSE);
         $sistema_id                     = new TDBCombo('sistema_id', 'atividade', 'Sistema', 'id', 'nome');
-        $sistema_id->setDefaultOption(FALSE);
         $status_ticket_id               = new TDBCombo('status_ticket_id', 'atividade', 'StatusTicket', 'id', 'nome');
         $status_ticket_id->setDefaultOption(FALSE);
         $prioridade_id                  = new TDBCombo('prioridade_id', 'atividade', 'Prioridade', 'id', 'nome');
@@ -148,6 +147,7 @@ class TicketForm extends TPage
         $solicitante_id->addValidation('Solicitante', new TRequiredValidator);
         $titulo->addValidation('Titulo', new TRequiredValidator);
         $responsavel_id->addValidation('Responsável', new TRequiredValidator);
+        $sistema_id->addValidation('Sistema', new TRequiredValidator);
         
         $gerar_dr = TButton::create('gerar_dr', array('RequisitoDesenvolvimentoForm', 'onEdit'), 'Gerar DTR', 'ico_add.png');
         $editar_dr = TButton::create('editar_dr', array('RequisitoDesenvolvimentoForm', 'onEdit'), 'Editar DTR', 'ico_edit.png');
@@ -167,7 +167,8 @@ class TicketForm extends TPage
         $label_titulo->setFontColor('#FF0000');
         $table->addRowSet( new TLabel('Origem:'), $origem );
         $table->addRowSet( new TLabel('Tipo Ticket:'), $tipo_ticket_id );
-        $table->addRowSet( new TLabel('Sistema:'), $sistema_id );
+        $table->addRowSet( $label_sistema = new TLabel('Sistema:'), $sistema_id );
+        $label_sistema->setFontColor('#FF0000');
         $table->addRowSet( new TLabel('Status:'), $status_ticket_id );
         $table->addRowSet( new TLabel('Prioridade:'), $prioridade_id );
         $table->addRowSet( new TLabel('Descrição Solicitação:'), $solicitacao_descricao );
@@ -711,7 +712,10 @@ class TicketForm extends TPage
                 
                 if($object->tipo_ticket_id == 4 or $object->tipo_ticket_id == 5 or $object->tipo_ticket_id == 6)
                 {
-                    TButton::enableField('form_Ticket', 'gerar_dr');
+                    if(!$object->nome_dtr)
+                    {
+                        TButton::enableField('form_Ticket', 'gerar_dr');
+                    }
                 }
                 
                 TButton::disableField('form_Ticket', 'delete');

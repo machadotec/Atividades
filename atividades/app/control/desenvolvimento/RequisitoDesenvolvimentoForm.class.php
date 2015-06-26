@@ -249,7 +249,7 @@ Sistema: '.$desenvolvimento->ticket->sistema->nome.'      Módulo:              
 Cliente: '.$cliente.' Solicitante/Dpto: '.$responsavel;
             
             $tr->addRow();
-            $tr->addCell($cabecalho, 'left', 'title');
+            $tr->addCell(utf8_decode($cabecalho), 'left', 'title');
            
             $tr->addRow();
             $tr->addCell('<br /><b>Objetivo:</b> <br />'.$desenvolvimento->objetivo, 'left', 'datap');
