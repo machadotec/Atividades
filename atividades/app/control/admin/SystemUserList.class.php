@@ -47,10 +47,10 @@ class SystemUserList extends TPage
         $new_button  = new TButton('new');
         // define the button actions
         $find_button->setAction(new TAction(array($this, 'onSearch')), _t('Find'));
-        $find_button->setImage('ico_find.png');
+        $find_button->setImage('fa:search');
         
         $new_button->setAction(new TAction(array('SystemUserForm', 'onEdit')), _t('New'));
-        $new_button->setImage('ico_new.png');
+        $new_button->setImage('fa:plus-square green');
         
         // add a row for the form actions
         $container = new THBox;
@@ -105,12 +105,12 @@ class SystemUserList extends TPage
         // creates two datagrid actions
         $action1 = new TDataGridAction(array('SystemUserForm', 'onEdit'));
         $action1->setLabel(_t('Edit'));
-        $action1->setImage('ico_edit.png');
+        $action1->setImage('fa:pencil-square-o blue fa-lg');
         $action1->setField('id');
         
         $action2 = new TDataGridAction(array($this, 'onDelete'));
         $action2->setLabel(_t('Delete'));
-        $action2->setImage('ico_delete.png');
+        $action2->setImage('fa:trash-o red fa-lg');
         $action2->setField('id');
         
         // add the actions to the datagrid

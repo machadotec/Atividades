@@ -18,5 +18,31 @@ class SystemProgram extends TRecord
         parent::addAttribute('name');
         parent::addAttribute('controller');
     }
+    
+    /**
+     * Delete the object and its aggregates
+     * @param $id object ID
+     */
+    public function delete($id = NULL)
+    {
+        SystemChangeLog::register($this, $this->toArray(), array());
+        // delete the object itself
+        parent::delete($id);
+    }
+    
+    public function onBeforeStore($object)
+    {
+        $this->lastState = array();
+        if (self::exists($object->id))
+        {
+            $this->lastState = parent::load($object->id)->toArray();
+        }
+        // file_put_contents('/tmp/log.txt', "Before Store ".print_r($object, TRUE), FILE_APPEND);
+    }
+    
+    public function onAfterStore($object)
+    {
+        SystemChangeLog::register($this, $this->lastState, (array) $object);
+        // file_put_contents('/tmp/log.txt', "After Store ".print_r($object, TRUE), FILE_APPEND);
+    }
 }
-?>

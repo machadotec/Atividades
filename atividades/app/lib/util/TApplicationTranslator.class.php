@@ -79,6 +79,11 @@ class TApplicationTranslator
         $this->messages['en'][] = 'Page name';
         $this->messages['en'][] = 'The passwords do not match';
         $this->messages['en'][] = 'Log in';
+        $this->messages['en'][] = 'Date';
+        $this->messages['en'][] = 'Column';
+        $this->messages['en'][] = 'Operation';
+        $this->messages['en'][] = 'Old value';
+        $this->messages['en'][] = 'New value';
         
         $this->messages['pt'][] = 'Arquivo não encontrado';
         $this->messages['pt'][] = 'Buscar';
@@ -144,6 +149,11 @@ class TApplicationTranslator
         $this->messages['pt'][] = 'Nome da Tela';
         $this->messages['pt'][] = 'As senhas não conferem';
         $this->messages['pt'][] = 'Entrar';
+        $this->messages['pt'][] = 'Data';
+        $this->messages['pt'][] = 'Coluna';
+        $this->messages['pt'][] = 'Operação';
+        $this->messages['pt'][] = 'Valor antigo';
+        $this->messages['pt'][] = 'Valor novo';
     }
     
     /**

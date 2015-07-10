@@ -69,7 +69,6 @@ table.tdatagrid_table > thead.tdatagrid_head > tr > th.tdatagrid_col[generator=a
     background-color: #CFCFCF;
     border-left: 1px solid gray;
     border-right: 1px solid gray;
-    padding-left: 0px;
     padding-right: 0px;
     -moz-user-select: none;
     user-select: none;
@@ -84,11 +83,6 @@ table.tdatagrid_table > tbody.tdatagrid_body
 table.tdatagrid_table > tbody.tdatagrid_body > tr > td
 {
     height: 26px;
-}
-
-table.tdatagrid_table > tbody.tdatagrid_body > tr > td.tdatagrid_cell.action
-{
-    padding: 2px;
 }
 
 table.tdatagrid_table > tbody.tdatagrid_body > tr.tdatagrid_group

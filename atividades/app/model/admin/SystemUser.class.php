@@ -57,9 +57,12 @@ class SystemUser extends TRecord
      * Add a System_user_group to the System_user
      * @param $object Instance of System_group
      */
-    public function addSystemUserGroup(SystemGroup $object)
+    public function addSystemUserGroup(SystemGroup $systemusergroup)
     {
-        $this->system_user_groups[] = $object;
+        $object = new SystemUserGroup;
+        $object->system_group_id = $systemusergroup->id;
+        $object->system_user_id = $this->id;
+        $object->store();
     }
     
     /**
@@ -69,7 +72,21 @@ class SystemUser extends TRecord
      */
     public function getSystemUserGroups()
     {
-        return $this->system_user_groups;
+        $system_user_groups = array();
+        
+        // load the related System_user_group objects
+        $repository = new TRepository('SystemUserGroup');
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter('system_user_id', '=', $this->id));
+        $system_user_system_user_groups = $repository->load($criteria);
+        if ($system_user_system_user_groups)
+        {
+            foreach ($system_user_system_user_groups as $system_user_system_user_group)
+            {
+                $system_user_groups[] = new SystemGroup( $system_user_system_user_group->system_group_id );
+            }
+        }
+        return $system_user_groups;
     }
     
     /**
@@ -77,9 +94,12 @@ class SystemUser extends TRecord
      * Add a System_user_program to the System_user
      * @param $object Instance of System_program
      */
-    public function addSystemUserProgram(SystemProgram $object)
+    public function addSystemUserProgram(SystemProgram $systemprogram)
     {
-        $this->system_user_programs[] = $object;
+        $object = new SystemUserProgram;
+        $object->system_program_id = $systemprogram->id;
+        $object->system_user_id = $this->id;
+        $object->store();
     }
     
     /**
@@ -89,7 +109,21 @@ class SystemUser extends TRecord
      */
     public function getSystemUserPrograms()
     {
-        return $this->system_user_programs;
+        $system_user_programs = array();
+        
+        // load the related System_user_program objects
+        $repository = new TRepository('SystemUserProgram');
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter('system_user_id', '=', $this->id));
+        $system_user_system_user_programs = $repository->load($criteria);
+        if ($system_user_system_user_programs)
+        {
+            foreach ($system_user_system_user_programs as $system_user_system_user_program)
+            {
+                $system_user_programs[] = new SystemProgram( $system_user_system_user_program->system_program_id );
+            }
+        }
+        return $system_user_programs;
     }
 
     /**
@@ -97,90 +131,17 @@ class SystemUser extends TRecord
      */
     public function clearParts()
     {
-        $this->system_user_groups = array();
-        $this->system_user_programs = array();
-    }
-
-    /**
-     * Load the object and its aggregates
-     * @param $id object ID
-     */
-    public function load($id)
-    {
-        // load the related System_user_group objects
-        $repository = new TRepository('SystemUserGroup');
-        $criteria = new TCriteria;
-        $criteria->add(new TFilter('system_user_id', '=', $id));
-        $system_user_system_user_groups = $repository->load($criteria);
-        if ($system_user_system_user_groups)
-        {
-            foreach ($system_user_system_user_groups as $system_user_system_user_group)
-            {
-                $system_user_group = new SystemGroup( $system_user_system_user_group->system_group_id );
-                $this->addSystemUserGroup($system_user_group);
-            }
-        }
-    
-        // load the related System_user_program objects
-        $repository = new TRepository('SystemUserProgram');
-        $criteria = new TCriteria;
-        $criteria->add(new TFilter('system_user_id', '=', $id));
-        $system_user_system_user_programs = $repository->load($criteria);
-        if ($system_user_system_user_programs)
-        {
-            foreach ($system_user_system_user_programs as $system_user_system_user_program)
-            {
-                $system_user_program = new SystemProgram( $system_user_system_user_program->system_program_id );
-                $this->addSystemUserProgram($system_user_program);
-            }
-        }
-    
-        // load the object itself
-        return parent::load($id);
-    }
-
-    /**
-     * Store the object and its aggregates
-     */
-    public function store()
-    {
-        // store the object itself
-        parent::store();
-    
         // delete the related System_userSystem_user_group objects
         $criteria = new TCriteria;
         $criteria->add(new TFilter('system_user_id', '=', $this->id));
+        
         $repository = new TRepository('SystemUserGroup');
         $repository->delete($criteria);
-        // store the related System_userSystem_user_group objects
-        if ($this->system_user_groups)
-        {
-            foreach ($this->system_user_groups as $system_user_group)
-            {
-                $system_user_system_user_group = new SystemUserGroup;
-                $system_user_system_user_group->system_group_id = $system_user_group->id;
-                $system_user_system_user_group->system_user_id = $this->id;
-                $system_user_system_user_group->store();
-            }
-        }
-        // delete the related System_userSystem_user_program objects
-        $criteria = new TCriteria;
-        $criteria->add(new TFilter('system_user_id', '=', $this->id));
+        
         $repository = new TRepository('SystemUserProgram');
-        $repository->delete($criteria);
-        // store the related System_userSystem_user_program objects
-        if ($this->system_user_programs)
-        {
-            foreach ($this->system_user_programs as $system_user_program)
-            {
-                $system_user_system_user_program = new SystemUserProgram;
-                $system_user_system_user_program->system_program_id = $system_user_program->id;
-                $system_user_system_user_program->system_user_id = $this->id;
-                $system_user_system_user_program->store();
-            }
-        }
+        $repository->delete($criteria);   
     }
-
+    
     /**
      * Delete the object and its aggregates
      * @param $id object ID

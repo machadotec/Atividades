@@ -13,3 +13,8 @@ function tdatagrid_inlineedit( querystring )
         });
     });
 }
+
+function tdatagrid_add_serialized_row(datagrid, row)
+{
+    $('#'+datagrid+' > tbody:last-child').append(row);
+}

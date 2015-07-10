@@ -484,6 +484,11 @@ abstract class TRecord
      */
     public function exists($id)
     {
+        if (empty($id))
+        {
+            return FALSE;
+        }
+        
         $class = get_class($this);     // get the Active Record class name
         $pk = $this->getPrimaryKey();  // discover the primary key name
         
@@ -978,6 +983,26 @@ abstract class TRecord
     public function save()
     {
         $this->store();
+    }
+    
+    /**
+     * Creates an indexed array
+     * @returns the TRepository object with a filter
+     */
+    public static function getIndexedArray($indexColumn, $valueColumn)
+    {
+        $indexedArray = array();
+        $class = get_called_class(); // get the Active Record class name
+        $repository = new TRepository( $class ); // create the repository
+        $objects = $repository->load();
+        if ($objects)
+        {
+            foreach ($objects as $object)
+            {
+                $indexedArray[ $object->$indexColumn ] = $object->$valueColumn;
+            }
+        }
+        return $indexedArray;
     }
     
     /**

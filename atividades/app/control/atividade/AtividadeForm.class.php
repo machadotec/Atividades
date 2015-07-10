@@ -77,7 +77,10 @@ class AtividadeForm extends TPage
         $colaborador_nome->setEditable(FALSE);
         $colaborador_nome->setValue($logado->pessoa_nome);
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
-        $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo');
+        
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter("status_ticket_id", "=", 1));
+        $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo', $criteria);
                                    
         $horario = explode(':', $hora_padrao);
 

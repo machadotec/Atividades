@@ -484,7 +484,7 @@ function tmultifield_enable_field(form_name, field) {
 
 function tmultifield_disable_field(form_name, field) {
     setTimeout(function() {$('form[name='+form_name+'] div[mtf_name="block_'+field+'"]').remove();}, 19);
-    setTimeout(function() {$('form[name='+form_name+'] div[mtf_name="'+field+'"]').css('position', 'relative').prepend('<div mtf_name="block_{$field}" style="position:absolute; width:'+$('div[mtf_name="'+field+'"]').width()+'px; height:'+$('div[mtf_name="'+field+'"]').height()+'px; background: #c0c0c0; opacity:0.5;"></div>')}, 20);    
+    setTimeout(function() {$('form[name='+form_name+'] div[mtf_name="'+field+'"]').css('position', 'relative').prepend('<div mtf_name="block_'+field+'" style="position:absolute; width:'+$('div[mtf_name="'+field+'"]').width()+'px; height:'+$('div[mtf_name="'+field+'"]').height()+'px; background: #c0c0c0; opacity:0.5;"></div>')}, 20);    
 }
 
 function tmultifield_clear_field(form_name, field) {

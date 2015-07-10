@@ -70,16 +70,16 @@ class SystemGroupForm extends TPage
         // create an action button (save)
         $save_button=new TButton('save');
         $save_button->setAction(new TAction(array($this, 'onSave')), _t('Save'));
-        $save_button->setImage('ico_save.png');
+        $save_button->setImage('fa:floppy-o');
         
         // create an new button (edit with no parameters)
         $new_button=new TButton('new');
         $new_button->setAction(new TAction(array($this, 'onEdit')), _t('New'));
-        $new_button->setImage('ico_new.png');
+        $new_button->setImage('fa:plus-square green');
         
         $list_button=new TButton('list');
         $list_button->setAction(new TAction(array('SystemGroupList','onReload')), _t('Back to the listing'));
-        $list_button->setImage('ico_datagrid.png');
+        $list_button->setImage('fa:table blue');
 
         // define the form fields
         $this->form->setFields(array($id,$name,$multifield,$save_button,$new_button,$list_button));
@@ -117,6 +117,9 @@ class SystemGroupForm extends TPage
             // get the form data into an active record System_group
             $object = $this->form->getData('SystemGroup');
             
+            $this->form->validate(); // form validation
+            $object->store(); // stores the object
+            $object->clearParts();
             if( $object->programs )
             {
                 foreach( $object->programs as $program )
@@ -125,8 +128,6 @@ class SystemGroupForm extends TPage
                 }
             }
             
-            $this->form->validate(); // form validation
-            $object->store(); // stores the object
             $this->form->setData($object); // fill the form with the active record data
             
             TTransaction::close(); // close the transaction
@@ -184,4 +185,3 @@ class SystemGroupForm extends TPage
         }
     }
 }
-?>

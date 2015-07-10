@@ -98,16 +98,16 @@ class SystemUserForm extends TPage
         // create an action button (save)
         $save_button=new TButton('save');
         $save_button->setAction(new TAction(array($this, 'onSave')), _t('Save'));
-        $save_button->setImage('ico_save.png');
+        $save_button->setImage('fa:floppy-o');
         
         // create an new button (edit with no parameters)
         $new_button=new TButton('new');
         $new_button->setAction(new TAction(array($this, 'onEdit')), _t('New'));
-        $new_button->setImage('ico_new.png');
+        $new_button->setImage('fa:plus-square green');
         
         $list_button=new TButton('list');
         $list_button->setAction(new TAction(array('SystemUserList','onReload')), _t('Back to the listing'));
-        $list_button->setImage('ico_datagrid.png');
+        $list_button->setImage('fa:table blue');
         
         // define the form fields
         $this->form->setFields(array($id,$name,$login,$password,$repassword,$multifield_programs,$frontpage_id, $frontpage_name, $groups,$email,$save_button,$new_button,$list_button));
@@ -166,6 +166,8 @@ class SystemUserForm extends TPage
             else
                 unset($object->password);
             
+            $object->store(); // stores the object
+            $object->clearParts();
             
             if( $object->groups )
             {
@@ -182,8 +184,6 @@ class SystemUserForm extends TPage
                     $object->addSystemUserProgram( $program );
                 }
             }
-            
-            $object->store(); // stores the object
             
             $object->password = $senha;
             

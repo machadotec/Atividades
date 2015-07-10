@@ -77,6 +77,7 @@ class AdiantiCoreTranslator
         $this->messages['en'][] = 'You must call ^1 before ^2';
         $this->messages['en'][] = 'You must pass the ^1 (^2) as a parameter to ^3';
         $this->messages['en'][] = 'The parameter (^1) of ^2 is required';
+        $this->messages['en'][] = 'The parameter (^1) of ^2 constructor is required';
         $this->messages['en'][] = 'You have already added a field called "^1" inside the form';
         $this->messages['en'][] = 'Quit the application ?';
         $this->messages['en'][] = 'Use the addField() or setFields() to define the form fields';
@@ -161,7 +162,8 @@ class AdiantiCoreTranslator
         $this->messages['pt'][] = 'Você deve executar o construtor de ^1';
         $this->messages['pt'][] = 'Você deve executar ^1 antes de ^2';
         $this->messages['pt'][] = 'Você deve passar o ^1 (^2) como parâmetro para ^3';
-        $this->messages['pt'][] = 'O patâmetro (^1) de ^2 é obrigatório';
+        $this->messages['pt'][] = 'O parâmetro (^1) de ^2 é obrigatório';
+        $this->messages['pt'][] = 'O parâmetro (^1) do construtor de ^2 é obrigatório';
         $this->messages['pt'][] = 'Você já adicionou um campo chamado "^1" ao formulário';
         $this->messages['pt'][] = 'Fechar a aplicação ?';
         $this->messages['pt'][] = 'Use addField() ou setFields() para definir os campos do formulário';

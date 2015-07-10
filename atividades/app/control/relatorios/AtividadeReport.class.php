@@ -38,6 +38,7 @@ class AtividadeReport extends TPage
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
+        $criteria->add(new TFilter("ativo", "=", 1));
         $newparam['order'] = 'pessoa_nome';
         $newparam['direction'] = 'asc';
         $criteria->setProperties($newparam); // order, offset

@@ -244,6 +244,26 @@ ALTER SEQUENCE status_ticket_id_seq OWNED BY status_ticket.id;
 
 
 --
+-- Name: system_changelog; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE system_changelog (
+    id integer NOT NULL,
+    logdate timestamp without time zone,
+    login text,
+    tablename text,
+    primarykey text,
+    pkvalue text,
+    operation text,
+    columnname text,
+    oldvalue text,
+    newvalue text
+);
+
+
+ALTER TABLE public.system_changelog OWNER TO postgres;
+
+--
 -- Name: system_group; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -342,7 +362,6 @@ CREATE TABLE ticket (
     valor_total_pago numeric(9,2),
     data_cadastro date,
     data_prevista date,
-    data_validade date,
     data_aprovacao date,
     observacao text,
     solicitante_id integer,
@@ -351,7 +370,10 @@ CREATE TABLE ticket (
     sistema_id integer,
     status_ticket_id integer,
     prioridade_id integer,
-    forma_pagamento text
+    forma_pagamento text,
+    data_inicio date,
+    data_encerramento date,
+    data_cancelamento date
 );
 
 
@@ -769,6 +791,133 @@ COPY atividade (id, data_atividade, hora_inicio, hora_fim, descricao, colaborado
 437	2015-06-25	17:00:00	17:35:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359
 438	2015-06-25	15:30:00	16:00:00	Atualizando contato de e-mail mkt	11	5	60
 439	2015-06-26	09:40:00	11:40:00	Telas para app	11	5	361
+440	2015-06-26	14:30:00	16:30:00	telas app	11	5	361
+441	2015-06-26	09:15:00	12:20:00	Revisão dos recursos exclusivos	14	3	350
+442	2015-06-26	13:50:00	16:10:00	Revisão dos recursos exclusivos	14	3	350
+443	2015-06-26	16:30:00	17:10:00	Eliminação dos recursos exclusivos antigos	14	3	350
+444	2015-06-26	09:15:00	12:15:00	\N	1	3	310
+445	2015-06-26	14:00:00	17:00:00	testes	1	3	310
+446	2015-06-26	10:00:00	12:00:00	Regras Status x Datas : Botão Salvar\r\nClasse: /app/lib/validator/TstatusDatasValidator.class\r\nTDatasTicketValidator.class\r\nPalavra Dr por DTr\r\n1 - menu.xml\r\n2 - \\app\\control\\desenvolvimento\\RequisitoDesenvolvimentoForm.class.php	2	3	359
+447	2015-06-26	14:30:00	17:30:00	Regras Status x Datas : Botão Salvar\r\nClasse: /app/lib/validator/TstatusDatasValidator.class\r\nTDatasTicketValidator.class\r\nPalavra Dr por DTr\r\n1 - menu.xml\r\n2 - \\app\\control\\desenvolvimento\\RequisitoDesenvolvimentoForm.class.php	2	3	359
+448	2015-06-26	18:00:00	18:20:00	cadastro de contrato	8	9	21
+449	2015-06-29	09:20:00	09:50:00	cadastro de contrato	8	9	28
+450	2015-06-29	09:50:00	11:30:00	cadastro de contratos	8	9	45
+451	2015-06-29	13:50:00	14:30:00	Conclusão do processo DTR010	14	3	316
+452	2015-06-26	16:30:00	17:00:00	criando dicumento com telas e regras	11	6	361
+453	2015-06-29	14:30:00	16:00:00	alterando fluxo incluindo etapa de lançamento no ECS 500 Repasses	11	6	334
+454	2015-06-29	14:00:00	16:00:00	publicação, testes, documentação	1	3	310
+455	2015-06-29	14:00:00	15:00:00	Atualização da DTR conforme definição em reunião pela manhã	2	6	342
+456	2015-06-29	15:00:00	17:35:00	1- Acertar documento DTR cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342
+457	2015-06-30	09:40:00	09:55:00	cadastro de contrato	8	9	45
+458	2015-06-29	14:30:00	17:15:00	Preparação da publicação dos tickets T345, T350	14	3	350
+459	2015-06-30	09:00:00	11:20:00	analise e importação de ecs vinculos, atualização documentação, testes	1	3	310
+460	2015-06-30	09:00:00	09:30:00	alteraçao para solicitaçao de orçamento 	11	6	361
+461	2015-06-30	11:20:00	12:15:00	\N	1	3	363
+462	2015-06-30	14:00:00	16:00:00	\N	1	3	363
+463	2015-06-29	08:00:00	16:48:00	\N	9	10	328
+464	2015-06-02	09:30:00	10:10:00	\N	21	10	328
+465	2015-06-23	09:45:00	10:10:00	\N	21	10	328
+466	2015-06-10	09:00:00	11:00:00	\N	3	10	328
+467	2015-06-16	14:30:00	17:30:00	\N	3	10	328
+468	2015-06-18	14:00:00	17:00:00	\N	3	10	328
+469	2015-06-30	16:00:00	17:00:00	correçoes relatorio	1	3	318
+470	2015-06-30	09:43:00	12:30:00	Simulação de publicação para os tickets 345, E 350	14	3	345
+471	2015-06-30	14:30:00	15:50:00	Criação documento DTR010	14	6	364
+472	2015-06-26	08:30:00	10:30:00	CRIAÇÃO DAS PLANILHAS PARA TESTE.	21	4	345
+473	2015-06-26	13:30:00	14:50:00	CRIAÇÃO DE TABELAS PARA TESTE	21	4	345
+474	2015-06-29	10:30:00	12:00:00	CRIAÇÃO DA TABELA PARA TESTE	21	4	345
+475	2015-06-29	14:00:00	15:00:00	TESTE FINAL 	21	4	345
+476	2015-06-29	15:00:00	16:20:00	Suporte processamento de arquivo de retorno.	21	5	28
+477	2015-06-29	16:20:00	16:45:00	Esclarecimento de duvidas e arquivo	21	5	32
+478	2015-06-29	16:45:00	18:30:00	Suporte ECS	21	5	301
+479	2015-06-30	10:00:00	11:00:00	teste	21	4	345
+480	2015-06-30	11:30:00	12:30:00	Suporte ECS	21	5	301
+481	2015-06-30	14:00:00	15:50:00	suporte ecs	21	5	301
+482	2015-06-30	16:30:00	18:00:00	teste planilha	21	4	345
+483	2015-06-30	09:50:00	12:00:00	1- Acertar documento DTR 342 cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\n\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh_	2	3	342
+484	2015-06-30	14:30:00	17:40:00	1- Acertar documento DTR 342 cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\n\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh_	2	3	342
+485	2015-07-01	08:01:00	10:10:00	Correção da pesquisa de cpf duplo	14	12	326
+486	2015-06-29	10:00:00	10:20:00	Cartões, alterações dados bancários.	105	5	28
+487	2015-06-30	14:10:00	14:30:00	Número autorização,  Autorização URA, Senha.	105	5	301
+488	2015-06-30	14:30:00	15:30:00	Alterações documentação 	105	6	100
+489	2015-07-01	08:30:00	11:30:00	exclusão lógica de pessoas e atualização das rotinas que consumiam as pessas (estabelecimento, vinculos, ...)	1	3	318
+490	2015-07-01	10:30:00	11:30:00	Melhoria na execução do SQL	14	3	363
+491	2015-07-01	10:30:00	12:00:00	gerando limites	11	5	59
+493	2015-07-01	15:00:00	16:45:00	LCTO de trasações na ETD 21	11	5	59
+494	2015-07-01	10:00:00	12:00:00	auxilio usar fechamento padrão.. não está mais disponível ECS: 3000 p/ lcto em lote. 	9	5	27
+495	2015-07-01	17:30:00	18:10:00	Importando dados e gerando envio 	11	11	59
+496	2015-07-01	14:30:00	16:30:00	\N	14	12	367
+497	2015-07-01	14:45:00	16:00:00	correção consulta conforme avistado por mauricio	1	12	310
+498	2015-07-01	16:00:00	18:30:00	ajustes datas inicio, encerramento e cancelamento	1	3	318
+499	2015-07-01	09:42:00	10:30:00	Configuração layout arquivo retorno da camara (PMNH) , para tratar matricula com letras\r\n	2	3	5
+501	2015-07-01	14:30:00	18:30:00	Retorno bancario tratamento estorno dos lancamentos para uma mesma FPG com bancos diferentes.	2	3	365
+492	2015-07-01	12:45:00	13:00:00	cadastro de contrato ecs 948	8	9	28
+502	2015-07-02	10:00:00	10:30:00	cadastro contrato ecs 1210	8	9	36
+503	2015-07-01	10:00:00	12:00:00	TEF fora do ar!	21	5	301
+504	2015-07-01	13:20:00	14:35:00	Suporte sobre o arquivo de retorno no FP	21	5	32
+505	2015-07-01	14:50:00	18:20:00	Testes junto com o monti	21	4	365
+506	2015-07-02	09:38:00	12:38:00	pesquisa e geração dos dados	11	5	366
+507	2015-07-02	09:00:00	12:00:00	validações e publicação alterações das datas	1	3	318
+508	2015-07-02	15:00:00	16:00:00	melhorias sistema	1	3	318
+509	2015-07-02	16:00:00	17:00:00	correção relatorio	1	12	310
+510	2015-07-02	16:00:00	18:20:00	Gerando dados em xlsx	11	5	366
+511	2015-07-02	17:00:00	18:00:00	\N	1	3	368
+512	2015-07-02	08:38:00	10:00:00	Testes conforme alterações feitas.	2	4	359
+513	2015-07-02	14:30:00	17:30:00	reunião Interna com o pessoal da Afpuc.	2	8	9
+514	2015-07-02	14:00:00	15:00:00	Alterações documentação	105	6	100
+515	2015-07-02	18:00:00	18:30:00	apresentação alterações e levantamentos de requisitos com oseias	1	8	318
+516	2015-07-02	14:10:00	18:10:00	\N	12	8	9
+517	2015-07-03	08:30:00	10:00:00	alterações solicitadas por oseias	1	3	318
+518	2015-07-03	10:00:00	11:00:00	correção listagem de atividades	1	12	318
+519	2015-07-03	11:00:00	11:30:00	\N	1	3	368
+520	2015-07-02	11:10:00	12:00:00	Suporte ECS	21	5	301
+521	2015-07-03	11:30:00	12:20:00	alterações solicitadas por oseias	1	3	363
+522	2015-07-03	10:40:00	11:00:00	cadastro de contrato ecs 1212	8	9	28
+523	2015-07-02	13:20:00	14:05:00	Suporte ECS	21	5	301
+524	2015-07-02	15:00:00	16:30:00	TESTE planilha	21	4	345
+525	2015-07-02	17:40:00	18:20:00	teste dos repasses	21	4	368
+526	2015-07-03	15:35:00	16:00:00	cadastro contrato ecs 1215	8	9	29
+527	2015-07-03	09:30:00	12:30:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342
+528	2015-07-03	14:30:00	17:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342
+529	2015-07-03	14:30:00	17:30:00	veirifacao do cadastro das industrias jundo a FIERGS\r\n	11	5	366
+530	2015-07-03	10:30:00	11:55:00	Suporte ECS	21	5	301
+531	2015-07-03	13:00:00	13:40:00	Suporte ECS	21	5	301
+532	2015-07-03	15:30:00	18:15:00	Teste planilha.	21	4	345
+533	2015-07-06	10:30:00	11:00:00	LCTO de compra piraju	11	5	136
+534	2015-07-06	14:30:00	16:15:00	LCTO de compra piraju	11	5	136
+535	2015-07-06	14:28:00	16:28:00	cadastrar bloqueio total apos acessos chegar a 0	1	3	316
+536	2015-07-06	16:28:00	17:05:00	\N	1	3	363
+537	2015-07-06	16:15:00	16:45:00	envio do e-mail	11	11	371
+538	2015-07-06	14:30:00	17:45:00	\N	14	3	364
+539	2015-07-06	10:00:00	12:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh	2	3	342
+540	2015-07-06	14:30:00	17:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh\r\nApos Apresentação do mesmo para Suporte (Fernanda)	2	3	342
+541	2015-07-06	17:00:00	17:40:00	Configuração e teste recurso exclusivo da Arco para processar arquivo em lct de lote	2	3	372
+542	2015-07-06	10:10:00	10:50:00	Suporte ECS	21	5	301
+543	2015-07-06	13:00:00	13:45:00	Suporte ecs	21	5	301
+544	2015-07-06	15:50:00	17:05:00	Suporte	21	5	372
+545	2015-07-07	09:40:00	12:10:00	atualizando dados	11	5	369
+546	2015-07-07	09:30:00	12:00:00	\N	1	3	373
+547	2015-07-07	14:00:00	18:15:00	\N	1	3	373
+548	2015-07-07	09:00:00	11:45:00	Programação	14	3	364
+549	2015-07-07	14:07:00	16:15:00	Programação	14	3	364
+550	2015-07-07	16:45:00	17:35:00	Programador	14	3	364
+551	2015-07-07	15:10:00	15:25:00	cadastro de contrato ecs 1216	8	9	20
+552	2015-07-07	15:50:00	16:05:00	cadastro de contrato ecs 1219	8	9	28
+554	2015-07-07	09:45:00	12:00:00	1 - ,pg_ent_login.php / pg_ent_login.html: \r\nSalientar fontes com problema de Encerramento ou Fechamento\r\n2 - pg_envio_retorno_planilha.php pg_envio_retorno.html\r\nGerar palnilha de resumo	2	3	342
+555	2015-07-07	14:30:00	17:20:00	 pg_fec_retorno_bco..php pg_fec_retorno_bco.html\r\n     Tratamento retorno maior que envio, planilha resumo definida junto       \r\n      Fernanda.	2	3	342
+556	2015-07-07	16:10:00	17:10:00	busca de dados das industrias	11	5	366
+557	2015-07-08	09:30:00	10:00:00	Indicador do E-mail mkt	11	11	59
+558	2015-07-08	11:30:00	12:00:00	\N	11	5	369
+559	2015-07-08	09:10:00	11:55:00	Programação	14	3	364
+560	2015-07-08	09:00:00	11:30:00	\N	1	3	373
+561	2015-07-08	13:30:00	15:15:00	\N	1	3	373
+562	2015-07-08	14:30:00	15:38:00	registra dados na planilha e envio para Oseioas e Peterson	11	5	369
+563	2015-07-08	13:55:00	16:05:00	Programação	14	3	364
+564	2015-07-08	16:40:00	17:40:00	Programação	14	3	364
+565	2015-07-09	08:45:00	09:30:00	cadastro de contraton ecs 1710/1221	8	9	17
+566	2015-07-09	09:50:00	10:10:00	cadastro de contrato ecs 465	8	9	34
+567	2015-07-09	10:30:00	10:45:00	atualização dados ecs 6851 contrato sisme	8	9	11
+568	2015-07-09	11:00:00	11:15:00	cadastro de contrato ecs 1222	8	9	28
 \.
 
 
@@ -776,7 +925,7 @@ COPY atividade (id, data_atividade, hora_inicio, hora_fim, descricao, colaborado
 -- Name: atividade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('atividade_id_seq', 439, true);
+SELECT pg_catalog.setval('atividade_id_seq', 568, true);
 
 
 --
@@ -896,7 +1045,6 @@ COPY ponto (id, data_ponto, hora_entrada, hora_saida, colaborador_id) FROM stdin
 178	2015-06-22	09:02:00	\N	2
 179	2015-06-23	09:25:00	\N	8
 180	2015-06-23	10:40:00	\N	11
-181	2015-06-23	10:20:00	\N	21
 182	2015-06-23	08:46:00	\N	2
 183	2015-06-24	08:37:00	\N	1
 184	2015-06-24	08:45:00	\N	8
@@ -917,6 +1065,72 @@ COPY ponto (id, data_ponto, hora_entrada, hora_saida, colaborador_id) FROM stdin
 199	2015-06-26	08:26:00	\N	8
 200	2015-06-25	08:39:00	\N	2
 201	2015-06-26	08:20:00	\N	11
+202	2015-06-25	08:04:00	\N	9
+203	2015-06-29	08:28:00	\N	1
+204	2015-06-29	08:28:00	\N	14
+205	2015-06-26	08:48:00	\N	2
+206	2015-06-29	08:32:00	\N	8
+207	2015-06-29	08:22:00	\N	11
+208	2015-06-30	08:23:00	\N	1
+209	2015-06-29	08:55:00	\N	2
+210	2015-06-30	08:36:00	\N	8
+211	2015-06-30	09:43:00	\N	14
+212	2015-06-26	08:05:00	\N	21
+213	2015-06-30	08:04:00	\N	11
+214	2015-06-29	08:00:00	\N	9
+215	2015-06-02	09:30:00	\N	21
+181	2015-06-23	09:45:00	\N	21
+216	2015-06-10	09:00:00	\N	3
+217	2015-06-16	14:30:00	\N	3
+218	2015-06-18	14:00:00	\N	3
+219	2015-06-29	09:30:00	\N	21
+220	2015-06-30	10:00:00	\N	21
+221	2015-07-01	08:30:00	\N	1
+222	2015-07-01	08:01:00	\N	14
+223	2015-06-30	08:45:00	\N	2
+224	2015-06-29	08:03:00	\N	105
+225	2015-06-30	08:01:00	\N	105
+226	2015-07-01	08:20:00	\N	11
+227	2015-07-01	08:39:00	\N	8
+228	2015-06-30	08:09:00	\N	9
+229	2015-07-01	08:00:00	\N	9
+230	2015-07-02	08:00:00	\N	14
+231	2015-07-02	08:39:00	\N	1
+232	2015-07-01	09:42:00	\N	2
+233	2015-07-02	08:41:00	\N	8
+234	2015-07-01	09:40:00	\N	21
+236	2015-07-02	08:38:00	\N	11
+238	2015-07-02	08:38:00	\N	2
+239	2015-07-02	08:17:00	\N	105
+240	2015-07-03	08:16:00	\N	11
+241	2015-07-03	08:01:00	\N	14
+242	2015-07-02	10:03:00	\N	12
+243	2015-07-03	08:11:00	\N	1
+235	2015-07-02	10:55:00	\N	21
+244	2015-07-03	08:43:00	\N	8
+245	2015-07-03	10:10:00	\N	21
+246	2015-07-03	08:42:00	\N	2
+247	2015-07-06	08:28:00	\N	1
+248	2015-07-06	09:02:00	\N	14
+249	2015-07-06	08:27:00	\N	11
+250	2015-07-02	08:28:00	\N	9
+251	2015-07-03	08:03:00	\N	9
+252	2015-07-06	08:00:00	\N	9
+253	2015-07-07	08:14:00	\N	14
+254	2015-07-06	08:33:00	\N	2
+255	2015-07-07	08:47:00	\N	1
+256	2015-07-06	09:20:00	\N	21
+257	2015-07-07	09:25:00	\N	21
+258	2015-07-07	08:39:00	\N	11
+259	2015-07-08	08:34:00	\N	1
+260	2015-07-07	08:43:00	\N	8
+261	2015-07-07	08:46:00	\N	2
+262	2015-07-08	08:25:00	\N	11
+263	2015-07-08	08:25:00	\N	14
+264	2015-07-09	08:00:00	\N	8
+265	2015-07-09	08:38:00	\N	1
+266	2015-07-08	08:26:00	\N	2
+267	2015-07-09	08:57:00	\N	14
 \.
 
 
@@ -924,7 +1138,7 @@ COPY ponto (id, data_ponto, hora_entrada, hora_saida, colaborador_id) FROM stdin
 -- Name: ponto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ponto_id_seq', 201, true);
+SELECT pg_catalog.setval('ponto_id_seq', 267, true);
 
 
 --
@@ -932,9 +1146,9 @@ SELECT pg_catalog.setval('ponto_id_seq', 201, true);
 --
 
 COPY prioridade (id, nome) FROM stdin;
-1	Alta
-2	Media
-3	Baixa
+1	Urgente
+2	Importante
+3	Normal
 \.
 
 
@@ -950,14 +1164,17 @@ SELECT pg_catalog.setval('prioridade_id_seq', 3, false);
 --
 
 COPY requisito_desenvolvimento (id, titulo, data_cadastro, rotina, objetivo, entrada, processamento, saida, ticket_id) FROM stdin;
+14	Definir forma de tratar retorno a maior que envio	2015-06-10	\N	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	Tela de tratamento do arquivo retorno RH & Banco	No processamento do arq. retorno, caso o valor do arquivo for maior que o valor de envio (tbz_envio_retorno) :\r\n      Gerar lançamento CREDTIDO do valor TOTAL retornado e bloquear o associado\r\n      E após termino do processamento do arquivo emitir mensagem de alerta sobre esta situação, para que o usuário analise a planilha.\r\nObs.: \r\n1 – Estas definições (vermelho) foram sugeridas pelo Oseias e acertadas durante a reunião do dia 29/06/2015 (Oseias,Peterson,Marcus)\r\n2- 0 Gerar Planilha de Conferencia tendo como origem todos os associados que.\r\n	\r\nMensagem Alerta : Verificar Planilha de Conferencia.\r\n	342
 11	ETD - Resumo de contas a receber	2015-05-29	(a = 381c34)	incluir 2 colunas no relatório = Cartão e suporte	ETD - Resumo de contas a receber \r\n(a = 381c34)\r\n	Retirar da colunas outros os seguintes históricos:\r\nCartão = Histórico 009;\r\nSuporte= Históricos 018,019;	\N	311
 12	Alteração Cadastro Pessoas	2015-06-01	\N	Melhorar dados de pesquisa no modulo de pessoas	Tela do Cadastro Pessoas	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa 	Lista pesquisa tela de pesssoas, lista pesquisa avançada	326
 13	Auditor  identificar duplicidade e de lcts, autorizações.	2015-06-10	\N	Definição e programação script pata auditar lancamentos efetuados no extrato asssociado.	\N	\N	\N	343
-14	Definir forma de tratar retorno a maior que envio	2015-06-10	\N	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	\N	\N	\N	342
 15	Bloqueio ECS para autorizações	2015-06-11	Cadastro ECS / Restrições	Criar restrição para bloqueio de autorizações para estabelecimentos com situação de bloqueio referente a "Tarifa de manutenção anual" (TMA) igual a "Bloqueio Total". (B)	- Código de estabelecimento\r\n- Situação bloqueio TMA	Consultar a situação de bloqueio da TMA no cadastro de estabelecimento, caso situação igual a B não permitir a realização da autorização independente de qualquer outra restrição.	Mensagem de bloqueio.	345
 17	Alterações Cadastro TICKETS	2015-06-23	\N	Alterar atributos no cadastro de tickets para definição dos indicadores pelo Diretor da Tecbiz	: Classe Tickets.	\N	\N	359
 18	Auditoria Sistema Tecbiz	2015-06-23	\N	Gerar um relatório/planilha identificando discrepâncias, anormalidades, referente ao uso do sistema.	\N	\N	\N	360
-16	ETD 150 – Financeiro TBZ x Rede Conveniada	2015-06-23	ECS-Resumo contas receber	Definir ETD 150 como responsável pelo relacionamento financeiro das TecBiz com os Estabelecimentos comerciais. Definir históricos , relartórios e processos necessários para a administração de pendências e aprovisionamento de valores.	ECS / Todos\r\nCom saldo/Todos\r\nHistórico / Todos\r\nMês inicial: Final:\r\nAnalitico / Sintético	O relatório irá varrer a tabela de lançamentos para todos Estabelecimentos com vinculo com a Entidade 150 no mês selecionado agrupando pelos historicos na coluna.	\N	310
+16	ETD 150 – Financeiro TBZ x Rede Conveniada	2015-06-23	ECS-Resumo contas receber	Definir ETD 150 como responsável pelo relacionamento financeiro das TecBiz com os Estabelecimentos comerciais. Definir históricos , relartórios e processos necessários para a administração de pendências e aprovisionamento de valores.	ECS / Todos\r\nCom saldo/Todos\r\nMês inicial: Final:\r\nAnalitico / Sintético	O relatório irá varrer a tabela de lançamentos para todos Estabelecimentos com vinculo com a Entidade 150 no mês selecionado agrupando pelos historicos na coluna.	\N	310
+20	Relação vinculos por ETD	2015-06-29	\N	Incluir colunas no relatório atual e tbém outras formas de classificação.	Vida modelo planilha Excel Ticket-363	\N	\N	363
+21	ETD Configura nível de acesso exigido para ações	2015-06-30	\N	Criar forma de configurar por Entidade o nível do operador exigido para executar determinadas ações no sistema TecBiz OnLine, são elas: \r\n\r\n- Estorno de Autorização (a=61c2fb);\r\n- Lançamento Individual (a=ab269a);\r\n- Lançamento em Lote (a=b423c9);\r\n- Alteração de Limite (a=f08457);\r\n- Alteração de Limite em lote (a=010fc0);\r\n\r\nOnde somente usuários do tipo Gerencial terão acesso as configurações.	Código da página\r\nTitulo da página\r\nTipo de acesso exigido\r\n	\N	\N	364
+19	ECS - Log acesso e banner autorizador externo pendências financeiras	2015-06-29	Autorizador Ecs externo	Alterar os sistemas Autorizador Externo ECS, Administrador e TecBiz online para: \r\n  \r\n 1 - Registrar log de acesso por parte dos estabelecimentos comerciais. \r\n 2 - Criar campo no cadastro de ECS para definir quantidade de acessos ao autorizador externo quando o ECS estiver em bloqueio total, este número será verificado em no momento do acesso ao AUTORIZADOR EXTERNO que exibirá uma tela com a mensagem de pendencia financeira e a quantidade de acessos restantes. Quando o mesmo não possuir mais acessos, a tela de aviso não possibilitará realizar autorizações.	\N	Quando chegar o acesso a 0, o bloqueio será alterado para bloqueio total	\N	316
 \.
 
 
@@ -965,7 +1182,7 @@ COPY requisito_desenvolvimento (id, titulo, data_cadastro, rotina, objetivo, ent
 -- Name: requisito_desenvolvimento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('requisito_desenvolvimento_id_seq', 18, true);
+SELECT pg_catalog.setval('requisito_desenvolvimento_id_seq', 21, true);
 
 
 --
@@ -993,10 +1210,10 @@ SELECT pg_catalog.setval('sistema_id_seq', 8, true);
 --
 
 COPY status_ticket (id, nome) FROM stdin;
-1	Aberto
-2	Cancelado
-3	Em Andamento
-4	Fechado
+1	Ativo
+2	Pendente
+3	Encerrado
+4	Cancelado
 \.
 
 
@@ -1008,13 +1225,262 @@ SELECT pg_catalog.setval('status_ticket_id_seq', 5, false);
 
 
 --
+-- Data for Name: system_changelog; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY system_changelog (id, logdate, login, tablename, primarykey, pkvalue, operation, columnname, oldvalue, newvalue) FROM stdin;
+1	2015-07-02 10:17:09	admin	system_program	id	26	created	id	\N	26
+2	2015-07-02 10:17:09	admin	system_program	id	26	created	name	\N	SystemChangeLogView
+3	2015-07-02 10:17:09	admin	system_program	id	26	created	controller	\N	SystemChangeLogView
+4	2015-07-02 12:27:04	marcus	ticket	id	342	created	data_inicio	\N	2015-06-29
+5	2015-07-02 12:27:04	marcus	ticket	id	342	changed	status_ticket_id	2	1
+6	2015-07-02 16:52:32	gustavo	ticket	id	368	created	titulo	\N	Estorno meses passados
+7	2015-07-02 16:52:32	gustavo	ticket	id	368	created	data_inicio	\N	2015-07-02
+8	2015-07-02 16:52:32	gustavo	ticket	id	368	created	origem	\N	I
+9	2015-07-02 16:52:32	gustavo	ticket	id	368	created	solicitacao_descricao	\N	a entidade pode estornar lançamentos para meses já encerrados.
+10	2015-07-02 16:52:32	gustavo	ticket	id	368	created	data_cadastro	\N	2015-07-02
+11	2015-07-02 16:52:32	gustavo	ticket	id	368	created	solicitante_id	\N	21
+12	2015-07-02 16:52:32	gustavo	ticket	id	368	created	tipo_ticket_id	\N	6
+13	2015-07-02 16:52:32	gustavo	ticket	id	368	created	sistema_id	\N	2
+14	2015-07-02 16:52:32	gustavo	ticket	id	368	created	status_ticket_id	\N	1
+15	2015-07-02 16:52:32	gustavo	ticket	id	368	created	prioridade_id	\N	1
+16	2015-07-02 16:52:32	gustavo	ticket	id	368	created	responsavel_id	\N	1
+17	2015-07-02 16:52:32	gustavo	ticket	id	368	created	id	\N	368
+18	2015-07-03 10:51:54	peterson	ticket	id	350	changed	solicitacao_descricao	Limitar a quantidade de caracteres nos campos de limite de associado.	Limitar o valor dos limites (mensal e total) dos associado a 5.000,00 R$ em todos os módulos.\r\n
+19	2015-07-03 11:57:17	gustavo	ticket	id	368	created	data_cancelamento	\N	2015-07-03
+20	2015-07-03 11:57:17	gustavo	ticket	id	368	created	observacao	\N	Cancelado pois não houve consenso sobre a alteração. o estorno iria conflitar com outras regras do sistema tecbiz
+21	2015-07-03 11:57:17	gustavo	ticket	id	368	changed	status_ticket_id	1	4
+22	2015-07-06 10:10:26	gustavo	ticket	id	359	created	data_inicio	\N	2015-06-23
+23	2015-07-06 10:10:26	gustavo	ticket	id	359	created	data_encerramento	\N	2015-07-03
+24	2015-07-06 10:10:26	gustavo	ticket	id	359	changed	status_ticket_id	2	3
+25	2015-07-06 12:22:15	peterson	ticket	id	60	changed	titulo	ETD0060 - Cartao Empresarial SISME	ETD-060 - Cartao Empresarial SISME
+26	2015-07-06 12:25:21	peterson	ticket	id	9	changed	solicitante_id	12	45
+27	2015-07-06 12:26:21	peterson	ticket	id	28	changed	solicitante_id	12	75
+28	2015-07-06 14:42:17	gustavo	ticket	id	345	created	data_inicio	\N	2015-06-10
+29	2015-07-06 14:42:17	gustavo	ticket	id	345	changed	status_ticket_id	2	1
+30	2015-07-06 14:55:03	henrique	ticket	id	369	created	titulo	\N	Plhanilha QUALITÁ
+31	2015-07-06 14:55:03	henrique	ticket	id	369	created	data_inicio	\N	2015-07-06
+32	2015-07-06 14:55:03	henrique	ticket	id	369	created	origem	\N	I
+33	2015-07-06 14:55:03	henrique	ticket	id	369	created	solicitacao_descricao	\N	Localizar e atualizar panilha qualita de valores a pagar
+34	2015-07-06 14:55:03	henrique	ticket	id	369	created	orcamento_horas	\N	2:00:00
+35	2015-07-06 14:55:03	henrique	ticket	id	369	created	valor_total	\N	0.00
+36	2015-07-06 14:55:03	henrique	ticket	id	369	created	data_cadastro	\N	2015-07-06
+37	2015-07-06 14:55:03	henrique	ticket	id	369	created	data_prevista	\N	2015-07-10
+38	2015-07-06 14:55:03	henrique	ticket	id	369	created	data_aprovacao	\N	2015-07-06
+39	2015-07-06 14:55:03	henrique	ticket	id	369	created	solicitante_id	\N	13
+40	2015-07-06 14:55:03	henrique	ticket	id	369	created	tipo_ticket_id	\N	1
+41	2015-07-06 14:55:03	henrique	ticket	id	369	created	sistema_id	\N	1
+42	2015-07-06 14:55:03	henrique	ticket	id	369	created	status_ticket_id	\N	1
+43	2015-07-06 14:55:03	henrique	ticket	id	369	created	prioridade_id	\N	3
+44	2015-07-06 14:55:03	henrique	ticket	id	369	created	responsavel_id	\N	11
+45	2015-07-06 14:55:03	henrique	ticket	id	369	created	id	\N	369
+46	2015-07-06 14:55:34	henrique	ticket	id	369	changed	titulo	Plhanilha QUALITÁ	Planilha QUALITÁ
+47	2015-07-06 15:36:48	henrique	ticket	id	370	created	titulo	\N	Orçamento novo provedor
+48	2015-07-06 15:36:48	henrique	ticket	id	370	created	data_inicio	\N	2015-07-06
+49	2015-07-06 15:36:48	henrique	ticket	id	370	created	origem	\N	I
+50	2015-07-06 15:36:48	henrique	ticket	id	370	created	solicitacao_descricao	\N	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL
+51	2015-07-06 15:36:48	henrique	ticket	id	370	created	data_cadastro	\N	2015-07-06
+52	2015-07-06 15:36:48	henrique	ticket	id	370	created	solicitante_id	\N	13
+53	2015-07-06 15:36:48	henrique	ticket	id	370	created	tipo_ticket_id	\N	1
+54	2015-07-06 15:36:48	henrique	ticket	id	370	created	sistema_id	\N	1
+55	2015-07-06 15:36:48	henrique	ticket	id	370	created	status_ticket_id	\N	1
+56	2015-07-06 15:36:48	henrique	ticket	id	370	created	prioridade_id	\N	1
+57	2015-07-06 15:36:48	henrique	ticket	id	370	created	responsavel_id	\N	11
+58	2015-07-06 15:36:48	henrique	ticket	id	370	created	id	\N	370
+59	2015-07-06 15:39:36	henrique	ticket	id	371	created	titulo	\N	Sindicatos Indústrias
+60	2015-07-06 15:39:36	henrique	ticket	id	371	created	data_inicio	\N	2015-07-06
+61	2015-07-06 15:39:36	henrique	ticket	id	371	created	origem	\N	I
+62	2015-07-06 15:39:36	henrique	ticket	id	371	created	solicitacao_descricao	\N	Envio e análise de retorno dos e-mails
+63	2015-07-06 15:39:36	henrique	ticket	id	371	created	data_cadastro	\N	2015-07-06
+64	2015-07-06 15:39:36	henrique	ticket	id	371	created	solicitante_id	\N	13
+65	2015-07-06 15:39:36	henrique	ticket	id	371	created	tipo_ticket_id	\N	1
+66	2015-07-06 15:39:36	henrique	ticket	id	371	created	sistema_id	\N	1
+67	2015-07-06 15:39:36	henrique	ticket	id	371	created	status_ticket_id	\N	1
+68	2015-07-06 15:39:36	henrique	ticket	id	371	created	prioridade_id	\N	1
+69	2015-07-06 15:39:36	henrique	ticket	id	371	created	responsavel_id	\N	11
+70	2015-07-06 15:39:36	henrique	ticket	id	371	created	id	\N	371
+71	2015-07-06 16:12:18	henrique	ticket	id	136	changed	titulo	ETD0136 - Cartão Empresarial PIRAJU	ETD 0136 - Cartão Empresarial PIRAJU
+153	2015-07-06 17:08:05	luis	ticket	id	372	created	responsavel_id	\N	2
+72	2015-07-06 16:12:33	henrique	ticket	id	60	changed	titulo	ETD-060 - Cartao Empresarial SISME	ETD 060 - Cartao Empresarial SISME
+73	2015-07-06 16:12:50	henrique	ticket	id	59	changed	titulo	ETD0059 - Cartão Empresarial SIMUCA	ETD 059 - Cartão Empresarial SIMUCA
+74	2015-07-06 16:21:25	fe	ticket	id	331	changed	solicitante_id	12	75
+75	2015-07-06 16:24:45	gustavo	ticket	id	345	created	data_encerramento	\N	2015-07-06
+76	2015-07-06 16:24:45	gustavo	ticket	id	345	changed	status_ticket_id	1	3
+77	2015-07-06 16:25:44	gustavo	ticket	id	316	created	data_inicio	\N	2015-05-31
+78	2015-07-06 16:25:44	gustavo	ticket	id	316	changed	status_ticket_id	2	1
+79	2015-07-06 16:26:41	gustavo	ticket	id	316	created	data_encerramento	\N	2015-07-06
+80	2015-07-06 16:26:41	gustavo	ticket	id	316	changed	status_ticket_id	1	3
+81	2015-07-06 16:28:06	fe	ticket	id	58	changed	titulo	ETD 058 - AFIC	ETD 058 - AFFIC
+82	2015-07-06 16:28:06	fe	ticket	id	58	changed	solicitante_id	12	118
+83	2015-07-06 16:28:54	fe	ticket	id	56	changed	solicitante_id	12	102
+84	2015-07-06 16:30:27	fe	ticket	id	46	changed	solicitante_id	12	97
+85	2015-07-06 16:30:54	fe	ticket	id	45	changed	solicitante_id	12	95
+86	2015-07-06 16:31:21	fe	ticket	id	44	changed	solicitante_id	12	94
+87	2015-07-06 16:31:47	fe	ticket	id	43	changed	solicitante_id	12	93
+88	2015-07-06 16:32:32	fe	ticket	id	42	deleted	id	42	\N
+89	2015-07-06 16:32:32	fe	ticket	id	42	deleted	titulo	ETD 042 - UGEIRM	\N
+90	2015-07-06 16:32:32	fe	ticket	id	42	deleted	origem	I	\N
+91	2015-07-06 16:32:32	fe	ticket	id	42	deleted	solicitacao_descricao	\N	\N
+92	2015-07-06 16:32:32	fe	ticket	id	42	deleted	providencia	\N	\N
+93	2015-07-06 16:32:32	fe	ticket	id	42	deleted	orcamento_horas	\N	\N
+94	2015-07-06 16:32:32	fe	ticket	id	42	deleted	orcamento_valor_hora	\N	\N
+95	2015-07-06 16:32:32	fe	ticket	id	42	deleted	valor_desconto	\N	\N
+96	2015-07-06 16:32:32	fe	ticket	id	42	deleted	valor_total	\N	\N
+97	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_ultimo_pgto	\N	\N
+98	2015-07-06 16:32:32	fe	ticket	id	42	deleted	valor_ultimo_pgto	\N	\N
+99	2015-07-06 16:32:32	fe	ticket	id	42	deleted	valor_total_pago	\N	\N
+100	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_cadastro	2015-06-11	\N
+101	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_prevista	\N	\N
+102	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_aprovacao	\N	\N
+103	2015-07-06 16:32:32	fe	ticket	id	42	deleted	observacao	\N	\N
+104	2015-07-06 16:32:32	fe	ticket	id	42	deleted	solicitante_id	12	\N
+105	2015-07-06 16:32:32	fe	ticket	id	42	deleted	responsavel_id	12	\N
+106	2015-07-06 16:32:32	fe	ticket	id	42	deleted	tipo_ticket_id	1	\N
+107	2015-07-06 16:32:32	fe	ticket	id	42	deleted	sistema_id	1	\N
+108	2015-07-06 16:32:32	fe	ticket	id	42	deleted	status_ticket_id	2	\N
+109	2015-07-06 16:32:32	fe	ticket	id	42	deleted	prioridade_id	2	\N
+110	2015-07-06 16:32:32	fe	ticket	id	42	deleted	forma_pagamento	\N	\N
+111	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_inicio	\N	\N
+112	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_encerramento	\N	\N
+113	2015-07-06 16:32:32	fe	ticket	id	42	deleted	data_cancelamento	\N	\N
+114	2015-07-06 16:37:59	fe	ticket	id	41	changed	solicitante_id	12	92
+115	2015-07-06 16:38:27	fe	ticket	id	40	deleted	id	40	\N
+116	2015-07-06 16:38:27	fe	ticket	id	40	deleted	titulo	ETD 040 - ASGRACAS	\N
+117	2015-07-06 16:38:27	fe	ticket	id	40	deleted	origem	I	\N
+118	2015-07-06 16:38:27	fe	ticket	id	40	deleted	solicitacao_descricao	\N	\N
+119	2015-07-06 16:38:27	fe	ticket	id	40	deleted	providencia	\N	\N
+120	2015-07-06 16:38:27	fe	ticket	id	40	deleted	orcamento_horas	\N	\N
+121	2015-07-06 16:38:27	fe	ticket	id	40	deleted	orcamento_valor_hora	\N	\N
+122	2015-07-06 16:38:27	fe	ticket	id	40	deleted	valor_desconto	\N	\N
+123	2015-07-06 16:38:27	fe	ticket	id	40	deleted	valor_total	\N	\N
+124	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_ultimo_pgto	\N	\N
+125	2015-07-06 16:38:27	fe	ticket	id	40	deleted	valor_ultimo_pgto	\N	\N
+126	2015-07-06 16:38:27	fe	ticket	id	40	deleted	valor_total_pago	\N	\N
+127	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_cadastro	2015-06-11	\N
+128	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_prevista	\N	\N
+129	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_aprovacao	\N	\N
+130	2015-07-06 16:38:27	fe	ticket	id	40	deleted	observacao	\N	\N
+131	2015-07-06 16:38:27	fe	ticket	id	40	deleted	solicitante_id	12	\N
+132	2015-07-06 16:38:27	fe	ticket	id	40	deleted	responsavel_id	12	\N
+133	2015-07-06 16:38:27	fe	ticket	id	40	deleted	tipo_ticket_id	1	\N
+134	2015-07-06 16:38:27	fe	ticket	id	40	deleted	sistema_id	1	\N
+135	2015-07-06 16:38:27	fe	ticket	id	40	deleted	status_ticket_id	2	\N
+136	2015-07-06 16:38:27	fe	ticket	id	40	deleted	prioridade_id	2	\N
+137	2015-07-06 16:38:27	fe	ticket	id	40	deleted	forma_pagamento	\N	\N
+138	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_inicio	\N	\N
+139	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_encerramento	\N	\N
+140	2015-07-06 16:38:27	fe	ticket	id	40	deleted	data_cancelamento	\N	\N
+141	2015-07-06 16:39:05	fe	ticket	id	39	changed	solicitante_id	12	90
+142	2015-07-06 16:46:42	fe	ticket	id	37	changed	solicitante_id	12	61
+143	2015-07-06 16:53:05	fe	ticket	id	36	changed	solicitante_id	12	86
+144	2015-07-06 17:08:05	luis	ticket	id	372	created	titulo	\N	ARCO - Configuração recurso exclusivo arquivo retorno
+145	2015-07-06 17:08:05	luis	ticket	id	372	created	origem	\N	I
+146	2015-07-06 17:08:05	luis	ticket	id	372	created	solicitacao_descricao	\N	Configuração para liberar lançamento no 3000 para reprocessamento arquivo de retorno via recurso exclusivo. 
+147	2015-07-06 17:08:05	luis	ticket	id	372	created	data_cadastro	\N	2015-07-06
+148	2015-07-06 17:08:05	luis	ticket	id	372	created	solicitante_id	\N	21
+149	2015-07-06 17:08:05	luis	ticket	id	372	created	tipo_ticket_id	\N	1
+150	2015-07-06 17:08:05	luis	ticket	id	372	created	sistema_id	\N	3
+151	2015-07-06 17:08:05	luis	ticket	id	372	created	status_ticket_id	\N	2
+152	2015-07-06 17:08:05	luis	ticket	id	372	created	prioridade_id	\N	1
+154	2015-07-06 17:08:05	luis	ticket	id	372	created	id	\N	372
+155	2015-07-06 17:47:03	luis	ticket	id	372	created	data_inicio	\N	2015-07-06
+156	2015-07-06 17:47:03	luis	ticket	id	372	created	data_encerramento	\N	2015-07-06
+157	2015-07-06 17:47:03	luis	ticket	id	372	changed	status_ticket_id	2	3
+158	2015-07-07 10:02:35	gustavo	ticket	id	373	created	titulo	\N	Tickets - Resumo e atividades
+159	2015-07-07 10:02:35	gustavo	ticket	id	373	created	data_inicio	\N	2015-07-07
+160	2015-07-07 10:02:35	gustavo	ticket	id	373	created	origem	\N	I
+161	2015-07-07 10:02:35	gustavo	ticket	id	373	created	solicitacao_descricao	\N	Relatório de tickets (sintético e analitico) com relação a as atividades dos colaboradores, layout e regras conforma planilha
+162	2015-07-07 10:02:35	gustavo	ticket	id	373	created	data_cadastro	\N	2015-07-07
+163	2015-07-07 10:02:35	gustavo	ticket	id	373	created	solicitante_id	\N	13
+164	2015-07-07 10:02:35	gustavo	ticket	id	373	created	tipo_ticket_id	\N	4
+165	2015-07-07 10:02:35	gustavo	ticket	id	373	created	sistema_id	\N	4
+166	2015-07-07 10:02:35	gustavo	ticket	id	373	created	status_ticket_id	\N	1
+167	2015-07-07 10:02:35	gustavo	ticket	id	373	created	prioridade_id	\N	3
+168	2015-07-07 10:02:35	gustavo	ticket	id	373	created	responsavel_id	\N	1
+169	2015-07-07 10:02:35	gustavo	ticket	id	373	created	id	\N	373
+170	2015-07-07 11:11:43	luis	ticket	id	357	changed	solicitacao_descricao	FABIANA ECS/ CARLOS TEF\r\ntel contato: 3488.2931\r\nTEF: Sitef\r\nObs: Aguardando homologação	FABIANA ECS/ CARLOS TEF\r\ntel contato: 3488.2931\r\nTEF: Sitef\r\nObs: Aguardando homologação\r\nvolta de férias apenas começo de agosto.
+171	2015-07-07 12:11:15	henrique	ticket	id	369	changed	orcamento_horas	02:00:00	5:00:00
+172	2015-07-07 12:11:40	henrique	ticket	id	369	changed	prioridade_id	3	1
+173	2015-07-08 10:54:52	henrique	ticket	id	374	created	titulo	\N	Maunal do Cartão Empresarial
+174	2015-07-08 10:54:52	henrique	ticket	id	374	created	data_inicio	\N	2015-07-08
+175	2015-07-08 10:54:52	henrique	ticket	id	374	created	origem	\N	I
+176	2015-07-08 10:54:52	henrique	ticket	id	374	created	solicitacao_descricao	\N	Criar e padronizar 
+177	2015-07-08 10:54:52	henrique	ticket	id	374	created	data_cadastro	\N	2015-07-08
+178	2015-07-08 10:54:52	henrique	ticket	id	374	created	solicitante_id	\N	13
+179	2015-07-08 10:54:52	henrique	ticket	id	374	created	tipo_ticket_id	\N	1
+180	2015-07-08 10:54:52	henrique	ticket	id	374	created	sistema_id	\N	1
+181	2015-07-08 10:54:52	henrique	ticket	id	374	created	status_ticket_id	\N	1
+182	2015-07-08 10:54:52	henrique	ticket	id	374	created	prioridade_id	\N	3
+183	2015-07-08 10:54:52	henrique	ticket	id	374	created	responsavel_id	\N	11
+184	2015-07-08 10:54:52	henrique	ticket	id	374	created	id	\N	374
+185	2015-07-08 10:57:32	henrique	ticket	id	374	changed	data_inicio	2015-07-08	\N
+186	2015-07-08 10:57:32	henrique	ticket	id	374	changed	status_ticket_id	1	2
+187	2015-07-08 12:01:45	henrique	ticket	id	369	changed	solicitacao_descricao	Localizar e atualizar panilha qualita de valores a pagar	Localizar e atualizar panilha qualita de valores a pagar\r\n\r\napartir de junho/15
+188	2015-07-08 12:02:27	henrique	ticket	id	370	changed	titulo	Orçamento novo provedor	Orçamento novo Data Center
+189	2015-07-08 12:02:27	henrique	ticket	id	370	changed	solicitacao_descricao	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL\r\n\r\n- ver com Qualitar 
+190	2015-07-08 14:19:06	marcus	ticket	id	318	created	data_inicio	\N	2015-05-29
+191	2015-07-08 14:19:06	marcus	ticket	id	318	created	data_encerramento	\N	2015-07-03
+192	2015-07-08 14:19:06	marcus	ticket	id	318	changed	status_ticket_id	2	3
+193	2015-07-08 14:19:44	marcus	ticket	id	342	created	data_encerramento	\N	2015-07-03
+194	2015-07-08 14:19:44	marcus	ticket	id	342	changed	status_ticket_id	1	3
+195	2015-07-08 14:19:58	marcus	ticket	id	342	changed	data_encerramento	2015-07-03	\N
+196	2015-07-08 14:19:58	marcus	ticket	id	342	changed	status_ticket_id	3	1
+197	2015-07-08 15:11:51	admin	system_program	id	27	created	id	\N	27
+198	2015-07-08 15:11:51	admin	system_program	id	27	created	name	\N	TicketReport
+199	2015-07-08 15:11:51	admin	system_program	id	27	created	controller	\N	TicketReport
+200	2015-07-08 15:29:15	marcus	ticket	id	373	created	data_encerramento	\N	2015-07-08
+201	2015-07-08 15:29:15	marcus	ticket	id	373	changed	status_ticket_id	1	3
+202	2015-07-08 15:56:05	henrique	ticket	id	366	created	orcamento_horas	\N	4:00:00
+203	2015-07-08 15:56:05	henrique	ticket	id	366	created	valor_total	\N	0.00
+204	2015-07-08 15:57:09	henrique	ticket	id	371	created	orcamento_horas	\N	1:00:00
+205	2015-07-08 15:57:09	henrique	ticket	id	371	created	valor_total	\N	0.00
+206	2015-07-08 15:57:34	henrique	ticket	id	371	changed	data_prevista	\N	2015-07-10
+207	2015-07-08 15:58:41	henrique	ticket	id	370	created	data_prevista	\N	2015-07-10
+208	2015-07-08 15:58:41	henrique	ticket	id	370	created	data_aprovacao	\N	2015-07-06
+209	2015-07-08 16:00:09	henrique	ticket	id	59	created	orcamento_horas	\N	3:00:00
+210	2015-07-08 16:00:09	henrique	ticket	id	59	created	valor_total	\N	0.00
+211	2015-07-08 16:00:31	henrique	ticket	id	60	created	orcamento_horas	\N	3:00:00
+212	2015-07-08 16:00:31	henrique	ticket	id	60	created	valor_total	\N	0.00
+213	2015-07-08 16:00:55	henrique	ticket	id	136	created	orcamento_horas	\N	3:00:00
+214	2015-07-08 16:00:55	henrique	ticket	id	136	created	valor_total	\N	0.00
+215	2015-07-08 18:23:31	henrique	ticket	id	301	created	data_inicio	\N	2015-07-01
+216	2015-07-08 18:23:31	henrique	ticket	id	301	changed	status_ticket_id	2	1
+217	2015-07-08 18:24:14	henrique	ticket	id	136	created	data_inicio	\N	2015-07-01
+218	2015-07-08 18:24:14	henrique	ticket	id	136	changed	status_ticket_id	2	1
+219	2015-07-08 18:24:32	henrique	ticket	id	374	created	data_inicio	\N	2015-07-08
+220	2015-07-08 18:24:32	henrique	ticket	id	374	changed	status_ticket_id	2	1
+221	2015-07-08 18:24:43	henrique	ticket	id	334	created	data_inicio	\N	2015-07-01
+222	2015-07-08 18:24:43	henrique	ticket	id	334	changed	status_ticket_id	2	1
+223	2015-07-08 18:24:54	henrique	ticket	id	60	created	data_inicio	\N	2015-07-01
+224	2015-07-08 18:24:54	henrique	ticket	id	60	changed	status_ticket_id	2	1
+225	2015-07-08 18:25:08	henrique	ticket	id	59	created	data_inicio	\N	2015-07-01
+226	2015-07-08 18:25:08	henrique	ticket	id	59	changed	status_ticket_id	2	1
+227	2015-07-08 18:25:29	henrique	ticket	id	56	created	data_inicio	\N	2015-07-01
+228	2015-07-08 18:25:29	henrique	ticket	id	56	changed	status_ticket_id	2	1
+229	2015-07-09 09:56:29	mauricio	ticket	id	17	created	data_inicio	\N	2015-06-11
+230	2015-07-09 09:56:29	mauricio	ticket	id	17	changed	status_ticket_id	2	1
+231	2015-07-09 10:13:49	mauricio	ticket	id	37	changed	titulo	ETD 037 - AFHDP	ETD 017 - AFHDP
+232	2015-07-09 10:16:25	gustavo	ticket	id	326	created	data_inicio	\N	2015-06-01
+233	2015-07-09 10:16:25	gustavo	ticket	id	326	changed	status_ticket_id	2	1
+234	2015-07-09 10:19:03	peterson	ticket	id	364	created	data_inicio	\N	2015-07-06
+235	2015-07-09 10:19:03	peterson	ticket	id	364	changed	status_ticket_id	2	1
+236	2015-07-09 10:59:59	eunice	ticket	id	34	created	data_inicio	\N	2015-06-11
+237	2015-07-09 10:59:59	eunice	ticket	id	34	changed	status_ticket_id	2	1
+238	2015-07-09 11:15:31	eunice	ticket	id	11	created	data_inicio	\N	2015-06-11
+239	2015-07-09 11:15:31	eunice	ticket	id	11	changed	status_ticket_id	2	1
+240	2015-07-09 11:17:42	eunice	ticket	id	28	created	data_inicio	\N	2015-06-01
+241	2015-07-09 11:17:42	eunice	ticket	id	28	changed	status_ticket_id	2	1
+\.
+
+
+--
 -- Data for Name: system_group; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY system_group (id, name) FROM stdin;
 1	ADMIN
-2	usuarios
 3	tecbiz
+2	usuarios
 \.
 
 
@@ -1029,33 +1495,37 @@ COPY system_group_program (id, system_group_id, system_program_id) FROM stdin;
 4	1	4
 5	1	5
 6	1	6
-57	2	7
-58	2	8
-59	2	9
-60	2	10
-61	2	11
-62	2	12
-63	2	13
-64	2	14
-65	2	15
-66	2	16
-67	2	17
-68	2	18
-69	2	19
-70	2	20
-71	2	21
-72	2	12
-73	2	22
-74	2	24
-75	2	25
-76	3	8
-77	3	11
-78	3	20
-79	3	21
-80	3	22
-81	3	9
-82	3	10
-83	3	25
+105	3	8
+106	3	11
+107	3	20
+108	3	21
+109	3	22
+110	3	9
+111	3	10
+112	3	25
+113	3	26
+114	3	23
+115	2	7
+116	2	8
+117	2	9
+118	2	10
+119	2	11
+120	2	12
+121	2	13
+122	2	14
+123	2	15
+124	2	16
+125	2	17
+126	2	18
+127	2	19
+128	2	20
+129	2	21
+130	2	12
+131	2	22
+132	2	24
+133	2	25
+134	2	23
+135	2	27
 \.
 
 
@@ -1089,6 +1559,8 @@ COPY system_program (id, name, controller) FROM stdin;
 23	Relatorio	AtividadeReport
 24	TicketFormAcerto	TicketFormAcerto
 25	TicketPessoaSeek	TicketPessoaSeek
+26	SystemChangeLogView	SystemChangeLogView
+27	TicketReport	TicketReport
 \.
 
 
@@ -1106,10 +1578,10 @@ COPY system_user (id, name, login, password, email, frontpage_id) FROM stdin;
 12	Mauricio Cardoso	mauricio	f9a06be8a0d606d4e9332975bc24d0bc	financeiro@tecbiz.com.br	21
 13	Marco Leal	marco leal	7bbfac75dbeed99c5e2c07479d16aab2	comercial2@tecbiz.com.br	21
 1	Administrator	admin	f2b1332aff709790cfa05a6f32ca5e74	admin@admin.net	6
-4	Peterson Nunes Pedroso	peterson	314eea43b4d96799ccc782f6ba0835b3	peterson@tecbiz.com.br	9
-3	Marcus Monti da Silva	marcus	e10adc3949ba59abbe56e057f20f883e	monti@tecbiz.com.br	21
 11	Henrique	henrique	244948ae796768a2cc9259a684ef058b	henriquemorethson@gmail.com	21
 14	Oseias	oseias	8226ac2b36ae53f0c0b5e98a34e06169	oseias@tecbiz.com.br	10
+4	Peterson Nunes Pedroso	peterson	314eea43b4d96799ccc782f6ba0835b3	peterson@tecbiz.com.br	9
+3	Marcus Monti da Silva	marcus	e10adc3949ba59abbe56e057f20f883e	monti@tecbiz.com.br	21
 5	Gustavo Emmel	gustavo	850af92f8d9903e7a4e0559a98ecc857	gustavo@tecbiz.com.br	21
 \.
 
@@ -1128,11 +1600,11 @@ COPY system_user_group (id, system_user_id, system_group_id) FROM stdin;
 16	12	3
 17	13	3
 19	1	1
-21	4	2
-22	3	2
 23	11	2
 24	14	3
-25	5	2
+26	4	2
+27	3	2
+28	5	2
 \.
 
 
@@ -1156,12 +1628,16 @@ COPY system_user_program (id, system_user_id, system_program_id) FROM stdin;
 13	2	19
 14	2	20
 15	2	21
-17	4	23
-18	3	23
 19	11	23
 20	14	23
-21	5	23
-22	5	7
+24	4	23
+25	4	26
+26	3	23
+27	3	26
+28	5	23
+29	5	7
+30	5	26
+31	5	27
 \.
 
 
@@ -1169,108 +1645,118 @@ COPY system_user_program (id, system_user_id, system_program_id) FROM stdin;
 -- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_horas, orcamento_valor_hora, valor_desconto, valor_total, data_ultimo_pgto, valor_ultimo_pgto, valor_total_pago, data_cadastro, data_prevista, data_validade, data_aprovacao, observacao, solicitante_id, responsavel_id, tipo_ticket_id, sistema_id, status_ticket_id, prioridade_id, forma_pagamento) FROM stdin;
-3	ETD 003 - AFUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	\N	12	12	1	1	1	2	\N
-39	ETD 039 - ASMUT	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-09	\N	\N	\N	\N	12	12	1	1	1	2	\N
-58	ETD 058 - AFIC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	\N	12	12	1	1	1	2	\N
-5	ETD 005 - GSFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-1	ETD 001 - GSMCB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-2	ETD 002 - ARBS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-4	ETD 004 - ASHCLIN	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-6	ETD 006 - SSPM SAP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-7	ETD 007 - ASSERMIBA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-8	ETD 008 - AFFZB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-9	ETD 009 - AFPUC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-10	ETD 010 - ASSOBAND	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-11	ETD 011 - SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-12	ETD 012 - ASCOM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-13	ETD 013 - SBSHED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-28	ETD 028 - AFUMI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	12	12	1	1	1	2	\N
-21	ETD 021 - SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	12	12	1	1	1	2	\N
-36	ETD 036 - PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	\N	\N	\N	\N	12	12	1	1	1	2	\N
-14	ETD 014 - BELSHOP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-56	ETD 056 - AFU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	12	12	1	1	1	2	\N
-32	ETD 032 - ASED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	12	12	1	1	1	2	\N
-20	ETD 020 - AFUSC	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	12	12	1	1	1	2	\N
-15	ETD 015 - ASMV	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-18	ETD 018 - SIMSOL	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-19	ETD 019 - SPMG	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-22	ETD 022 - AFUSPE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-23	ETD 023 - SIMCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-25	ETD 025 - ASEMARGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-26	ETD 026 - ASSURFRGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-27	ETD 027 - SINDISMAR	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-29	ETD 029 - SIMPASSO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-31	ETD 031 - GSAFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-33	ETD 033 - ASSERJUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-34	ETD 034 - ASSOCIAMED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-35	ETD 035 - ABOJERIS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-37	ETD 037 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-38	ETD 038 - IBCM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-40	ETD 040 - ASGRACAS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-41	ETD 041 - AGASAI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-42	ETD 042 - UGEIRM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-43	ETD 043 - ASPROCERGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-44	ETD 044 - COFRS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-45	ETD 045 - ARCO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-46	ETD 046 - AFUSPA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-319	Auditoria de lançamentos de controle FP	I	Desenvolver rotina, metodologia e periodicidade de auditoria nos lançamentos de controle gerados pelo Fechamento (FP).	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	4	3	1	2	\N
-320	Contas a pagar	I	 TBZ movimentação contas a pagar encerrado (Avaliar criar tabela com %tx adm alterados): Publicar ADM e OnLine.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	5	3	1	2	\N
-308	Alterar regra de geração de senha dinâmica.	I	Definir a alterar regra de geração de senha dinâmica.	Alterada a regra de geração da senha quinzenal	\N	\N	\N	\N	\N	\N	\N	2015-05-29	2015-06-22	2015-06-22	2015-06-22	\N	14	14	5	2	4	2	\N
-17	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	1	1	2	\N
-334	Cartão empresarial - Fluxo	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	2015-06-30	\N	\N	13	11	8	1	1	1	\N
-338	Acesso anos anteriores - ARCO	E	Cliente solicita acesso aos anos anteriores para consulta.	\N	01:00:00	50.00	\N	50.00	\N	0.00	0.00	2015-06-08	2015-06-08	2015-06-08	2015-06-08	\N	96	21	1	3	4	1	LANÇAMENTO: 2650638
-340	RELATÓRIO ASSOCIADOS AFPUC	E	 Cliente solicita relatório de associados liberados de todas as fontes pagadoras, no layout a seguir: Matricula / Nome / E-mail	Disponibilizado TecBiz OnLine, na tabela que exibe o resultados da pesquisa de associados.	01:00:00	45.00	0.00	45.00	\N	\N	\N	2015-06-09	2015-06-09	2015-06-09	2015-06-09	Inlcuso também os campos CPF, RG e E-mail2	107	12	1	3	4	2	LANÇAMENTO:2624232 MAIO/15
-307	Tratamento envio/retorno FP - TBZ	I	Associado com a mesma matricula em FPG's diferentes, FP está trocando os associados. Fazendo assim tratar o associado errado! \r\n  \r\n Exp: ETD 045, Matricula: 86845438	Rotinas envolvidas no processo:\r\npg_envio_retorno_rh.php\r\npg_fec_retorno_banco.php\r\npg_fec_retorno_rh.php\r\nsql3.php -> fp_estorno_tbz_envio_retorno \r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	12	2	3	3	4	2	\N
-316	ECS - Log acesso e banner autorizador externo pendências financeiras	I	 Alterar os sistemas Autorizador Externo ECS, Administrador e TecBiz online para: \r\n  \r\n 1 - Registrar log de acesso por parte dos estabelecimentos comerciais. \r\n 2 - Criar campo no cadastro de ECS para definir quantidade de acessos ao autorizador externo quando o ECS estiver em bloqueio total, este número será verificado em no momento do acesso ao AUTORIZADOR EXTERNO que exibirá uma tela com a mensagem de pendencia financeira e a quantidade de acessos restantes. Quando o mesmo não possuir mais acessos, a tela de aviso não possibilitará realizar autorizações.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	4	3	1	2	\N
-342	Definir forma de tratar retorno a maior que envio	I	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	Definir procedimento e mensagem a ser tratado na rotina de reotrno bancario e rh	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	\N	13	2	4	3	1	2	\N
-311	ETD - Resumo de contas a receber	I	incluir 2 colunas no relatório = Cartão e suporte	Tirar da coluna outros os seguintes históricos:\r\nCartão = Histórico 009;\r\nSuporte= Históricos 018,019;\r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	13	1	4	2	1	1	\N
-314	Cadastro de 2° limite associado 	E	  Cliente solicita a inclusão de um segundo campo de limite no cadastro dos associados referente ao cartão SONAE; \r\n E ao gerar o recurso exclusivo com o limite mensal do cartão da TecBiz, sera feito o abatimento deste limite informado com o valor disponibilizado pelo RH. \r\n \r\n Exemplo: Associado recebe do RH 1500 reais para limite mensal(LimiteRH);\r\n Em seu cadastro o associado utiliza um limite no cartão SONAE de 200 reais(LimiteSONAE);\r\n Ao gerar o recurso exclusivo do sistema da TecBiz será disponivel seu novo LimiteMensal = (LimiteRH - LimiteSONAE) ou seja LimiteMensal (1500 - 200), liberando apenas 1.300 reais de consumo mensal no cartão TBZ.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	85	12	1	3	1	2	\N
-321	Homologação Quero Quero	E	Homologação do TEF Quero-Quero.\r\n \r\n Configuração: "ok" 18/11/2014\r\n Arquivo de Conciliação: "aguardando T.I"	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	1	3	1	2	\N
-317	Listagem de associados inativos	E	Alterar listagem de associados inativos no TecBiz Online para a Entidade poder visualizar os associados cobrados e ter a opção de excluir os que estão inativos a mais de 12 meses.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	74	12	1	3	1	2	\N
-315	Alteração Layout arquivo envio banco 	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n segue contato do responsável desta alteração por parte da CEF \r\n Contato: Humberto: 96536998 \r\n hvinholesdecarvalho@gmail.com	\N	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	80	2	1	3	1	2	\N
-318	Modulo Atividades	I	 Modulo de Atividades para controlo Tickets , Ordem de Servi~ço , Atividades Registrada pelo Colaboradores Tercbiz	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	13	2	4	2	1	2	\N
-313	FP - Gerar valores creditos na ECS 9020	I	  Gerar valores de credito do ASSOCIADO em uma ECS especifica (9020)	Alteradas as rotinas para contemplar a nova regra	16:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-19	2015-06-01	\N	12	2	5	3	4	2	\N
-310	ETD 150 – Financeiro TBZ x Rede Conveniada	I	Definir ETD 150 como responsável pelo relacionamento financeiro das TecBiz com os Estabelecimentos comerciais. Definir históricos , relartórios e processos necessários para a administração de pendências e aprovisionamento de valores.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	14	14	4	2	1	2	\N
-305	Bloqueio de associado por período	E	Cliente solicita período de bloqueio para associado individual, o bloqueio irá consistir em data início e fim, estará disponível no cadastro do associado e terá desbloqueio automático ao final do período. \r\n Existirá também relatório de associados bloqueados pelo cadastro.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	45	12	1	3	1	2	\N
-306	Lançamento associado individual - melhoria	I	  Alterar o módulo de lançamento para associado individual para inserir os campos forma de pagamento e tipo de crédito, alteração do layout da tela para dar ficar mais compreensível a transação, deixando claro quem será debitado e creditado.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	12	12	3	3	1	2	\N
-322	Editar comprovante	E	 Cliente solicita as seguintes alterações no comprovante: \r\n  \r\n *Aumentar a quantidade de caracteres do campo comprovantes, para registrar acertos \r\n *Ter a opção de imprimir o comprovante com o campo observação, para ser utilizado como documento de negociação e o associado assinar; \r\n *Editar Obs. de autorizações encerradas, para utilizar em caso de renegociações. \r\n  \r\n Data solicitação: 15/09/2014	\N	16:00:00	45.00	\N	720.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	45	12	1	3	1	2	\N
-324	Relatório analítico	E	Cliente solicita novo relatório também semanal com as informações conforme o recurso exclusivo já disponivel(a=1e22a9) porém discriminado os valores por associado, exemplo: ASS 1= autorização, data,nome loja, valor total, valor parcelas.	\N	10:00:00	45.00	\N	450.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	55	12	1	3	1	2	\N
-326	Alteração Cadastro Pessoas	I	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa 	Alterar a rotina :  pg_adm_pessoas; pg_adm_pesquisa_pessoas	\N	\N	\N	\N	\N	\N	\N	2015-06-01	2015-06-08	\N	\N	\N	13	2	5	2	1	1	\N
-327	Alteração Layout CEF arquivo envio banco ASED	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n	Configurar/Parametrizar este layout nas rotinas\r\nlayout_etd_banco e ;pg_fec_envio_banco Tabela :tbz_convenio_banco	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-06-01	2015-06-22	\N	\N	Segue contato do responsável desta alteração por parte da CEF Contato: Humberto: 96536998 	80	2	4	3	3	1	\N
-328	Atestado médico	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	13	12	7	1	1	1	\N
-333	Processo Ticket	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	\N	12	12	8	1	1	1	\N
-339	Arquivo de conciliação	E	Desenvolvimento de arquivo de conciliação conforme layout fornecido pelo cliente (similar ELO)	\N	\N	0.00	\N	0.00	\N	\N	\N	2015-06-08	2015-06-10	2015-06-10	2015-06-08	\N	108	14	4	3	3	1	\N
-345	Bloqueio ECS para autorizações	I	Cadastro ECS: Manutençao Anual em Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\nEsta rotina irá alterar status para bloqueado "Manuteção anual"	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	\N	13	14	4	2	1	1	\N
-323	Arquivo associados bloqueados	E	 Cliente solicita que o arquivo que é enviado mensalmente no dia 1 ref. ao arquivo de bloqueio em lote, seja enviado ou disponibilizado no sistema via excel.\r\n solução:\r\n enviar em arquivo .xlsx(EXCEL) anexado via email no mesmo layout que é enviado via atualmente.\r\n Ticket reenviado dia 03/11/2014	\N	08:00:00	45.00	\N	360.00	\N	\N	\N	2015-05-29	\N	\N	\N	\N	73	12	1	3	1	2	\N
-332	Treinamento - AFPUC	E	Cliente solicita treinamento para funcionários que vão utilizar o sistema TecBiz online.	\N	03:00:00	45.00	\N	135.00	\N	\N	\N	2015-06-03	\N	\N	\N	\N	107	21	1	3	1	1	\N
-347	Exibição correta lista meses	I	Correção da exibição dos meses nos Ctas a Receber (aberto e fechado) exibindo o ultimo mês fechado da fonte selecionada, para meses fechados, e primeiro mês aberto referente a fonte selecionada para meses abertos.	Alteração realizada conforme constatação do erro.	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-11	2015-06-11	2015-06-11	2015-06-11	Construir relatório unificado, independente da situação do mês, onde será informado no resultado (relatório) a situação da fonte no mês selecionado.	9	14	6	3	1	1	\N
-331	Dados complementares dependente - AFUMI	E	Cliente solicita que seja inserido dois campos para o cadastro de dependente, são eles a data de nascimento e grau de parentesco (do dependente com o titular).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-03	\N	\N	\N	\N	12	12	4	3	1	2	\N
-330	Alterações Manutenção Anual	I	No Cadastro ECS em Manutenção Anual  providenciar:\r\nem Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\n	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	2015-06-02	2015-06-02	2015-06-01	Item da ATA do dia 01/06	13	1	5	2	4	1	\N
-309	Inibir lançamentos para ECS de fechamento	I	 Alterar os módulos de lançamento para associado individual e em lote para não permitir que sejam realizados lançamentos para estabelecimentos de fechamento/cobrança, ex: 3000, 9000, 9020, 1500 e outros.	\N	18:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-19	2015-06-01	\N	12	12	1	3	4	2	\N
-301	ECS - Generico	I	XXXX	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	\N	12	12	1	1	1	1	\N
-341	Extrato Associado POS	I	As cargas dos POS que possuem a opção "Extrato" não estão funcionando.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	\N	12	12	1	3	4	1	\N
-312	Alteração de e-mails de destino TBZ	I	 Alteração de e-mails de destino da TecBiz:\r\n # Site\r\n Comercial E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br\r\n Rede E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n Usuário E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n \r\n # Sistema\r\n Solicitação de Convênios: credenciamento@tecbiz.com.br\r\n ECS Dados Cadastrais: suporte@tecbiz.com.br, credenciamento@tecbiz.com.br\r\n Questionário T.E.F: atendimento@tecbiz.com.br, suporte@tecbiz.com.br\r\n Contato ECS: suporte@tecbiz.com.br, oseias@tecbiz.combr e atendimento2@hotmail.com\r\n Fale diretoria: oseias@tecbiz.com.br, suporte@tecbiz.com.br\r\n Cartão Empresarial: oseias@tecbiz.com.br, suporte@tecbiz.com.br, henrique@tecbiz.com.br, \r\n \r\n Excluir os Emails Abaixo:\r\n \r\n carla@tecbiz.com.br - INATIVO\r\n cartoes@tecbiz.com.br - INATIVO\r\n clientes@tecbiz.com.br - INATIVO\r\n convenios@tecbiz.com.br - INATIVO (FORM. ALTERAÇÕES CADASTRO DE ECS)\r\n felipe@tecbiz.com.br - INATIVO\r\n tecnologia@tecbiz.com.br - INATIVO.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	\N	12	12	5	3	1	2	\N
-359	Alterações Cadastro TICKETS	I	Alterar atributos no cadastro de tickets para definição dos indicadores pelo Diretor da Tecbiz	Defini DTR, e Apos aprovada pelo Oseias , desenvolver as alterações no cadsastro de Tickets	\N	\N	\N	\N	\N	\N	\N	2015-06-23	2015-07-03	\N	\N	\N	13	2	5	4	1	2	\N
-360	Auditoria Sistema Tecbiz	I	Gerar um relatório/planilha identificando discrepâncias, anormalidades, referente ao uso do sistema.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	2015-07-31	\N	\N	\N	13	2	4	2	1	2	\N
-350	Limitar limites de associado	I	Limitar a quantidade de caracteres nos campos de limite de associado.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-16	2015-06-19	\N	\N	\N	13	14	5	3	1	1	\N
-356	AFPUC - Acesso Olds	E	Será disponibilizado 2 dias de acesso grátis dos anos anteriores para a AFPUC. Começando a partir do dia 23/06	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-22	\N	\N	\N	\N	107	13	1	3	4	1	\N
-358	ASMV - Duplicidade lançamentos margem F.P	E	ESTORNAR sempre no dia 23 de todo o mês os lançamentos duplicados pela rotina de F.P do operador "DIFERENÇA".	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	\N	58	21	1	3	4	3	\N
-352	Alteração recurso exclusivo AFPUC	E	Após publicação da DTR218 no qual inibi lançamentos de ECS 3000, cliente não consegue realizar os lançamentos via recurso exclusivo, alterar programa para permitir o lançamento quando for oriundo de tratamento de envio/retorno	\N	\N	\N	\N	0.00	\N	\N	\N	2015-06-18	\N	\N	\N	\N	107	9	1	3	1	1	\N
-354	Restrições por segmento - Administrador	I	Em restrições por segmento que traziam por default o campo "bloqueável: não" quando o mesmo não tinha restrição, gerando problema no período de bloqueio da ETD-01	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	\N	9	9	1	2	1	1	\N
-351	Data e hora de geração nos relatórios de contas e pagar e receber	I	Inserir no cabecalho e rodapé dos  relatórios de Ctas a pagar e a receber a data e hora da geração dos mesmos.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-17	2015-06-17	\N	\N	\N	13	14	5	2	4	1	\N
-60	ETD0060 - Cartao Empresarial SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	49	11	1	1	1	1	\N
-361	Módulo associado mobile	I	Desenvolvimento de módulo mobile para associado com consulta de saldo e rede conveniada.	\N	20:00:00	0.00	\N	0.00	\N	\N	\N	2015-06-23	2015-07-31	\N	\N	\N	13	14	4	3	1	2	\N
-357	TEF - ECS 1403 - Posto Quadros	I	FABIANA ECS/ CARLOS TEF\r\ntel contato: 3488.2931\r\nTEF: Sitef\r\nObs: Aguardando homologação	01/06/2015 - Envio de e-mail para homologação, empresa esta com problemas técnicos. aguardando contato para a configuração e teste	\N	\N	\N	\N	\N	\N	\N	2015-06-22	\N	\N	\N	\N	21	21	1	8	3	1	\N
-136	ETD0136 - Cartão Empresarial PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	86	11	1	1	1	1	\N
-59	ETD0059 - Cartão Empresarial SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	\N	69	11	1	1	1	1	\N
-355	ASMV - Recurso exclusivo matricula/lçt 300	I	acertar o recurso exlusivo de envio e retorn rh com o 3000, de acordo com os lançamentos e também a matricula com 7 digitos	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	\N	58	2	1	3	4	1	\N
-353	Periodo de bloqueio e Alteração Encerramento - GSMCB	E	Cliente solicita período de bloqueio de volta do dia 18 ao dia 19 para fonte pagadora 1! E não quer trabalhar com o período de ajuste (Corta e encerra no mesmo dia).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	\N	35	21	1	2	1	1	\N
-349	ESTORNO SENHA PADRÃO	I	Senha padrão não fará extorno no ecs	Quando um usuario de ECS se logar com senha padrão, será gravado na sessão e deverá ser inibido o botão de estorno.\r\nTodas as ações feitas no sistema online utilizando a senha padrão serão gravadas no log com um diferencial (SA) após a descrição da atividade	\N	\N	\N	\N	\N	\N	\N	2015-06-12	2015-06-22	2015-06-22	2015-06-22	/tecbiz/logica/controle/senha.php\r\n/tecbiz/logica/log/registro_log_geral.php\r\n/tecbiz/interface/web/acoes/pg_est_estorno_aut.php\r\n/tecbiz/interface/web/acoes/pg_logout.php	12	1	1	3	4	1	\N
-348	Extrato associado - AFPUC	I	Cliente deseja que apareça o telefone para contato no relatório dos associados. (Telefone/Celular)	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-12	\N	\N	\N	\N	21	12	1	3	1	1	\N
-343	Auditor identificar duplicidade e de lcts, autorizações.	I	Definição e programação script pata auditar lancamentos efetuados no extrato asssociado.	Desenvolvimento de uma rotina a ser disparada apos encerramento da fpg para auditar lancamentos cfe regras:\r\nExecutar esta rotina após o dia de encerramento\r\nMontar array por associado com valor devido conforme seu extrato referente ao ultimo mês encerrado\r\nValor atributo valor_origem (Tbz_envio_retorno) deve ser igual ao valor array\r\nNo extrato atual do associado só poderá haver no maximo 2 lancamentos na ECS 3000\r\nUm  lancamento de debito e um lancamento de credito\r\nO valor do lancamento de debito (3000) + lancamento exedente margem (9000) deve ser igual ao valor do array do associado (vlr devido do ultimo enecerramento)\r\nValor debito lct 3000 deve ser igual ao valo do atributo envio_valor (tbz_envio_retorno)\r\nValor lct execedente margem (9000) deve ser igual ao valor da diferenca entre os  array & envio_valor (tbz_envio_retorno)\r\n	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	\N	13	2	1	3	1	1	\N
-362	Visita POS ecs: 0020 MERCADO ACCADROLLI	E	Desde o dia 19/06/15 - a máquina não esta funcionando! vamos agendar visita para semana que vem. a partir do dia 30/06/15	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	\N	21	21	1	1	1	1	\N
+COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_horas, orcamento_valor_hora, valor_desconto, valor_total, data_ultimo_pgto, valor_ultimo_pgto, valor_total_pago, data_cadastro, data_prevista, data_aprovacao, observacao, solicitante_id, responsavel_id, tipo_ticket_id, sistema_id, status_ticket_id, prioridade_id, forma_pagamento, data_inicio, data_encerramento, data_cancelamento) FROM stdin;
+307	Tratamento envio/retorno FP - TBZ	I	Associado com a mesma matricula em FPG's diferentes, FP está trocando os associados. Fazendo assim tratar o associado errado! \r\n  \r\n Exp: ETD 045, Matricula: 86845438	Rotinas envolvidas no processo:\r\npg_envio_retorno_rh.php\r\npg_fec_retorno_banco.php\r\npg_fec_retorno_rh.php\r\nsql3.php -> fp_estorno_tbz_envio_retorno \r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	12	2	3	3	3	2	\N	2015-05-29	2015-06-11	\N
+308	Alterar regra de geração de senha dinâmica.	I	Definir a alterar regra de geração de senha dinâmica.	Alterada a regra de geração da senha quinzenal	\N	\N	\N	\N	\N	\N	\N	2015-05-29	2015-06-22	2015-06-22	\N	14	14	5	2	3	2	\N	2015-05-29	2015-06-22	\N
+338	Acesso anos anteriores - ARCO	E	Cliente solicita acesso aos anos anteriores para consulta.	\N	01:00:00	50.00	\N	50.00	\N	0.00	0.00	2015-06-08	2015-06-08	2015-06-08	\N	96	21	1	3	3	1	LANÇAMENTO: 2650638	2015-06-08	2015-06-08	\N
+340	RELATÓRIO ASSOCIADOS AFPUC	E	 Cliente solicita relatório de associados liberados de todas as fontes pagadoras, no layout a seguir: Matricula / Nome / E-mail	Disponibilizado TecBiz OnLine, na tabela que exibe o resultados da pesquisa de associados.	01:00:00	45.00	0.00	45.00	\N	\N	\N	2015-06-09	2015-06-09	2015-06-09	Inlcuso também os campos CPF, RG e E-mail2	107	12	1	3	3	2	LANÇAMENTO:2624232 MAIO/15	2015-06-09	2015-06-09	\N
+3	ETD 003 - AFUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+309	Inibir lançamentos para ECS de fechamento	I	 Alterar os módulos de lançamento para associado individual e em lote para não permitir que sejam realizados lançamentos para estabelecimentos de fechamento/cobrança, ex: 3000, 9000, 9020, 1500 e outros.	\N	18:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-01	\N	12	12	1	3	3	2	\N	2015-05-29	2015-08-23	\N
+313	FP - Gerar valores creditos na ECS 9020	I	  Gerar valores de credito do ASSOCIADO em uma ECS especifica (9020)	Alteradas as rotinas para contemplar a nova regra	16:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-01	\N	12	2	5	3	3	2	\N	2015-05-29	2015-06-19	\N
+327	Alteração Layout CEF arquivo envio banco ASED	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n	Configurar/Parametrizar este layout nas rotinas\r\nlayout_etd_banco e ;pg_fec_envio_banco Tabela :tbz_convenio_banco	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-06-01	2015-06-22	\N	Segue contato do responsável desta alteração por parte da CEF Contato: Humberto: 96536998 	80	2	4	3	1	1	\N	2015-06-01	\N	\N
+339	Arquivo de conciliação	E	Desenvolvimento de arquivo de conciliação conforme layout fornecido pelo cliente (similar ELO)	\N	\N	0.00	\N	0.00	\N	\N	\N	2015-06-08	2015-06-10	2015-06-08	\N	111	14	4	3	1	1	\N	2015-06-08	\N	\N
+330	Alterações Manutenção Anual	I	No Cadastro ECS em Manutenção Anual  providenciar:\r\nem Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\n	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	2015-06-02	2015-06-01	Item da ATA do dia 01/06	13	1	5	2	3	1	\N	2015-06-02	2015-06-02	\N
+341	Extrato Associado POS	I	As cargas dos POS que possuem a opção "Extrato" não estão funcionando.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	3	1	\N	2015-06-11	2015-06-12	\N
+354	Restrições por segmento - Administrador	I	Em restrições por segmento que traziam por default o campo "bloqueável: não" quando o mesmo não tinha restrição, gerando problema no período de bloqueio da ETD-01	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	9	9	1	2	3	1	\N	2015-06-19	2015-06-19	\N
+5	ETD 005 - GSFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+1	ETD 001 - GSMCB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+347	Exibição correta lista meses	I	Correção da exibição dos meses nos Ctas a Receber (aberto e fechado) exibindo o ultimo mês fechado da fonte selecionada, para meses fechados, e primeiro mês aberto referente a fonte selecionada para meses abertos.	Alteração realizada conforme constatação do erro.	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-11	2015-06-11	2015-06-11	Construir relatório unificado, independente da situação do mês, onde será informado no resultado (relatório) a situação da fonte no mês selecionado.	9	14	6	3	3	1	\N	2015-06-11	2015-06-11	\N
+349	ESTORNO SENHA PADRÃO	I	Senha padrão não fará extorno no ecs	Quando um usuario de ECS se logar com senha padrão, será gravado na sessão e deverá ser inibido o botão de estorno.\r\nTodas as ações feitas no sistema online utilizando a senha padrão serão gravadas no log com um diferencial (SA) após a descrição da atividade	\N	\N	\N	\N	\N	\N	\N	2015-06-12	2015-06-22	2015-06-22	/tecbiz/logica/controle/senha.php\r\n/tecbiz/logica/log/registro_log_geral.php\r\n/tecbiz/interface/web/acoes/pg_est_estorno_aut.php\r\n/tecbiz/interface/web/acoes/pg_logout.php	12	1	1	3	3	1	\N	2015-06-12	2015-06-15	\N
+351	Data e hora de geração nos relatórios de contas e pagar e receber	I	Inserir no cabecalho e rodapé dos  relatórios de Ctas a pagar e a receber a data e hora da geração dos mesmos.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-17	2015-06-17	\N	\N	13	14	5	2	3	1	\N	2015-06-17	2015-06-17	\N
+355	ASMV - Recurso exclusivo matricula/lçt 300	I	acertar o recurso exlusivo de envio e retorn rh com o 3000, de acordo com os lançamentos e também a matricula com 7 digitos	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	58	2	1	3	3	1	\N	2015-06-19	2015-06-22	\N
+356	AFPUC - Acesso Olds	E	Será disponibilizado 2 dias de acesso grátis dos anos anteriores para a AFPUC. Começando a partir do dia 23/06	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-22	\N	\N	\N	107	13	1	3	3	1	\N	2015-06-22	2015-06-22	\N
+358	ASMV - Duplicidade lançamentos margem F.P	E	ESTORNAR sempre no dia 23 de todo o mês os lançamentos duplicados pela rotina de F.P do operador "DIFERENÇA".	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	58	21	1	3	3	3	\N	2015-06-23	2015-06-23	\N
+365	ASED - RETORNO FECHAMENTO	I	Ao carregar mais de um arquivo de banco nas mesma fonte pagadora, o sistema apaga o ultimo processado.\r\n\r\nExemplo: Ao processar o arquivo da FP 32001 do banco banrisul, e em seguida processar o arquivo da CEF na mesma fonte, o sistema está apagando banrisul como se ele não tivesse tratado o retorno do banrisul. 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-01	\N	\N	\N	113	2	1	3	3	1	\N	2015-07-01	2015-07-01	\N
+2	ETD 002 - ARBS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+4	ETD 004 - ASHCLIN	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+6	ETD 006 - SSPM SAP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+7	ETD 007 - ASSERMIBA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+8	ETD 008 - AFFZB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+10	ETD 010 - ASSOBAND	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+9	ETD 009 - AFPUC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	45	12	1	1	2	2	\N	\N	\N	\N
+58	ETD 058 - AFFIC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	118	12	1	1	2	2	\N	\N	\N	\N
+39	ETD 039 - ASMUT	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-09	\N	\N	\N	90	12	1	1	2	2	\N	\N	\N	\N
+342	Definir forma de tratar retorno a maior que envio	I	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	Definir procedimento e mensagem a ser tratado na rotina de reotrno bancario e rh	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	13	2	4	3	1	2	\N	2015-06-29	\N	\N
+12	ETD 012 - ASCOM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+13	ETD 013 - SBSHED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+21	ETD 021 - SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+14	ETD 014 - BELSHOP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+32	ETD 032 - ASED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+20	ETD 020 - AFUSC	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+15	ETD 015 - ASMV	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+18	ETD 018 - SIMSOL	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+19	ETD 019 - SPMG	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+22	ETD 022 - AFUSPE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+23	ETD 023 - SIMCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+25	ETD 025 - ASEMARGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+26	ETD 026 - ASSURFRGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+27	ETD 027 - SINDISMAR	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+29	ETD 029 - SIMPASSO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+31	ETD 031 - GSAFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+33	ETD 033 - ASSERJUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+35	ETD 035 - ABOJERIS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+38	ETD 038 - IBCM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+319	Auditoria de lançamentos de controle FP	I	Desenvolver rotina, metodologia e periodicidade de auditoria nos lançamentos de controle gerados pelo Fechamento (FP).	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	4	3	2	2	\N	\N	\N	\N
+320	Contas a pagar	I	 TBZ movimentação contas a pagar encerrado (Avaliar criar tabela com %tx adm alterados): Publicar ADM e OnLine.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	5	3	2	2	\N	\N	\N	\N
+311	ETD - Resumo de contas a receber	I	incluir 2 colunas no relatório = Cartão e suporte	Tirar da coluna outros os seguintes históricos:\r\nCartão = Histórico 009;\r\nSuporte= Históricos 018,019;\r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	13	1	4	2	2	1	\N	\N	\N	\N
+314	Cadastro de 2° limite associado 	E	  Cliente solicita a inclusão de um segundo campo de limite no cadastro dos associados referente ao cartão SONAE; \r\n E ao gerar o recurso exclusivo com o limite mensal do cartão da TecBiz, sera feito o abatimento deste limite informado com o valor disponibilizado pelo RH. \r\n \r\n Exemplo: Associado recebe do RH 1500 reais para limite mensal(LimiteRH);\r\n Em seu cadastro o associado utiliza um limite no cartão SONAE de 200 reais(LimiteSONAE);\r\n Ao gerar o recurso exclusivo do sistema da TecBiz será disponivel seu novo LimiteMensal = (LimiteRH - LimiteSONAE) ou seja LimiteMensal (1500 - 200), liberando apenas 1.300 reais de consumo mensal no cartão TBZ.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	85	12	1	3	2	2	\N	\N	\N	\N
+321	Homologação Quero Quero	E	Homologação do TEF Quero-Quero.\r\n \r\n Configuração: "ok" 18/11/2014\r\n Arquivo de Conciliação: "aguardando T.I"	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	1	3	2	2	\N	\N	\N	\N
+317	Listagem de associados inativos	E	Alterar listagem de associados inativos no TecBiz Online para a Entidade poder visualizar os associados cobrados e ter a opção de excluir os que estão inativos a mais de 12 meses.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	74	12	1	3	2	2	\N	\N	\N	\N
+315	Alteração Layout arquivo envio banco 	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n segue contato do responsável desta alteração por parte da CEF \r\n Contato: Humberto: 96536998 \r\n hvinholesdecarvalho@gmail.com	\N	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-05-29	\N	\N	\N	80	2	1	3	2	2	\N	\N	\N	\N
+305	Bloqueio de associado por período	E	Cliente solicita período de bloqueio para associado individual, o bloqueio irá consistir em data início e fim, estará disponível no cadastro do associado e terá desbloqueio automático ao final do período. \r\n Existirá também relatório de associados bloqueados pelo cadastro.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	45	12	1	3	2	2	\N	\N	\N	\N
+306	Lançamento associado individual - melhoria	I	  Alterar o módulo de lançamento para associado individual para inserir os campos forma de pagamento e tipo de crédito, alteração do layout da tela para dar ficar mais compreensível a transação, deixando claro quem será debitado e creditado.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	12	12	3	3	2	2	\N	\N	\N	\N
+322	Editar comprovante	E	 Cliente solicita as seguintes alterações no comprovante: \r\n  \r\n *Aumentar a quantidade de caracteres do campo comprovantes, para registrar acertos \r\n *Ter a opção de imprimir o comprovante com o campo observação, para ser utilizado como documento de negociação e o associado assinar; \r\n *Editar Obs. de autorizações encerradas, para utilizar em caso de renegociações. \r\n  \r\n Data solicitação: 15/09/2014	\N	16:00:00	45.00	\N	720.00	\N	\N	\N	2015-05-29	\N	\N	\N	45	12	1	3	2	2	\N	\N	\N	\N
+367	Mensagem URA Cartão Bloq	I	Correção da mensagem informada pela URA quando o cartão está bloqueado pelo retorno do fechamento	Correção realizada conforme solicitação	02:00:00	\N	\N	0.00	\N	\N	\N	2015-07-02	2015-07-02	2015-07-02	\N	21	14	1	3	3	1	\N	2015-07-02	2015-07-01	\N
+17	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	1	2	\N	2015-06-11	\N	\N
+46	ETD 046 - AFUSPA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	97	12	1	1	2	2	\N	\N	\N	\N
+45	ETD 045 - ARCO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	95	12	1	1	2	2	\N	\N	\N	\N
+44	ETD 044 - COFRS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	94	12	1	1	2	2	\N	\N	\N	\N
+43	ETD 043 - ASPROCERGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	93	12	1	1	2	2	\N	\N	\N	\N
+41	ETD 041 - AGASAI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	92	12	1	1	2	2	\N	\N	\N	\N
+36	ETD 036 - PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	\N	\N	\N	86	12	1	1	2	2	\N	\N	\N	\N
+34	ETD 034 - ASSOCIAMED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	1	2	\N	2015-06-11	\N	\N
+318	Modulo Atividades	I	 Modulo de Atividades para controlo Tickets , Ordem de Servi~ço , Atividades Registrada pelo Colaboradores Tercbiz	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	13	2	4	2	3	2	\N	2015-05-29	2015-07-03	\N
+334	Cartão empresarial - Fluxo	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	13	11	8	1	1	1	\N	2015-07-01	\N	\N
+56	ETD 056 - AFU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	102	12	1	1	1	2	\N	2015-07-01	\N	\N
+37	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	61	12	1	1	2	2	\N	\N	\N	\N
+11	ETD 011 - SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	1	2	\N	2015-06-11	\N	\N
+324	Relatório analítico	E	Cliente solicita novo relatório também semanal com as informações conforme o recurso exclusivo já disponivel(a=1e22a9) porém discriminado os valores por associado, exemplo: ASS 1= autorização, data,nome loja, valor total, valor parcelas.	\N	10:00:00	45.00	\N	450.00	\N	\N	\N	2015-05-29	\N	\N	\N	55	12	1	3	2	2	\N	\N	\N	\N
+328	Atestado médico	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	13	12	7	1	2	1	\N	\N	\N	\N
+333	Processo Ticket	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	12	12	8	1	2	1	\N	\N	\N	\N
+323	Arquivo associados bloqueados	E	 Cliente solicita que o arquivo que é enviado mensalmente no dia 1 ref. ao arquivo de bloqueio em lote, seja enviado ou disponibilizado no sistema via excel.\r\n solução:\r\n enviar em arquivo .xlsx(EXCEL) anexado via email no mesmo layout que é enviado via atualmente.\r\n Ticket reenviado dia 03/11/2014	\N	08:00:00	45.00	\N	360.00	\N	\N	\N	2015-05-29	\N	\N	\N	73	12	1	3	2	2	\N	\N	\N	\N
+332	Treinamento - AFPUC	E	Cliente solicita treinamento para funcionários que vão utilizar o sistema TecBiz online.	\N	03:00:00	45.00	\N	135.00	\N	\N	\N	2015-06-03	\N	\N	\N	107	21	1	3	2	1	\N	\N	\N	\N
+310	ETD 150 – Financeiro TBZ x Rede Conveniada	I	Definir ETD 150 como responsável pelo relacionamento financeiro das TecBiz com os Estabelecimentos comerciais. Definir históricos , relartórios e processos necessários para a administração de pendências e aprovisionamento de valores.	vincular todas ecs com a etd 150 via arquivo em lote.\r\nlançamento em lote para estabelecimento.	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	4	2	2	2	\N	\N	\N	\N
+312	Alteração de e-mails de destino TBZ	I	 Alteração de e-mails de destino da TecBiz:\r\n # Site\r\n Comercial E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br\r\n Rede E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n Usuário E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n \r\n # Sistema\r\n Solicitação de Convênios: credenciamento@tecbiz.com.br\r\n ECS Dados Cadastrais: suporte@tecbiz.com.br, credenciamento@tecbiz.com.br\r\n Questionário T.E.F: atendimento@tecbiz.com.br, suporte@tecbiz.com.br\r\n Contato ECS: suporte@tecbiz.com.br, oseias@tecbiz.combr e atendimento2@hotmail.com\r\n Fale diretoria: oseias@tecbiz.com.br, suporte@tecbiz.com.br\r\n Cartão Empresarial: oseias@tecbiz.com.br, suporte@tecbiz.com.br, henrique@tecbiz.com.br, \r\n \r\n Excluir os Emails Abaixo:\r\n \r\n carla@tecbiz.com.br - INATIVO\r\n cartoes@tecbiz.com.br - INATIVO\r\n clientes@tecbiz.com.br - INATIVO\r\n convenios@tecbiz.com.br - INATIVO (FORM. ALTERAÇÕES CADASTRO DE ECS)\r\n felipe@tecbiz.com.br - INATIVO\r\n tecnologia@tecbiz.com.br - INATIVO.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	12	12	5	3	2	2	\N	\N	\N	\N
+360	Auditoria Sistema Tecbiz	I	Gerar um relatório/planilha identificando discrepâncias, anormalidades, referente ao uso do sistema.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	2015-07-31	\N	\N	13	2	4	2	2	2	\N	\N	\N	\N
+352	Alteração recurso exclusivo AFPUC	E	Após publicação da DTR218 no qual inibi lançamentos de ECS 3000, cliente não consegue realizar os lançamentos via recurso exclusivo, alterar programa para permitir o lançamento quando for oriundo de tratamento de envio/retorno	\N	\N	\N	\N	0.00	\N	\N	\N	2015-06-18	\N	\N	\N	107	9	1	3	2	1	\N	\N	\N	\N
+361	Módulo associado mobile	I	Desenvolvimento de módulo mobile para associado com consulta de saldo e rede conveniada.	\N	20:00:00	0.00	\N	0.00	\N	\N	\N	2015-06-23	2015-07-31	\N	\N	13	14	4	3	2	2	\N	\N	\N	\N
+353	Periodo de bloqueio e Alteração Encerramento - GSMCB	E	Cliente solicita período de bloqueio de volta do dia 18 ao dia 19 para fonte pagadora 1! E não quer trabalhar com o período de ajuste (Corta e encerra no mesmo dia).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	35	21	1	2	2	1	\N	\N	\N	\N
+348	Extrato associado - AFPUC	I	Cliente deseja que apareça o telefone para contato no relatório dos associados. (Telefone/Celular)	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-12	\N	\N	\N	21	12	1	3	2	1	\N	\N	\N	\N
+343	Auditor identificar duplicidade e de lcts, autorizações.	I	Definição e programação script pata auditar lancamentos efetuados no extrato asssociado.	Desenvolvimento de uma rotina a ser disparada apos encerramento da fpg para auditar lancamentos cfe regras:\r\nExecutar esta rotina após o dia de encerramento\r\nMontar array por associado com valor devido conforme seu extrato referente ao ultimo mês encerrado\r\nValor atributo valor_origem (Tbz_envio_retorno) deve ser igual ao valor array\r\nNo extrato atual do associado só poderá haver no maximo 2 lancamentos na ECS 3000\r\nUm  lancamento de debito e um lancamento de credito\r\nO valor do lancamento de debito (3000) + lancamento exedente margem (9000) deve ser igual ao valor do array do associado (vlr devido do ultimo enecerramento)\r\nValor debito lct 3000 deve ser igual ao valo do atributo envio_valor (tbz_envio_retorno)\r\nValor lct execedente margem (9000) deve ser igual ao valor da diferenca entre os  array & envio_valor (tbz_envio_retorno)\r\n	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	13	2	1	3	2	1	\N	\N	\N	\N
+363	Relação vinculos por ETD	I	Incluir colunas no relatório atual e tbém outras formas de classificação.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-29	\N	2015-06-29	\N	13	1	5	2	2	2	\N	\N	\N	\N
+362	Visita POS ecs: 0020 MERCADO ACCADROLLI	E	Desde o dia 19/06/15 - a máquina não esta funcionando! vamos agendar visita para semana que vem. a partir do dia 30/06/15	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	21	12	1	1	2	1	\N	\N	\N	\N
+59	ETD 059 - Cartão Empresarial SIMUCA	I	\N	\N	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-01	\N	\N	\N	69	11	1	1	1	1	\N	2015-07-01	\N	\N
+366	Cadastro Industrias FIERGS	I	Conseguir cadastro das industrias junto a FIERGS	\N	04:00:00	\N	\N	0.00	\N	\N	\N	2015-07-01	2015-07-02	2015-07-01	\N	14	11	1	1	2	1	\N	\N	\N	\N
+301	ECS - Generico	I	XXXX	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	12	12	1	1	1	1	\N	2015-07-01	\N	\N
+60	ETD 060 - Cartao Empresarial SISME	I	\N	\N	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-01	\N	\N	\N	49	11	1	1	1	1	\N	2015-07-01	\N	\N
+331	Dados complementares dependente - AFUMI	E	Cliente solicita que seja inserido dois campos para o cadastro de dependente, são eles a data de nascimento e grau de parentesco (do dependente com o titular).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-03	\N	\N	\N	75	12	4	3	2	2	\N	\N	\N	\N
+345	Bloqueio ECS para autorizações	I	Cadastro ECS: Manutençao Anual em Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\nEsta rotina irá alterar status para bloqueado "Manuteção anual"	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	13	14	4	2	3	1	\N	2015-06-10	2015-07-06	\N
+326	Alteração Cadastro Pessoas	I	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa \r\nVerificat CPF duplo	Alterar a rotina :  pg_adm_pessoas; pg_adm_pesquisa_pessoas	\N	\N	\N	\N	\N	\N	\N	2015-06-01	2015-06-08	\N	\N	13	2	5	2	1	1	\N	2015-06-01	\N	\N
+136	ETD 0136 - Cartão Empresarial PIRAJU	I	\N	\N	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-01	\N	\N	\N	86	11	1	1	1	1	\N	2015-07-01	\N	\N
+350	Limitar limites de associado	I	Limitar o valor dos limites (mensal e total) dos associado a 5.000,00 R$ em todos os módulos.\r\n	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-16	2015-06-19	\N	\N	13	14	5	3	2	1	\N	\N	\N	\N
+368	Estorno meses passados	I	a entidade pode estornar lançamentos para meses já encerrados.	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-02	\N	\N	Cancelado pois não houve consenso sobre a alteração. o estorno iria conflitar com outras regras do sistema tecbiz	21	1	6	2	4	1	\N	2015-07-02	\N	2015-07-03
+359	Alterações Cadastro TICKETS	I	Alterar atributos no cadastro de tickets para definição dos indicadores pelo Diretor da Tecbiz	Defini DTR, e Apos aprovada pelo Oseias , desenvolver as alterações no cadsastro de Tickets	\N	\N	\N	\N	\N	\N	\N	2015-06-23	2015-07-03	\N	\N	13	2	5	4	3	2	\N	2015-06-23	2015-07-03	\N
+316	ECS - Log acesso e banner autorizador externo pendências financeiras	I	 Alterar os sistemas Autorizador Externo ECS, Administrador e TecBiz online para: \r\n  \r\n 1 - Registrar log de acesso por parte dos estabelecimentos comerciais. \r\n 2 - Criar campo no cadastro de ECS para definir quantidade de acessos ao autorizador externo quando o ECS estiver em bloqueio total, este número será verificado em no momento do acesso ao AUTORIZADOR EXTERNO que exibirá uma tela com a mensagem de pendencia financeira e a quantidade de acessos restantes. Quando o mesmo não possuir mais acessos, a tela de aviso não possibilitará realizar autorizações.	\N	30:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-29	2015-06-29	\N	14	14	4	3	3	2	\N	2015-05-31	2015-07-06	\N
+372	ARCO - Configuração recurso exclusivo arquivo retorno	I	Configuração para liberar lançamento no 3000 para reprocessamento arquivo de retorno via recurso exclusivo. 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-06	\N	\N	\N	21	2	1	3	3	1	\N	2015-07-06	2015-07-06	\N
+357	TEF - ECS 1403 - Posto Quadros	I	FABIANA ECS/ CARLOS TEF\r\ntel contato: 3488.2931\r\nTEF: Sitef\r\nObs: Aguardando homologação\r\nvolta de férias apenas começo de agosto.	01/06/2015 - Envio de e-mail para homologação, empresa esta com problemas técnicos. aguardando contato para a configuração e teste	\N	\N	\N	\N	\N	\N	\N	2015-06-22	\N	\N	\N	21	21	1	8	1	1	\N	2015-06-22	\N	\N
+369	Planilha QUALITÁ	I	Localizar e atualizar panilha qualita de valores a pagar\r\n\r\napartir de junho/15	\N	05:00:00	\N	\N	0.00	\N	\N	\N	2015-07-06	2015-07-10	2015-07-06	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
+373	Tickets - Resumo e atividades	I	Relatório de tickets (sintético e analitico) com relação a as atividades dos colaboradores, layout e regras conforma planilha	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-07	\N	\N	\N	13	1	4	4	3	3	\N	2015-07-07	2015-07-08	\N
+371	Sindicatos Indústrias	I	Envio e análise de retorno dos e-mails	\N	01:00:00	\N	\N	0.00	\N	\N	\N	2015-07-06	2015-07-10	\N	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
+370	Orçamento novo Data Center	I	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL\r\n\r\n- ver com Qualitar 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-06	2015-07-10	2015-07-06	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
+374	Maunal do Cartão Empresarial	I	Criar e padronizar 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-08	\N	\N	\N	13	11	1	1	1	3	\N	2015-07-08	\N	\N
+364	ETD Configura nível de acesso exigido para ações	I	Criar forma de configurar por Entidade o nível do operador exigido para executar determinadas ações no sistema TecBiz OnLine, são elas: \r\n- Estorno de Autorização (a=61c2fb);\r\n- Lançamento Individual (a=ab269a);\r\n- Lançamento em Lote (a=b423c9);\r\n- Alteração de Limite (a=f08457);\r\n- Alteração de Limite em lote (a=010fc0);\r\n	\N	20:00:00	\N	\N	0.00	\N	\N	\N	2015-06-30	2015-07-08	\N	\N	14	14	4	3	1	1	\N	2015-07-06	\N	\N
+28	ETD 028 - AFUMI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	75	12	1	1	1	2	\N	2015-06-01	\N	\N
 \.
 
 
@@ -1278,7 +1764,7 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 -- Name: ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ticket_id_seq', 362, true);
+SELECT pg_catalog.setval('ticket_id_seq', 374, true);
 
 
 --
@@ -1295,6 +1781,8 @@ COPY tipo_atividade (id, nome) FROM stdin;
 9	Credenciamento
 10	Atestado médico
 11	E-mail marketing
+12	Correção
+13	Prospecção
 \.
 
 
@@ -1302,7 +1790,7 @@ COPY tipo_atividade (id, nome) FROM stdin;
 -- Name: tipo_atividade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('tipo_atividade_id_seq', 12, false);
+SELECT pg_catalog.setval('tipo_atividade_id_seq', 13, true);
 
 
 --
@@ -1374,6 +1862,14 @@ ALTER TABLE ONLY sistema
 
 ALTER TABLE ONLY status_ticket
     ADD CONSTRAINT status_ticket_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: system_changelog_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY system_changelog
+    ADD CONSTRAINT system_changelog_pkey PRIMARY KEY (id);
 
 
 --

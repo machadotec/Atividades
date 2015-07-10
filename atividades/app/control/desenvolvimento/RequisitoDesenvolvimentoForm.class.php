@@ -28,7 +28,7 @@ class RequisitoDesenvolvimentoForm extends TPage
         // add a row for the form title
         $row = $table->addRow();
         $row->class = 'tformtitle'; // CSS class
-        $row->addCell( new TLabel('Cadastro de DR') )->colspan = 2;
+        $row->addCell( new TLabel('Cadastro de DTr') )->colspan = 2;
         
         // create the form fields
         $id                             = new THidden('id');
@@ -87,7 +87,7 @@ class RequisitoDesenvolvimentoForm extends TPage
         $save_button = TButton::create('save', array($this, 'onSave'), _t('Save'), 'ico_save.png');
         $list_button   = TButton::create('list', array('RequisitoDesenvolvimentoList', 'onReload'), _t('List'), 'ico_datagrid.png');
         
-        $gerar_dtr = TButton::create('gerar_dtr', array($this, 'onGenerate'), 'Gerar DR', 'ico_save.png');
+        $gerar_dtr = TButton::create('gerar_dtr', array($this, 'onGenerate'), 'Gerar DTr', 'ico_save.png');
         $gerar_kanban = TButton::create('gerar_kanban', array($this, 'onGenerateKanban'), 'Gerar Kanban', 'ico_save.png');
 
         TButton::disableField('form_RequisitoDesenvolvimento', 'save');

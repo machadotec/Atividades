@@ -56,6 +56,14 @@ class TCombo extends TField implements AdiantiWidgetInterface
     }
     
     /**
+     * Return the combo items
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+    
+    /**
      * Return the post data
      */
     public function getPostData()

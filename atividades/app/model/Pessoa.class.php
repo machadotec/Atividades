@@ -52,7 +52,7 @@ class Pessoa extends TRecord
         $repository = new TRepository('Pessoa');
         $tickets = $repository->load($criteria);
         
-        $retorno[] = '0';
+        $retorno[] = '-1';
             
         foreach ($tickets as $row)
         {

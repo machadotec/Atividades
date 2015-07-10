@@ -224,3 +224,10 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 .navbar-right {
     margin-right: 0 !important;
 }
+
+.badge-notify{
+   background: #E16D6D;
+   position:relative;
+   top: -12px;
+   left: -12px;
+}

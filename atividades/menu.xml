@@ -1,57 +1,77 @@
 <menu>
     <menuitem label='Administration'>
+        <icon>fa:university fa-fw</icon>
         <menu>
               <menuitem label='Programs'>
-                  <icon>fa:file-code-o fa-fw green</icon>
+                  <icon>fa:file-code-o fa-fw</icon>
                   <action>SystemProgramList</action>
               </menuitem>
               <menuitem label='Groups'>
-                  <icon>fa:users fa-fw blue</icon>
+                  <icon>fa:users fa-fw</icon>
                   <action>SystemGroupList</action>
               </menuitem>
               <menuitem label='Users'>
-                  <icon>fa:user fa-fw blue</icon>
+                  <icon>fa:user fa-fw</icon>
                   <action>SystemUserList</action>
+              </menuitem>
+              <menuitem label='PHP Info'>
+                  <icon>fa:user fa-code</icon>
+                  <action>PHPInfoView</action>
               </menuitem>
         </menu>
     </menuitem>
     
-    <menuitem label='Cadastros gerais'>
+   <menuitem label='Cadastros gerais'>
         <menu>
             <menuitem label='Ponto'>
-                <icon>fa:fa fa-clock-o fa-fw blue</icon>
+                <icon>fa:fa fa-clock-o fa-fw</icon>
                 <action>PontoFormList</action>
             </menuitem>
             <menuitem label='Cadastro de Tickets'>
-                <icon>fa:fa fa-ticket fa-fw blue</icon>
+                <icon>fa:fa fa-ticket fa-fw</icon>
                 <action>TicketList</action>
             </menuitem>
             <menuitem label='Cadastro de Atividades'>
-                <icon>fa:fa fa-wrench fa-fw blue</icon>
+                <icon>fa:fa fa-wrench fa-fw</icon>
                 <action>AtividadeList</action>
             </menuitem>
-            <menuitem label='Cadastro de DRs'>
-                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+            <menuitem label='Cadastro de DTRs'>
+                <icon>fa:fa fa-file-word-o fa-fw</icon>
                 <action>RequisitoDesenvolvimentoList</action>
             </menuitem>           
             <menuitem label='teste'>
-                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <icon>fa:fa fa-file-word-o fa-fw</icon>
                 <action>CommonPage</action>
             </menuitem>
             <menuitem label='teste seek'>
-                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <icon>fa:fa fa-file-word-o fa-fw</icon>
                 <action>FormSeekButtonView</action>
             </menuitem> 
             <menuitem label='teste seek 2'>
-                <icon>fa:fa fa-file-word-o fa-fw blue</icon>
+                <icon>fa:fa fa-file-word-o fa-fw</icon>
                 <action>TestCitySeek</action>
-            </menuitem>    
-            <menuitem label='Relatorio'>
-                <icon>fa:fa fa-line-chart fa-fw blue</icon>
-                <action>AtividadeReport</action>
-            </menuitem>    
+            </menuitem>     
         </menu>
     </menuitem>
+    
+    
+   <menuitem label='Relatorios'>
+        <menu>
+            <menuitem label='Colaboradores'>
+                <icon>fa:fa fa-line-chart fa-fw</icon>
+                <action>AtividadeReport</action>
+            </menuitem>    
+            <menuitem label='Tickets'>
+                <icon>fa:fa fa-tachometer fa-fw</icon>
+                <action>TicketReport</action>
+            </menuitem>    
+            <menuitem label='Log Alterações'>
+                <icon>fa:user fa-film</icon>
+                <action>SystemChangeLogView</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    
     
     <menuitem label='Tabelas de apoio'>
         <menu>

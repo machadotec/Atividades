@@ -1,9 +1,13 @@
 <?php
 namespace Adianti\Widget\Form;
 
+use Adianti\Core\AdiantiCoreTranslator;
 use Adianti\Widget\Base\TElement;
 use Adianti\Widget\Base\TScript;
 use Adianti\Validator\TFieldValidator;
+
+use Exception;
+use ReflectionClass;
 
 /**
  * Base class to construct all the widgets
@@ -32,6 +36,13 @@ abstract class TField
      */
     public function __construct($name)
     {
+        if (empty($name))
+        {
+            $rc = new ReflectionClass( $this );
+            $classname = $rc->getShortName();
+            throw new Exception(AdiantiCoreTranslator::translate('The parameter (^1) of ^2 constructor is required', 'name', $classname));
+        }
+        
         // define some default properties
         self::setEditable(TRUE);
         self::setName($name);

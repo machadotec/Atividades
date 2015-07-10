@@ -164,6 +164,7 @@ class TicketPessoaSeek extends TWindow
             $criteria = new TCriteria;
             $criteria->setProperties($param); // order, offset
             $criteria->setProperty('limit', $limit);
+            $criteria->add(new TFilter("ativo", "=", 1));
             
             if (TSession::getValue('test_pessoa_filter'))
             {

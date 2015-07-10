@@ -1,6 +1,7 @@
 <?php
 namespace Adianti\Base;
 
+use Adianti\Core\AdiantiCoreTranslator;
 use Exception;
 
 trait AdiantiStandardControlTrait

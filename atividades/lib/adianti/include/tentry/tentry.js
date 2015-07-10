@@ -165,4 +165,8 @@ function tentry_numeric_mask(field, decimals, decimal_sep, thousand_sep)
             decSymbol   : decimal_sep,
             groupSymbol : thousand_sep
     });
+    
+    if ($('input[name="'+field+'"]').prop('readonly') == true) {
+        $('input[name="'+field+'"]').unbind('keydown');
+    }
 }

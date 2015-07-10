@@ -65,7 +65,7 @@ class LoginForm extends TPage
         $save_button=new TButton('save');
         // define the button action
         $save_button->setAction(new TAction(array($this, 'onLogin')), _t('Log in'));
-        $save_button->class = 'btn btn-success btn-defualt';
+        $save_button->class = 'btn btn-success';
         $save_button->style = 'margin-left:32px;width:355px;height:40px;border-radius:6px;font-size:18px';
 
         $row=$table->addRow();
@@ -127,10 +127,9 @@ class LoginForm extends TPage
     /**
      * Logout
      */
-    function onLogout()
+    public static function onLogout()
     {
         TSession::freeSession();
         TApplication::gotoPage('LoginForm', '');
     }
 }
-?>

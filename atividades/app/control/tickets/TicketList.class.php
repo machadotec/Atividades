@@ -36,13 +36,16 @@ class TicketList extends TPage
         $id                             = new TEntry('id');
         $id->setMask('99999');
         $titulo                         = new TEntry('titulo');
+        
         $criteria = new TCriteria;
+        $criteria->add(new TFilter("ativo", "=", 1));
         $newparam['order'] = 'pessoa_nome';
         $newparam['direction'] = 'asc';
         $criteria->setProperties($newparam); // order, offset
         $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_search_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
         $solicitante_nome               = new TEntry('solicitante_nome');
         $solicitante_nome->setEditable(FALSE);
+        
         $criteria = new TCriteria;
         $criteria->add( new TFilter('enttipent', '=', 1));
         $entcodent                      = new TDBComboMultiValue('entcodent', 'tecbiz', 'Entidade', 'entcodent', array(0 => 'entcodent', 1 => 'entrazsoc'), 'entcodent', $criteria);
@@ -280,7 +283,6 @@ class TicketList extends TPage
             $filter = new TFilter('prioridade_id', '=', "$data->prioridade_id"); // create the filter
             TSession::setValue('TicketList_filter_prioridade_id',   $filter); // stores the filter in the session
         }
-
         
         // fill the form with data again
         $this->form->setData($data);
@@ -484,7 +486,7 @@ class TicketList extends TPage
     
     public function retornaStatus($campo, $object, $row)
     {
-         $status = array(1 => 'Aberto', 2 => 'Cancelado', 3 => 'Em Andamento', 4 => 'Fechado');           
+         $status = array(1 => 'Ativo', 2 => 'Pendente', 3 => 'Encerrado', 4 => 'Cancelado');           
         
          $row->popover = 'true';
          $row->popcontent = "<table class='popover-table' border='0'><tr><td>Status: {$status[$object->status_ticket_id]}</td></tr></table>";

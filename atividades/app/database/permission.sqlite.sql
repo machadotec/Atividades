@@ -45,6 +45,10 @@ INSERT INTO system_program VALUES(4,'System Program List','SystemProgramList');
 INSERT INTO system_program VALUES(5,'System User Form','SystemUserForm');
 INSERT INTO system_program VALUES(6,'System User List','SystemUserList');
 INSERT INTO system_program VALUES(7,'Common Page','CommonPage');
+INSERT INTO system_program VALUES(8,'PHP Info','PHPInfoView');
+INSERT INTO system_program VALUES(9,'System ChangeLog View','SystemChangeLogView');
+INSERT INTO system_program VALUES(10,'Welcome View','WelcomeView');
+
 
 INSERT INTO system_user VALUES(1,'Administrator','admin','21232f297a57a5a743894a0e4a801fc3','admin@admin.net',6);
 INSERT INTO system_user VALUES(2,'User','user','ee11cbb19052e40b07aac0ca060c23ee','user@user.net',7);
@@ -56,4 +60,7 @@ INSERT INTO system_group_program VALUES(3,1,3);
 INSERT INTO system_group_program VALUES(4,1,4);
 INSERT INTO system_group_program VALUES(5,1,5);
 INSERT INTO system_group_program VALUES(6,1,6);
+INSERT INTO system_group_program VALUES(7,1,8);
+INSERT INTO system_group_program VALUES(8,1,9);
+INSERT INTO system_group_program VALUES(9,1,10);
 INSERT INTO system_user_program VALUES(1,2,7);

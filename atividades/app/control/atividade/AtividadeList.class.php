@@ -41,22 +41,26 @@ class AtividadeList extends TPage
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
         $colaborador_id                 = new TDBCombo('colaborador_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
-        $ticket_id                      = new TDBCombo('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'id');
+        $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo');
         
         $criteria = new TCriteria;
+        $criteria->add(new TFilter("ativo", "=", 1));
         $newparam['order'] = 'pessoa_nome';
         $newparam['direction'] = 'asc';
         $criteria->setProperties($newparam); // order, offset
-        $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_search_Atividade','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome',$criteria);
+        $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_search_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
         $solicitante_nome               = new TEntry('solicitante_nome');
         $solicitante_nome->setEditable(FALSE);
-        
+                
         // define the sizes
         $id->setSize(50);
         $data_atividade->setSize(100);
         $colaborador_id->setSize(265);
         $tipo_atividade_id->setSize(265);
-        $ticket_id->setSize(265);
+        $ticket_id->setMinLength(0);
+        $ticket_id->setMaxSize(1);
+        $ticket_id->setSize(300);
+        $ticket_id->setOperator('ilike');
         $solicitante_id->setSize(40);
         
         // add one row for each form field
@@ -102,11 +106,11 @@ class AtividadeList extends TPage
         $hora_qte            = new TDataGridColumn('hora_qte', 'Qtde', 'right', 80);
         $colaborador_id      = new TDataGridColumn('colaborador_id', 'Colaborador', 'right', 200);
         $tipo_atividade_id   = new TDataGridColumn('tipo_atividade->nome', 'Atividade', 'right', 100); //get_tipo_atividade()->nome
-        $ticket_id           = new TDataGridColumn('ticket->titulo', 'Ticket', 'right', 200); // get_ticket()->titulo
+        $ticket_id           = new TDataGridColumn('ticket_id', 'Ticket', 'right', 200); // get_ticket()->titulo
         
         // transformers
         $colaborador_id->setTransformer(array($this, 'retornaPessoa'));
-        
+        $ticket_id->setTransformer(array($this, 'retornaTicket'));
         $hora_qte->setTransformer(array($this, 'calculaDiferenca'));
         $data_atividade->setTransformer(array('StringsUtil', 'formatDateBR'));
         //exemplo de uso de classe para jogar funcoes
@@ -256,8 +260,15 @@ class AtividadeList extends TPage
         }
         
         if (isset($data->ticket_id) AND ($data->ticket_id)) {
+            
+            $arraySwap = $data->ticket_id; 
+            $data->ticket_id = key($data->ticket_id);           
+            
             $filter = new TFilter('ticket_id', '=', "$data->ticket_id"); // create the filter
             TSession::setValue('AtividadeList_filter_ticket_id',   $filter); // stores the filter in the session
+            
+            $data->ticket_id = $arraySwap;
+            
         }
         
         // fill the form with data again
@@ -458,6 +469,19 @@ class AtividadeList extends TPage
 
         $this->onReload( );
          
+    }
+    
+    public function retornaTicket($campo, $object, $row)
+    {
+        TTransaction::open('atividade');
+        
+        $ticket = new Ticket($object->ticket_id);
+        $titulo = $ticket->titulo;
+        
+        return $titulo;
+        
+        TTransaction::close();
+    
     }
     
     public function retornaPessoa($campo, $object, $row)

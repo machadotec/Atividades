@@ -34,7 +34,6 @@ class Ticket extends TRecord
         parent::addAttribute('valor_total_pago');
         parent::addAttribute('data_cadastro');
         parent::addAttribute('data_prevista');
-        parent::addAttribute('data_validade');
         parent::addAttribute('data_aprovacao');
         parent::addAttribute('observacao');
         parent::addAttribute('solicitante_id');
@@ -44,9 +43,66 @@ class Ticket extends TRecord
         parent::addAttribute('status_ticket_id');
         parent::addAttribute('prioridade_id');
         parent::addAttribute('forma_pagamento');
+        parent::addAttribute('data_inicio');
+        parent::addAttribute('data_cancelamento');
+        parent::addAttribute('data_encerramento');
     }
 
+    public function relatorioAnalitico($ticket_id, $where)
+    {
+        $conn = TTransaction::get();
+        $result = $conn->query("select 
+                                	a.data_atividade, 
+                                	(a.hora_fim - a.hora_inicio) as tempo,
+                                	a.hora_inicio,
+                                	a.hora_fim, 
+                                	a.colaborador_id,
+                                	a.tipo_atividade_id,
+                                	ta.nome as tipo_atividade
+                                from atividade as a
+                                inner join ticket as t on t.id = a.ticket_id
+                                inner join tipo_atividade as ta on a.tipo_atividade_id = ta.id
+                                where a.ticket_id = {$ticket_id}
+                                {$where}
+                                order by a.data_atividade, a.hora_inicio");
+         
+        return $result;
+    
+    }
 
+    public function relatorioSintetico($where)
+    {
+        $conn = TTransaction::get();
+        
+        $result = $conn->query("select t.id,
+                                       t.status_ticket_id,
+                                       s.nome as status,
+                                       t.prioridade_id,
+                                       p.nome as prioridade,
+                                       t.orcamento_horas,
+                                       coalesce(sum(a.hora_fim - a.hora_inicio), '00:00:00') as horas_atividade,
+                                       (coalesce(t.orcamento_horas, '00:00:00') - coalesce(sum(a.hora_fim - a.hora_inicio), '00:00:00')) as horas_saldo,
+                                       t.data_prevista,
+                                       t.titulo,
+                                       t.responsavel_id,
+                                       t.origem,
+                                       t.solicitante_id,
+                                       coalesce(t.valor_total,0) as valor_total,
+                                       coalesce(t.valor_total_pago,0) as valor_total_pago,
+                                       (coalesce(t.valor_total,0) - coalesce(t.valor_total_pago,0)) as saldo
+                                from ticket as t
+                                left join atividade as a on t.id = a.ticket_id
+                                inner join status_ticket as s on t.status_ticket_id = s.id
+                                inner join prioridade as p on t.prioridade_id = p.id
+                                where t.id = t.id
+                                {$where}
+                                group by t.id, s.nome, p.nome
+                                order by t.id");
+                                                                
+         return $result;
+    
+    }
+    
     public function getDesenvolvimentoTicket($ticket_id)
     {
         $criteria = new TCriteria;
@@ -250,6 +306,33 @@ class Ticket extends TRecord
         $criteria = new TCriteria;
         $criteria->add(new TFilter('ticket_id', '=', $this->id));
         return RequisitoDesenvolvimento::getObjects( $criteria );
+    }
+    
+     /**
+     * Delete the object and its aggregates
+     * @param $id object ID
+     */
+    public function delete($id = NULL)
+    {
+        SystemChangeLog::register($this, $this->toArray(), array());
+        // delete the object itself
+        parent::delete($id);
+    }
+    
+    public function onBeforeStore($object)
+    {
+        $this->lastState = array();
+        if (self::exists($object->id))
+        {
+            $this->lastState = parent::load($object->id)->toArray();
+        }
+        // file_put_contents('/tmp/log.txt', "Before Store ".print_r($object, TRUE), FILE_APPEND);
+    }
+    
+    public function onAfterStore($object)
+    {
+        SystemChangeLog::register($this, $this->lastState, (array) $object);
+        // file_put_contents('/tmp/log.txt', "After Store ".print_r($object, TRUE), FILE_APPEND);
     }
     
 }

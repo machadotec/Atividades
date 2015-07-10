@@ -29,5 +29,4 @@ class TRequiredValidator extends TFieldValidator
             throw new Exception(AdiantiCoreTranslator::translate('The field ^1 is required', $label));
         }
     }
-    
 }

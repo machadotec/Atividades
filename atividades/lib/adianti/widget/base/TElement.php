@@ -37,6 +37,27 @@ class TElement
     }
     
     /**
+     * Create an element
+     * @param $name Element name
+     * @param $value Element value
+     * @param $attributes Element attributes
+     */
+    public static function tag($name, $value, $attributes = NULL)
+    {
+        $object = new TElement($name);
+        $object->add($value);
+        if ($attributes)
+        {
+            foreach ($attributes as $att_name => $att_value)
+            {
+                $object->$att_name = $att_value;
+            }
+        }
+        
+        return $object;
+    }
+    
+    /**
      * Change the element name
      * @param $name Element name
      */

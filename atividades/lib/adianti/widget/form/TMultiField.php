@@ -325,17 +325,16 @@ class TMultiField extends TField implements AdiantiWidgetInterface
             // create three buttons to control the MultiField
             $add = new TButton("{$this->name}btnStore");
             $add->setLabel(AdiantiCoreTranslator::translate('Register'));
-            //$add->setName("{$this->name}btnStore");
-            $add->setImage('ico_save.png');
+            $add->setImage('fa:angle-double-down');
             $add->addFunction("multifields['$this->name'].addRowFromFormFields()");
             
             $del = new TButton("{$this->name}btnDelete");
             $del->setLabel(AdiantiCoreTranslator::translate('Delete'));
-            $del->setImage('ico_delete.png');
+            $del->setImage('fa:trash');
             
             $can = new TButton("{$this->name}btnCancel");
             $can->setLabel(AdiantiCoreTranslator::translate('Cancel'));
-            $can->setImage('ico_close.png');
+            $can->setImage('fa:times-circle');
             
             $hbox_buttons = new THBox;
             $hbox_buttons->{'style'} = 'margin-top:3px;margin-bottom:3px';

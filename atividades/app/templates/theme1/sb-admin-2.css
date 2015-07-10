@@ -5,7 +5,7 @@
  */
 
 body {
-    background-color: #f8f8f8;
+    background-color: #F5F5F5;
 }
 
 #wrapper {
@@ -91,11 +91,21 @@ body {
 }
 
 .sidebar ul li {
-    border-bottom: 1px solid #e7e7e7;
+    
 }
 
 .sidebar ul li a.active {
     background-color: #eee;
+}
+
+.sidebar ul li.dropdown-submenu > a {
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus
+{
+    border-color: #dbdbdb;
 }
 
 .sidebar .arrow {
@@ -369,8 +379,9 @@ table.dataTable thead .sorting:after {
 
 .sidebar ul li a.active
 {
-    background-color: #DDE0F5;
+    background-color: #E8E8E8;
 }
+
 .navbar-default .navbar-brand
 {
     color: white;
@@ -382,7 +393,7 @@ table.dataTable thead .sorting:after {
 }
 .sidebar ul li a.active
 {
-    background-color: #DDE0F5;
+    background-color: #E8E8E8;
 }
 
 .sidebar ul li a:hover
@@ -392,28 +403,26 @@ table.dataTable thead .sorting:after {
 
 .sidebar ul li a.active:hover
 {
-    background: #DDE0F5;
+    background: #E8E8E8;
 }
 
 .nav>li>a:hover, .nav>li>a:focus
 {
     text-decoration: none;
-    background: rgb(169, 169, 221);
+    background: whiteSmoke;
 }
 
 .sidebar ul li {
-border-top: 1px solid #fff;
-border-bottom: 1px solid #dbdbdb;
+
 }
 
 
 .sidebar ul li:first-of-type {
-border-top: 1px solid #dbdbdb;
+
 }
 
 .sidebar ul li {
-border-top: 1px solid #fff;
-border-bottom: 1px solid #dbdbdb;
+
 }
 
 .navbar-static-top

@@ -11,8 +11,6 @@
  */
 class WelcomeView extends TPage
 {
-    private $html;
-    
     /**
      * Class constructor
      * Creates the page
@@ -22,16 +20,20 @@ class WelcomeView extends TPage
         parent::__construct();
         
         TPage::include_css('app/resources/styles.css');
-        $this->html = new THtmlRenderer('app/resources/wellcome.html');
+        $html1 = new THtmlRenderer('app/resources/welcome.html');
+        $html2 = new THtmlRenderer('app/resources/bemvindo.html');
 
-        // define replacements for the main section
-        $replace = array();
-        
         // replace the main section variables
-        $this->html->enableSection('main', $replace);
+        $html1->enableSection('main', array());
+        $html2->enableSection('main', array());
+        
+        $panel1 = new TPanelGroup('Welcome!');
+        $panel1->add($html1);
+        
+        $panel2 = new TPanelGroup('Bem-vindo!');
+        $panel2->add($html2);
         
         // add the template to the page
-        parent::add($this->html);
+        parent::add( TVBox::pack($panel1, $panel2) );
     }
 }
-?>

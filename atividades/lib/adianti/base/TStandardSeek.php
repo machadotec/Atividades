@@ -286,8 +286,8 @@ class TStandardSeek extends TWindow
             $pk   = constant("{$model}::PRIMARYKEY");
             
             $object = new StdClass;
-            $object->$receive_key   = $activeRecord->$pk;
-            $object->$receive_field = $activeRecord->$display_field;
+            $object->$receive_key   = isset($activeRecord->$pk) ? $activeRecord->$pk : '';
+            $object->$receive_field = isset($activeRecord->$display_field) ? $activeRecord->$display_field : '';
             TTransaction::close();
             
             TForm::sendData($parent, $object);

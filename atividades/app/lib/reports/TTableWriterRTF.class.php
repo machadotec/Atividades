@@ -27,7 +27,7 @@ class TTableWriterRTF implements ITableWriter
         
         // instancia a classe PHPRtfLite
         $this->rtf = new PHPRtfLite;
-        $this->rtf->setMargins(1, 1, 1, 1);
+        $this->rtf->setMargins(2, 2, 2, 2);
         
         // acrescenta uma seção ao documento
         $section = $this->rtf->addSection();

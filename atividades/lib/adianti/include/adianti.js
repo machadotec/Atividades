@@ -430,7 +430,7 @@ function __adianti_parse_html(data, callback)
         
         if (callback && typeof(callback) === "function")
         {
-            callback();
+            callback(data);
         }
     } catch (e) {
         if (e instanceof Error) {
