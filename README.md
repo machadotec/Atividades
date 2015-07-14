@@ -19,5 +19,5 @@ de projeto para ORM (Mapeamento Objeto Relacional) como Active Record e Reposito
 * Formulários e datagrids
 * Extensibilidade
 
-Criado por Pablo Dall'Oglio <adianti@adianti.com.br>
+Framework Criado por Pablo Dall'Oglio <adianti@adianti.com.br>
 Home-page: http://www.adianti.com.br/framework
