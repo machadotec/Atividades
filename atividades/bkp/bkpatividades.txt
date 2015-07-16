@@ -41,7 +41,8 @@ CREATE TABLE atividade (
     descricao text,
     colaborador_id integer,
     tipo_atividade_id integer,
-    ticket_id integer
+    ticket_id integer,
+    sistema_id integer
 );
 
 
@@ -533,391 +534,380 @@ ALTER TABLE ONLY tipo_ticket ALTER COLUMN id SET DEFAULT nextval('tipo_ticket_id
 -- Data for Name: atividade; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY atividade (id, data_atividade, hora_inicio, hora_fim, descricao, colaborador_id, tipo_atividade_id, ticket_id) FROM stdin;
-339	2015-06-18	10:30:00	11:00:00	cadastro de contrato	8	9	36
-174	2015-06-01	09:40:00	10:00:00	Zerando limite ETD cartao empresarial	11	5	59
-188	2015-06-01	17:00:00	18:50:00	Cartão Empresarial\r\n-Gerando limites\r\n-Agendamento de envio de e-mail	11	5	59
-193	2015-06-02	10:30:00	11:50:00	-importaçao associado\r\n- envio de -mail mkt do saldo	11	11	59
-200	2015-06-03	09:30:00	10:25:00	indicador de envios\r\nacerto de e-mails	11	5	59
-209	2015-06-08	13:30:00	14:35:00	Lançamentos cartão empresarial	11	5	59
-243	2015-06-10	10:20:00	12:50:00	Limites cartao empresarial	11	5	60
-257	2015-06-10	15:20:00	16:35:00	Gerando lista de e-mail e saldo para importaçao para o dinamize	11	11	60
-310	2015-06-16	11:00:00	11:30:00	cadastro de contrato 	8	9	21
-259	2015-06-09	08:00:00	12:30:00	VISITA AFUMI	21	5	28
-313	2015-06-16	13:45:00	16:35:00	Programação	14	3	345
-316	2015-06-16	14:00:00	14:30:00	Nr.Autorização, Estorno autorização, extratos.	105	5	301
-319	2015-06-16	17:40:00	18:05:00	cadastro de contrato	8	9	56
-322	2015-06-11	14:10:00	16:55:00	Suporte POS problema no pop	21	5	301
-325	2015-06-17	13:15:00	13:45:00	cadastro de contrato	8	9	5
-328	2015-06-15	14:00:00	17:00:00	Repasse Piraju - conferência.	9	5	36
-331	2015-06-17	14:00:00	16:00:00	Programação	14	3	309
-334	2015-06-18	10:10:00	10:30:00	cadastro de contrato	8	9	21
-337	2015-06-17	14:30:00	15:30:00	Liberação da execução do arquivo lcto de lotes oriundo do Fechamento Padrão	2	3	352
-342	2015-06-18	09:15:00	11:55:00	Programação (desvincular ao ecs de controle e sim ao tipo de ecs que pode ser normal ou fechamento)	14	3	309
-345	2015-06-17	14:30:00	17:30:00	biblioteca .rtf to .docx	1	3	318
-181	2015-06-01	13:55:00	15:30:00	suporte a relatórios de estornos ass:1313	12	5	21
-348	2015-06-12	14:00:00	15:45:00	Suporte ECS	21	5	301
-189	2015-06-01	13:30:00	15:00:00	Suporte VERA - Associados, extratos	21	5	21
-351	2015-06-16	14:00:00	16:00:00	 Suporte POS Ecs POP	21	5	301
-354	2015-06-17	13:00:00	14:20:00	Suprote POS ECS Pop	21	5	301
-182	2015-06-01	15:30:00	17:54:00	Suporte ass: Caroline Campos e ao Ctas a pagar encerrado  - Novo	12	5	28
-194	2015-06-01	15:00:00	17:30:00	Credenciamento ECS Pirajú	105	9	36
-357	2015-06-18	14:30:00	16:30:00	Identificação oriegm pessoa no cadastro ticket	2	3	318
-359	2015-06-19	10:30:00	12:25:00	Publicação e testes	14	4	313
-362	2015-06-19	14:15:00	16:30:00	biblioteca phpword	1	3	318
-365	2015-06-19	11:30:00	11:50:00	Suporte configuração POS ecs 1979	21	5	301
-368	2015-06-19	11:00:00	11:30:00	Geração arquivo som status PP (produção)	2	4	327
-201	2015-06-03	10:35:00	11:15:00	Suporte ref. POS, fechamento, contas a pagar com erro, associado exonerado, troca de matrículas, etc...	12	5	28
-371	2015-06-19	17:30:00	18:30:00	Alteração envio e retorno arquivo cfe mudança efetuadas nas matriculas dos associados.	2	3	355
-374	2015-06-17	14:00:00	16:30:00	Ligações 	11	11	60
-376	2015-06-22	11:30:00	13:30:00	Programação	14	3	308
-378	2015-06-22	13:30:00	14:25:00	Sistema OLD - Não havia ticket cadastrado	14	3	356
-206	2015-06-03	14:00:00	15:00:00	Credenciamentos	105	9	58
-207	2015-06-03	15:00:00	16:00:00	Credenciamentos	105	9	3
-208	2015-06-03	16:00:00	17:00:00	Códigos Internos	105	9	28
-380	2015-06-18	14:00:00	14:30:00	Problema ao inibir código ECS3000 - recurso exclusivo. abertura T152	9	5	352
-382	2015-06-19	11:00:00	11:35:00	explicação periodo de ajustes, datas de encerramento, abertura de ticket, e alteração do periodo..	9	5	353
-384	2015-06-22	14:00:00	17:20:00	Indicador e-mail mkt novo conceito	11	11	301
-386	2015-06-22	09:15:00	11:45:00	implementação de gravação de logs	1	3	318
-388	2015-06-22	09:30:00	09:50:00	Testes / lcts 3000.	2	4	355
-390	2015-06-22	14:00:00	15:00:00	testes e alteração da rotina para tratamento ecs 9000 e 9025 cfe arquivo exemplo enviado pelo usuario.	2	4	355
-392	2015-06-22	17:20:00	18:20:00	Ligacao ECS atualizacao 	11	5	60
-394	2015-06-23	09:00:00	11:30:00	log e relatorio	1	3	318
-396	2015-06-23	09:30:00	11:20:00	\N	14	3	358
-398	2015-06-23	13:50:00	15:58:00	Alteração dos vinculos com ECS 200	14	3	309
-400	2015-06-23	10:10:00	12:15:00	Definição/Esboço DTR	2	6	360
-401	2015-06-23	14:30:00	15:20:00	Termino definição esboço DTR	2	6	360
-402	2015-06-23	16:00:00	18:00:00	1 - Espelhar ambiente quente na vm-jacare\r\n2 - executar sql para atribuir null no atributo data validade cad ticket\r\nUPDATE ticket SET data_validade=null\r\n3 - Tirar fora o seguinte atributo no cadastro ticket: Data Validade\r\n4 - Adicionar os atributos no cadastro ticket\r\nData Inicio\r\nData Cancelamento\r\nData Encerramento\r\n5 - Acertar tabela de status_ticket	2	3	359
-403	2015-06-23	14:00:00	18:00:00	documentação e programação	1	3	310
-405	2015-06-24	09:50:00	10:10:00	cadastro de contrato	8	9	28
-406	2015-06-23	11:30:00	12:30:00	Alterações Documentos	105	6	100
-404	2015-06-24	09:20:00	09:50:00	cadastro de contrato	8	9	34
-407	2015-06-24	08:37:00	11:00:00	registro de log	1	3	318
-232	2015-06-08	09:00:00	09:30:00	Credenciamento	105	9	28
-233	2015-06-08	09:30:00	10:00:00	Credenciamento	105	9	39
-234	2015-06-09	09:00:00	10:00:00	Credenciamento	105	9	28
-235	2015-06-09	10:00:00	10:30:00	Credenciamento	105	9	39
-236	2015-06-09	10:30:00	11:30:00	Credenciamento	105	9	58
-237	2015-06-09	11:30:00	12:30:00	Credenciamento	105	9	20
-238	2015-06-09	08:50:00	09:20:00	problema pos, testes e informações para realizar a troca..	9	5	56
-408	2015-06-24	11:40:00	12:10:00	cadastro de contrato	8	9	36
-409	2015-06-24	12:10:00	12:25:00	cadastro de contrato	8	9	15
-241	2015-06-09	17:00:00	17:30:00	Credenciamento	105	9	56
-242	2015-06-10	09:00:00	09:30:00	Credenciamento	105	9	32
-410	2015-06-24	12:25:00	12:40:00	cadastro de contrato	8	1	34
-411	2015-06-24	12:40:00	13:00:00	cadastro de contrato	8	9	20
-412	2015-06-23	14:00:00	14:30:00	Indicador 	11	11	59
-413	2015-06-23	14:30:00	15:00:00	Indicador\r\n	11	11	60
-249	2015-06-08	11:45:00	13:00:00	Suporte ECS	21	5	\N
-250	2015-06-09	08:00:00	12:00:00	\N	12	5	28
-251	2015-06-09	13:00:00	18:59:00	\N	12	5	28
-414	2015-06-23	15:00:00	15:30:00	Indocador	11	11	136
-261	2015-06-10	17:10:00	18:00:00	importaçao e envio de saldo	11	11	60
-268	2015-06-10	18:00:00	18:59:00	LANÇAMENTOS cartao empresarial	11	5	60
-271	2015-06-11	10:00:00	11:00:00	indicador de resposta do e-mail mkt	11	11	60
-260	2015-06-09	14:00:00	18:59:00	VISITA AFUMI	21	5	\N
-262	2015-06-10	16:30:00	17:30:00	Credenciamento	105	9	28
-290	2015-06-12	15:00:00	16:45:00	Lançamentos cartao empresarial	11	5	136
-298	2015-06-15	10:20:00	11:30:00	gerando limites 	11	5	136
-307	2015-06-15	16:30:00	17:30:00	preparaçao e envio de e-mail mkt	11	11	136
-311	2015-06-16	09:00:00	11:30:00	Programação	14	3	339
-314	2015-06-16	09:30:00	12:15:00	script para backup diario da base de dados	1	3	318
-317	2015-06-16	14:45:00	16:00:00	vinculos ecs 9020 etd's	8	9	313
-320	2015-06-16	15:00:00	16:00:00	analize do retorno do e-mail para atualizaçao dos dados do ECS	11	11	60
-323	2015-06-17	09:10:00	11:30:00	vinculos ecs 9020 etd's	8	9	313
-329	2015-06-16	16:00:00	18:10:00	suporte pos - problema pop - troca de configuração	9	5	301
-332	2015-06-17	13:45:00	14:00:00	cadastro de contrato	8	9	45
-335	2015-06-16	14:40:00	17:30:00	Testes e programação identificação origem no cadastro ticket (ambbiente teste)	2	3	318
-326	2015-06-17	08:55:00	12:20:00	Programação	14	3	350
-270	2015-06-11	09:00:00	09:30:00	Geração/Envio Arquivo Remessa RH	105	5	28
-338	2015-06-17	15:30:00	17:30:00	testes lcto em lote para ecs 3000,9000,9025,9030,1500 oriundos e nao oriundos do fp	2	4	309
-340	2015-06-18	09:45:00	10:30:00	Solicitação/Cancelamento Cartões, Log operações.	105	5	28
-274	2015-06-11	10:30:00	11:00:00	Credenciamento	105	9	17
-343	2015-06-18	14:30:00	15:20:00	Programação	14	3	350
-346	2015-06-18	15:51:00	17:17:00	Programação	14	3	350
-349	2015-06-15	10:15:00	11:30:00	Suporte ECS	21	5	301
-352	2015-06-17	08:30:00	10:20:00	Suporte POS pop ECS	21	5	301
-355	2015-06-18	14:00:00	14:30:00	Suporte POS ecs 1789	21	5	301
-358	2015-06-19	08:15:00	10:15:00	Publicação e testes de publicação	14	3	313
-360	2015-06-19	11:45:00	12:00:00	cadastro de contrato	8	9	20
-283	2015-06-11	09:28:00	10:30:00	orientação para geração arquivo de envio de densconto	12	5	28
-284	2015-06-11	11:08:00	12:05:00	orientação para confecção de cartão, troca de POS e recurso exclusivo	12	5	14
-285	2015-06-11	14:05:00	15:29:00	suporte referente a compra de cartão, sugestão de cliente e NF	12	5	5
-286	2015-06-12	09:30:00	10:00:00	Credenciamento	105	9	58
-287	2015-06-12	14:30:00	15:30:00	Credenciamento	105	9	36
-372	2015-06-22	10:20:00	10:35:00	cadastro de contrato	8	9	34
-375	2015-06-19	14:50:00	17:00:00	Ligações	11	11	60
-377	2015-06-22	14:05:00	14:20:00	cadastro de contrato	8	9	58
-363	2015-06-19	14:25:00	16:25:00	Correção da restrição de bloqueio por período com base no segmento.	14	3	354
-379	2015-06-22	14:20:00	14:45:00	cadastro de contrato	8	9	28
-381	2015-06-22	16:55:00	17:10:00	cadastro de contrato	8	9	20
-297	2015-06-15	09:00:00	10:30:00	Credenciamento	105	9	28
-383	2015-06-19	14:00:00	14:40:00	teste pet fez alteração para restrição por segmento, no qual trazia default bloqueavel=não, não respeitando o periodo de bloqueio da ETD.	9	4	353
-385	2015-06-22	14:58:00	17:02:00	Programação	14	3	350
-387	2015-06-22	14:00:00	18:30:00	ajustes relatorios	1	3	318
-389	2015-06-22	10:00:00	11:00:00	Analise do arquivo enviado para CEF cfe email recebido da CEF. Foi orientado ao usuario para re-enviar o arquivo pois este não estava com problema cfe layout SIACC-150. 	2	4	327
-391	2015-06-22	15:40:00	17:30:00	Definição / Esboço da DTR -alterações cadastro de Tickets cfe solicitação do Oseias.	2	6	318
-393	2015-06-23	10:40:00	11:10:00	INDICADOR E-MAIL MKT	11	11	301
-395	2015-06-23	14:30:00	15:00:00	cadastro de contrato	8	9	28
-397	2015-06-23	11:20:00	12:50:00	Documentação	14	6	361
-308	2015-06-15	17:00:00	17:30:00	Credenciamento	105	9	39
-309	2015-06-15	17:30:00	18:00:00	Credenciamento	105	9	21
-220	2015-06-08	15:30:00	17:10:00	Fechamento do processo da DTR. Publicação / teste de peiublicação e atualização documento kanban,e DTM08 - Manual Tecnico	2	6	326
-175	2015-06-01	13:30:00	14:30:00	publicação e testes	1	3	316
-176	2015-06-01	09:15:00	10:00:00	Testes cadastramento Ponto.	2	4	318
-177	2015-06-01	14:00:00	14:30:00	Geração do arquivo para testes na CEF cfe ultima resposta (via email) do cliente (ASED/CEF)	2	4	327
-178	2015-06-01	14:45:00	15:30:00	Formatação Kanban , DTR Ticket	2	6	326
-179	2015-06-01	11:45:00	12:10:00	\N	12	10	328
-180	2015-06-01	15:00:00	17:00:00	inclusao de colunas de historicos de suporte e cartao	1	3	311
-183	2015-06-01	16:00:00	18:00:00	Testes da versão alterada apos sugetsões do Pablo referente (cache, datas etc)..\r\nFormtação de outras duvidas junto com Gustavo sobre o framework, e enviado ao Pablo	2	4	318
-190	2015-06-01	17:00:00	18:00:00	Formtação de outras duvidas junto com Jacare sobre o framework, e enviado ao Pablo	1	4	318
-191	2015-06-02	09:00:00	09:30:00	\N	1	3	330
-192	2015-06-02	10:00:00	10:30:00	\N	1	3	330
-221	2015-06-08	17:00:00	18:15:00	melhorias	1	3	318
-222	2015-06-03	14:00:00	18:55:00	TES POS!	21	4	301
-223	2015-06-09	09:00:00	12:15:00	melhorias no sistema junto com pablo	1	3	318
-224	2015-06-09	09:30:00	12:30:00	Publicação (utilizando GIT)	14	3	340
-226	2015-06-09	14:00:00	16:00:00	melhorias sistema atividade	1	3	318
-244	2015-06-05	10:05:00	12:00:00	Teste comunicação LYRA, pos UGHINI, BELSHOP.	21	4	301
-227	2015-06-09	16:00:00	17:30:00	testes automatizados no selenium	1	4	318
-195	2015-06-02	09:35:00	12:00:00	Pesquisa Pessoas alteração cfe solicitação Oseias	2	3	326
-196	2015-06-02	14:40:00	16:30:00	Pesquisa avançada Pessoas alteração cfe solicitação Oseias	2	3	326
-197	2015-06-02	17:10:00	18:20:00	Pesquisa Pessoas alteração cfe solicitação Oseias	2	3	326
-198	2015-06-02	15:00:00	15:30:00	Teste relatorio DTR 011	9	4	311
-199	2015-06-02	15:30:00	18:12:00	\N	1	3	318
-225	2015-06-09	14:30:00	16:30:00	Publicação (utilizando GIT)	14	3	307
-255	2015-06-10	12:00:00	12:20:00	Esboço de dr definição	2	6	342
-399	2015-06-22	10:05:00	11:20:00	Suporte ECS	21	5	301
-202	2015-06-03	09:30:00	11:30:00	Testes/Configuraçõe VM velocidade de acesso banco externo tecbiz (classes tickets e atividades)	2	4	318
-203	2015-06-03	14:30:00	15:40:00	Testes/Configuraçõe VM velocidade de acesso banco externo tecbiz (classes tickets e atividades)	2	4	318
-204	2015-06-03	13:30:00	17:30:00	ajustes	1	3	318
-205	2015-06-03	14:15:00	14:30:00	Suporte TecBiz autorizador externo	9	5	301
-210	2015-06-03	09:20:00	11:50:00	Suporte ECS	21	5	301
-211	2015-06-08	15:00:00	16:20:00	Alterações na instruçao de trabalho de acordo com suguestões da Fernanda	11	6	334
-212	2015-06-08	13:15:00	16:32:00	Atualização do processo para nova metodologia	12	6	333
-213	2015-06-08	11:30:00	12:45:00	Programação	14	3	339
-214	2015-06-08	14:10:00	16:55:00	Programação	14	3	339
-215	2015-06-08	11:00:00	12:30:00	Melhorias de perfornance	1	3	318
-216	2015-06-08	14:00:00	16:00:00	melhorias de layout	1	3	318
-217	2015-06-08	16:00:00	17:00:00	publicação, testes e manualização	1	3	311
-218	2015-06-08	09:50:00	12:00:00	Alteração pesquisa avançada cadastro Pessoas	2	3	326
-219	2015-06-08	14:00:00	15:20:00	Pesquisa Avançada cadastro Pessoas	2	3	326
-228	2015-06-09	11:00:00	12:20:00	Revisão das rotinas para publicação	2	6	307
-229	2015-06-09	15:00:00	16:40:00	Revisão e geração dp arquivo teste para CEF cfe a ultima validação.	2	4	327
-230	2015-06-09	16:40:00	17:20:00	Publicação / teste.	2	4	307
-231	2015-06-09	15:00:00	17:30:00	Alteraçao e revisão do documento	11	6	334
-240	2015-06-09	15:30:00	16:30:00	Suportes ECS nr. Extratos, Nr.Autorização, reimpressão comprovantes.	105	5	301
-245	2015-06-05	12:30:00	12:50:00	Suporte ECS	21	5	301
-246	2015-06-05	13:30:00	15:00:00	Suporte POS, UGHINI e contato LYRA	21	4	301
-248	2015-06-08	09:20:00	11:30:00	Suporte POS, UGHINI, BELSHOP, MARISUL\r\n	21	4	301
-252	2015-06-10	08:50:00	10:30:00	\N	12	10	328
-254	2015-06-10	11:40:00	12:00:00	Esboço de dr definição	2	6	343
-253	2015-06-10	10:03:00	11:40:00	Teste (publicação) tratamento de matriculas iguais para fpg diferentes arquiovo de retorno	2	4	307
-258	2015-06-08	14:05:00	17:05:00	POS Ughini, Belshop, callcenter arbs	21	4	301
-263	2015-06-10	09:25:00	12:25:00	relatorios	1	3	318
-264	2015-06-10	14:25:00	18:00:00	relatorios	1	3	318
-265	2015-06-10	09:00:00	11:40:00	Teste de publicação - Restauração da base, criação de ambiente para testes.	14	3	307
-266	2015-06-10	14:15:00	17:35:00	Programação	14	3	345
-267	2015-06-10	10:30:00	11:30:00	Suporte ECS	21	5	301
-269	2015-06-10	13:30:00	17:00:00	POS TBZ Lyra conexão, e Ughini POS	21	4	301
-256	2015-06-10	14:30:00	17:30:00	Teste (publicação) tratamento de matriculas iguais para fpg diferentes arquiovo de retorno	2	4	307
-272	2015-06-11	09:00:00	12:00:00	finalização do relatorio	1	3	318
-273	2015-06-11	14:00:00	17:00:00	melhorias	1	3	318
-275	2015-06-11	09:30:00	11:00:00	Definição de DR	2	6	343
-276	2015-06-11	11:00:00	12:00:00	Definição DR	2	6	307
-277	2015-06-11	14:30:00	16:00:00	Definição DR	2	6	307
-278	2015-06-11	15:00:00	16:00:00	Teste erro relatorio exibicação fonte pagadora fechada juntamente com fpgs abertas..	9	4	347
-279	2015-06-11	08:50:00	09:50:00	Descrição do documento	14	6	345
-280	2015-06-11	09:50:00	12:30:00	Programação	14	3	345
-281	2015-06-11	14:10:00	16:00:00	Correção	14	3	347
-282	2015-06-12	08:20:00	09:20:00	Reunião para dúvidas referente a layout	14	8	339
-288	2015-06-12	10:00:00	12:30:00	melhorias no ticket	1	3	318
-289	2015-06-12	14:00:00	16:00:00	melhorias no ticket	1	3	318
-291	2015-06-12	16:00:00	17:00:00	\N	1	3	349
-292	2015-06-12	09:40:00	12:40:00	Programação	14	3	341
-293	2015-06-12	13:40:00	16:40:00	Programação	14	3	341
-294	2015-06-12	10:00:00	10:30:00	DTR definição	2	6	343
-295	2015-06-12	10:30:00	11:00:00	DTR - definição	2	6	342
-296	2015-06-12	15:00:00	17:00:00	Acerto na numeração de tickets. Desenvolvimento rotina para acertar cadastros tickets,atividades, dtrs.	2	3	318
-299	2015-06-15	09:15:00	11:30:00	testes	1	4	349
-300	2015-06-15	14:00:00	15:00:00	publicação e testes no servidor quente	1	3	349
-301	2015-06-15	09:11:00	12:11:00	Programação 	14	3	339
-302	2015-06-15	09:40:00	11:00:00	Geração arquivo quente (Produção na CEF) para teste de real desconto em conta.(Geração de arquivo de Retorno)	2	4	327
-303	2015-06-15	14:00:00	16:10:00	Publicação	14	3	309
-304	2015-06-15	16:30:00	17:00:00	Teste publicação	14	3	309
-305	2015-06-15	17:00:00	17:35:00	Manualização DTM008	14	6	309
-306	2015-06-15	14:40:00	17:15:00	Geração script para acerto de numeração de  tickets,atividades,DTrs	2	3	318
-312	2015-06-16	12:10:00	12:45:00	cadastro de contrato	8	9	10
-315	2015-06-16	14:00:00	17:00:00	script de backup diario da base de dados	1	3	318
-318	2015-06-16	17:00:00	17:40:00	vinculos ecs 9020 etd's	8	9	313
-321	2015-06-11	09:45:00	12:00:00	Suporte POS - problema pop	21	5	301
-247	2015-06-05	15:00:00	15:40:00	POS - Callcenter problema	21	4	2
-330	2015-06-17	10:00:00	16:00:00	Documentação POS 	105	6	100
-333	2015-06-16	10:00:00	12:00:00	Testes/Desenvolvimento identificação origem do solicitante no cadastramento Ticket	2	3	318
-336	2015-06-17	10:00:00	12:00:00	Identificação origem pessoa (solicitante) no cadastro teicket	2	3	318
-327	2015-06-17	09:30:00	11:30:00	analise dos relatorios, alteração para incluir data e hora, testes e publicação.	1	3	351
-341	2015-06-18	14:00:00	14:30:00	2a.via cartões, cartão dependente	105	5	28
-344	2015-06-18	15:20:00	15:45:00	cadastro de contrato	8	9	27
-347	2015-06-12	10:00:00	11:20:00	Suporte ECS	21	5	301
-350	2015-06-16	10:00:00	12:00:00	SUPORTE POS ecs's	21	5	301
-353	2015-06-17	10:30:00	11:35:00	Suporte ECS Belshop 3077 POS	21	5	14
-356	2015-06-18	09:40:00	11:40:00	testes finais de publicação, inclusive , recurso exclusivo da Afpuc, FP. lançamento em lote.	2	4	309
-361	2015-06-19	09:00:00	12:15:00	biblido phpword	1	3	318
-364	2015-06-19	09:00:00	10:30:00	Suporte ECS	21	5	301
-367	2015-06-19	10:00:00	11:00:00	Tickets origem pessoa	2	3	318
-370	2015-06-19	14:00:00	17:00:00	Tetses origem pessoa Tickets.	2	4	318
-373	2015-06-22	10:35:00	11:00:00	cadastro de contrato	8	9	58
-415	2015-06-24	09:02:00	11:45:00	Programação	14	3	350
-416	2015-06-24	11:00:00	11:30:00	Teste com PET	21	4	350
-417	2015-06-24	11:30:00	12:10:00	Criação de tabela para teste	21	4	345
-418	2015-06-24	09:00:00	12:00:00	1-Acertar conforme novos atributo das datas e exclusão data validade: \r\n\t1.1 Classe (Control - TicketForm):\r\n\t1.2 Classe (Model - Ticket)	2	3	359
-419	2015-06-24	14:15:00	16:00:00	1-Acertar conforme novos atributo das datas e exclusão data validade: \r\n\t1.1 Classe (Control - TicketForm):\r\n\t1.2 Classe (Model - Ticket)	2	3	359
-420	2015-06-24	17:20:00	18:00:00	1-Acertar conforme novos atributo das datas e exclusão data validade: \r\n\t1.1 Classe (Control - TicketForm):\r\n\t1.2 Classe (Model - Ticket)	2	3	359
-421	2015-06-24	14:00:00	16:00:00	\N	1	3	310
-422	2015-06-24	17:00:00	17:30:00	\N	1	3	310
-423	2015-06-25	09:00:00	11:50:00	Geração dos arquivos com base em mais de uma compra e diversas parcelas.	14	3	339
-424	2015-06-24	14:00:00	15:30:00	pesquisa de aap do mercado com a função de lista de associado	11	5	361
-425	2015-06-23	10:40:00	11:40:00	repasse online-conferencia	9	5	36
-426	2015-06-25	17:50:00	18:10:00	cadastro de contrato	8	9	15
-427	2015-06-25	14:00:00	15:30:00	criando suguestao de tela para app 	11	5	361
-429	2015-06-25	14:30:00	16:50:00	Confecção de tabela para realização e controle de testes.	21	4	345
-430	2015-06-25	13:50:00	16:20:00	Programação	14	3	350
-431	2015-06-25	16:50:00	17:30:00	Programação	14	3	350
-432	2015-06-25	09:15:00	12:15:00	\N	1	3	310
-433	2015-06-25	14:00:00	18:00:00	\N	1	3	310
-434	2015-06-25	09:20:00	11:40:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359
-435	2015-06-25	14:30:00	16:30:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359
-436	2015-06-26	08:55:00	09:10:00	cadastro de contrato	8	9	28
-437	2015-06-25	17:00:00	17:35:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359
-438	2015-06-25	15:30:00	16:00:00	Atualizando contato de e-mail mkt	11	5	60
-439	2015-06-26	09:40:00	11:40:00	Telas para app	11	5	361
-440	2015-06-26	14:30:00	16:30:00	telas app	11	5	361
-441	2015-06-26	09:15:00	12:20:00	Revisão dos recursos exclusivos	14	3	350
-442	2015-06-26	13:50:00	16:10:00	Revisão dos recursos exclusivos	14	3	350
-443	2015-06-26	16:30:00	17:10:00	Eliminação dos recursos exclusivos antigos	14	3	350
-444	2015-06-26	09:15:00	12:15:00	\N	1	3	310
-445	2015-06-26	14:00:00	17:00:00	testes	1	3	310
-446	2015-06-26	10:00:00	12:00:00	Regras Status x Datas : Botão Salvar\r\nClasse: /app/lib/validator/TstatusDatasValidator.class\r\nTDatasTicketValidator.class\r\nPalavra Dr por DTr\r\n1 - menu.xml\r\n2 - \\app\\control\\desenvolvimento\\RequisitoDesenvolvimentoForm.class.php	2	3	359
-447	2015-06-26	14:30:00	17:30:00	Regras Status x Datas : Botão Salvar\r\nClasse: /app/lib/validator/TstatusDatasValidator.class\r\nTDatasTicketValidator.class\r\nPalavra Dr por DTr\r\n1 - menu.xml\r\n2 - \\app\\control\\desenvolvimento\\RequisitoDesenvolvimentoForm.class.php	2	3	359
-448	2015-06-26	18:00:00	18:20:00	cadastro de contrato	8	9	21
-449	2015-06-29	09:20:00	09:50:00	cadastro de contrato	8	9	28
-450	2015-06-29	09:50:00	11:30:00	cadastro de contratos	8	9	45
-451	2015-06-29	13:50:00	14:30:00	Conclusão do processo DTR010	14	3	316
-452	2015-06-26	16:30:00	17:00:00	criando dicumento com telas e regras	11	6	361
-453	2015-06-29	14:30:00	16:00:00	alterando fluxo incluindo etapa de lançamento no ECS 500 Repasses	11	6	334
-454	2015-06-29	14:00:00	16:00:00	publicação, testes, documentação	1	3	310
-455	2015-06-29	14:00:00	15:00:00	Atualização da DTR conforme definição em reunião pela manhã	2	6	342
-456	2015-06-29	15:00:00	17:35:00	1- Acertar documento DTR cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342
-457	2015-06-30	09:40:00	09:55:00	cadastro de contrato	8	9	45
-458	2015-06-29	14:30:00	17:15:00	Preparação da publicação dos tickets T345, T350	14	3	350
-459	2015-06-30	09:00:00	11:20:00	analise e importação de ecs vinculos, atualização documentação, testes	1	3	310
-460	2015-06-30	09:00:00	09:30:00	alteraçao para solicitaçao de orçamento 	11	6	361
-461	2015-06-30	11:20:00	12:15:00	\N	1	3	363
-462	2015-06-30	14:00:00	16:00:00	\N	1	3	363
-463	2015-06-29	08:00:00	16:48:00	\N	9	10	328
-464	2015-06-02	09:30:00	10:10:00	\N	21	10	328
-465	2015-06-23	09:45:00	10:10:00	\N	21	10	328
-466	2015-06-10	09:00:00	11:00:00	\N	3	10	328
-467	2015-06-16	14:30:00	17:30:00	\N	3	10	328
-468	2015-06-18	14:00:00	17:00:00	\N	3	10	328
-469	2015-06-30	16:00:00	17:00:00	correçoes relatorio	1	3	318
-470	2015-06-30	09:43:00	12:30:00	Simulação de publicação para os tickets 345, E 350	14	3	345
-471	2015-06-30	14:30:00	15:50:00	Criação documento DTR010	14	6	364
-472	2015-06-26	08:30:00	10:30:00	CRIAÇÃO DAS PLANILHAS PARA TESTE.	21	4	345
-473	2015-06-26	13:30:00	14:50:00	CRIAÇÃO DE TABELAS PARA TESTE	21	4	345
-474	2015-06-29	10:30:00	12:00:00	CRIAÇÃO DA TABELA PARA TESTE	21	4	345
-475	2015-06-29	14:00:00	15:00:00	TESTE FINAL 	21	4	345
-476	2015-06-29	15:00:00	16:20:00	Suporte processamento de arquivo de retorno.	21	5	28
-477	2015-06-29	16:20:00	16:45:00	Esclarecimento de duvidas e arquivo	21	5	32
-478	2015-06-29	16:45:00	18:30:00	Suporte ECS	21	5	301
-479	2015-06-30	10:00:00	11:00:00	teste	21	4	345
-480	2015-06-30	11:30:00	12:30:00	Suporte ECS	21	5	301
-481	2015-06-30	14:00:00	15:50:00	suporte ecs	21	5	301
-482	2015-06-30	16:30:00	18:00:00	teste planilha	21	4	345
-483	2015-06-30	09:50:00	12:00:00	1- Acertar documento DTR 342 cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\n\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh_	2	3	342
-484	2015-06-30	14:30:00	17:40:00	1- Acertar documento DTR 342 cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\n\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh_	2	3	342
-485	2015-07-01	08:01:00	10:10:00	Correção da pesquisa de cpf duplo	14	12	326
-486	2015-06-29	10:00:00	10:20:00	Cartões, alterações dados bancários.	105	5	28
-487	2015-06-30	14:10:00	14:30:00	Número autorização,  Autorização URA, Senha.	105	5	301
-488	2015-06-30	14:30:00	15:30:00	Alterações documentação 	105	6	100
-489	2015-07-01	08:30:00	11:30:00	exclusão lógica de pessoas e atualização das rotinas que consumiam as pessas (estabelecimento, vinculos, ...)	1	3	318
-490	2015-07-01	10:30:00	11:30:00	Melhoria na execução do SQL	14	3	363
-491	2015-07-01	10:30:00	12:00:00	gerando limites	11	5	59
-493	2015-07-01	15:00:00	16:45:00	LCTO de trasações na ETD 21	11	5	59
-494	2015-07-01	10:00:00	12:00:00	auxilio usar fechamento padrão.. não está mais disponível ECS: 3000 p/ lcto em lote. 	9	5	27
-495	2015-07-01	17:30:00	18:10:00	Importando dados e gerando envio 	11	11	59
-496	2015-07-01	14:30:00	16:30:00	\N	14	12	367
-497	2015-07-01	14:45:00	16:00:00	correção consulta conforme avistado por mauricio	1	12	310
-498	2015-07-01	16:00:00	18:30:00	ajustes datas inicio, encerramento e cancelamento	1	3	318
-499	2015-07-01	09:42:00	10:30:00	Configuração layout arquivo retorno da camara (PMNH) , para tratar matricula com letras\r\n	2	3	5
-501	2015-07-01	14:30:00	18:30:00	Retorno bancario tratamento estorno dos lancamentos para uma mesma FPG com bancos diferentes.	2	3	365
-492	2015-07-01	12:45:00	13:00:00	cadastro de contrato ecs 948	8	9	28
-502	2015-07-02	10:00:00	10:30:00	cadastro contrato ecs 1210	8	9	36
-503	2015-07-01	10:00:00	12:00:00	TEF fora do ar!	21	5	301
-504	2015-07-01	13:20:00	14:35:00	Suporte sobre o arquivo de retorno no FP	21	5	32
-505	2015-07-01	14:50:00	18:20:00	Testes junto com o monti	21	4	365
-506	2015-07-02	09:38:00	12:38:00	pesquisa e geração dos dados	11	5	366
-507	2015-07-02	09:00:00	12:00:00	validações e publicação alterações das datas	1	3	318
-508	2015-07-02	15:00:00	16:00:00	melhorias sistema	1	3	318
-509	2015-07-02	16:00:00	17:00:00	correção relatorio	1	12	310
-510	2015-07-02	16:00:00	18:20:00	Gerando dados em xlsx	11	5	366
-511	2015-07-02	17:00:00	18:00:00	\N	1	3	368
-512	2015-07-02	08:38:00	10:00:00	Testes conforme alterações feitas.	2	4	359
-513	2015-07-02	14:30:00	17:30:00	reunião Interna com o pessoal da Afpuc.	2	8	9
-514	2015-07-02	14:00:00	15:00:00	Alterações documentação	105	6	100
-515	2015-07-02	18:00:00	18:30:00	apresentação alterações e levantamentos de requisitos com oseias	1	8	318
-516	2015-07-02	14:10:00	18:10:00	\N	12	8	9
-517	2015-07-03	08:30:00	10:00:00	alterações solicitadas por oseias	1	3	318
-518	2015-07-03	10:00:00	11:00:00	correção listagem de atividades	1	12	318
-519	2015-07-03	11:00:00	11:30:00	\N	1	3	368
-520	2015-07-02	11:10:00	12:00:00	Suporte ECS	21	5	301
-521	2015-07-03	11:30:00	12:20:00	alterações solicitadas por oseias	1	3	363
-522	2015-07-03	10:40:00	11:00:00	cadastro de contrato ecs 1212	8	9	28
-523	2015-07-02	13:20:00	14:05:00	Suporte ECS	21	5	301
-524	2015-07-02	15:00:00	16:30:00	TESTE planilha	21	4	345
-525	2015-07-02	17:40:00	18:20:00	teste dos repasses	21	4	368
-526	2015-07-03	15:35:00	16:00:00	cadastro contrato ecs 1215	8	9	29
-527	2015-07-03	09:30:00	12:30:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342
-528	2015-07-03	14:30:00	17:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342
-529	2015-07-03	14:30:00	17:30:00	veirifacao do cadastro das industrias jundo a FIERGS\r\n	11	5	366
-530	2015-07-03	10:30:00	11:55:00	Suporte ECS	21	5	301
-531	2015-07-03	13:00:00	13:40:00	Suporte ECS	21	5	301
-532	2015-07-03	15:30:00	18:15:00	Teste planilha.	21	4	345
-533	2015-07-06	10:30:00	11:00:00	LCTO de compra piraju	11	5	136
-534	2015-07-06	14:30:00	16:15:00	LCTO de compra piraju	11	5	136
-535	2015-07-06	14:28:00	16:28:00	cadastrar bloqueio total apos acessos chegar a 0	1	3	316
-536	2015-07-06	16:28:00	17:05:00	\N	1	3	363
-537	2015-07-06	16:15:00	16:45:00	envio do e-mail	11	11	371
-538	2015-07-06	14:30:00	17:45:00	\N	14	3	364
-539	2015-07-06	10:00:00	12:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh	2	3	342
-540	2015-07-06	14:30:00	17:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh\r\nApos Apresentação do mesmo para Suporte (Fernanda)	2	3	342
-541	2015-07-06	17:00:00	17:40:00	Configuração e teste recurso exclusivo da Arco para processar arquivo em lct de lote	2	3	372
-542	2015-07-06	10:10:00	10:50:00	Suporte ECS	21	5	301
-543	2015-07-06	13:00:00	13:45:00	Suporte ecs	21	5	301
-544	2015-07-06	15:50:00	17:05:00	Suporte	21	5	372
-545	2015-07-07	09:40:00	12:10:00	atualizando dados	11	5	369
-546	2015-07-07	09:30:00	12:00:00	\N	1	3	373
-547	2015-07-07	14:00:00	18:15:00	\N	1	3	373
-548	2015-07-07	09:00:00	11:45:00	Programação	14	3	364
-549	2015-07-07	14:07:00	16:15:00	Programação	14	3	364
-550	2015-07-07	16:45:00	17:35:00	Programador	14	3	364
-551	2015-07-07	15:10:00	15:25:00	cadastro de contrato ecs 1216	8	9	20
-552	2015-07-07	15:50:00	16:05:00	cadastro de contrato ecs 1219	8	9	28
-554	2015-07-07	09:45:00	12:00:00	1 - ,pg_ent_login.php / pg_ent_login.html: \r\nSalientar fontes com problema de Encerramento ou Fechamento\r\n2 - pg_envio_retorno_planilha.php pg_envio_retorno.html\r\nGerar palnilha de resumo	2	3	342
-555	2015-07-07	14:30:00	17:20:00	 pg_fec_retorno_bco..php pg_fec_retorno_bco.html\r\n     Tratamento retorno maior que envio, planilha resumo definida junto       \r\n      Fernanda.	2	3	342
-556	2015-07-07	16:10:00	17:10:00	busca de dados das industrias	11	5	366
-557	2015-07-08	09:30:00	10:00:00	Indicador do E-mail mkt	11	11	59
-558	2015-07-08	11:30:00	12:00:00	\N	11	5	369
-559	2015-07-08	09:10:00	11:55:00	Programação	14	3	364
-560	2015-07-08	09:00:00	11:30:00	\N	1	3	373
-561	2015-07-08	13:30:00	15:15:00	\N	1	3	373
-562	2015-07-08	14:30:00	15:38:00	registra dados na planilha e envio para Oseioas e Peterson	11	5	369
-563	2015-07-08	13:55:00	16:05:00	Programação	14	3	364
-564	2015-07-08	16:40:00	17:40:00	Programação	14	3	364
-565	2015-07-09	08:45:00	09:30:00	cadastro de contraton ecs 1710/1221	8	9	17
-566	2015-07-09	09:50:00	10:10:00	cadastro de contrato ecs 465	8	9	34
-567	2015-07-09	10:30:00	10:45:00	atualização dados ecs 6851 contrato sisme	8	9	11
-568	2015-07-09	11:00:00	11:15:00	cadastro de contrato ecs 1222	8	9	28
+COPY atividade (id, data_atividade, hora_inicio, hora_fim, descricao, colaborador_id, tipo_atividade_id, ticket_id, sistema_id) FROM stdin;
+249	2015-06-08	11:45:00	13:00:00	Suporte ECS	21	5	\N	\N
+260	2015-06-09	14:00:00	18:59:00	VISITA AFUMI	21	5	\N	\N
+262	2015-06-10	16:30:00	17:30:00	Credenciamento	105	9	28	3
+339	2015-06-18	10:30:00	11:00:00	cadastro de contrato	8	9	36	3
+174	2015-06-01	09:40:00	10:00:00	Zerando limite ETD cartao empresarial	11	5	59	3
+188	2015-06-01	17:00:00	18:50:00	Cartão Empresarial\r\n-Gerando limites\r\n-Agendamento de envio de e-mail	11	5	59	3
+193	2015-06-02	10:30:00	11:50:00	-importaçao associado\r\n- envio de -mail mkt do saldo	11	11	59	3
+200	2015-06-03	09:30:00	10:25:00	indicador de envios\r\nacerto de e-mails	11	5	59	3
+209	2015-06-08	13:30:00	14:35:00	Lançamentos cartão empresarial	11	5	59	3
+243	2015-06-10	10:20:00	12:50:00	Limites cartao empresarial	11	5	60	3
+257	2015-06-10	15:20:00	16:35:00	Gerando lista de e-mail e saldo para importaçao para o dinamize	11	11	60	3
+310	2015-06-16	11:00:00	11:30:00	cadastro de contrato 	8	9	21	3
+259	2015-06-09	08:00:00	12:30:00	VISITA AFUMI	21	5	28	3
+313	2015-06-16	13:45:00	16:35:00	Programação	14	3	345	2
+316	2015-06-16	14:00:00	14:30:00	Nr.Autorização, Estorno autorização, extratos.	105	5	301	1
+319	2015-06-16	17:40:00	18:05:00	cadastro de contrato	8	9	56	3
+322	2015-06-11	14:10:00	16:55:00	Suporte POS problema no pop	21	5	301	1
+325	2015-06-17	13:15:00	13:45:00	cadastro de contrato	8	9	5	3
+328	2015-06-15	14:00:00	17:00:00	Repasse Piraju - conferência.	9	5	36	3
+331	2015-06-17	14:00:00	16:00:00	Programação	14	3	309	3
+334	2015-06-18	10:10:00	10:30:00	cadastro de contrato	8	9	21	3
+337	2015-06-17	14:30:00	15:30:00	Liberação da execução do arquivo lcto de lotes oriundo do Fechamento Padrão	2	3	352	3
+342	2015-06-18	09:15:00	11:55:00	Programação (desvincular ao ecs de controle e sim ao tipo de ecs que pode ser normal ou fechamento)	14	3	309	3
+345	2015-06-17	14:30:00	17:30:00	biblioteca .rtf to .docx	1	3	318	2
+181	2015-06-01	13:55:00	15:30:00	suporte a relatórios de estornos ass:1313	12	5	21	3
+348	2015-06-12	14:00:00	15:45:00	Suporte ECS	21	5	301	1
+189	2015-06-01	13:30:00	15:00:00	Suporte VERA - Associados, extratos	21	5	21	3
+351	2015-06-16	14:00:00	16:00:00	 Suporte POS Ecs POP	21	5	301	1
+354	2015-06-17	13:00:00	14:20:00	Suprote POS ECS Pop	21	5	301	1
+182	2015-06-01	15:30:00	17:54:00	Suporte ass: Caroline Campos e ao Ctas a pagar encerrado  - Novo	12	5	28	3
+194	2015-06-01	15:00:00	17:30:00	Credenciamento ECS Pirajú	105	9	36	3
+357	2015-06-18	14:30:00	16:30:00	Identificação oriegm pessoa no cadastro ticket	2	3	318	2
+359	2015-06-19	10:30:00	12:25:00	Publicação e testes	14	4	313	3
+362	2015-06-19	14:15:00	16:30:00	biblioteca phpword	1	3	318	2
+365	2015-06-19	11:30:00	11:50:00	Suporte configuração POS ecs 1979	21	5	301	1
+368	2015-06-19	11:00:00	11:30:00	Geração arquivo som status PP (produção)	2	4	327	3
+201	2015-06-03	10:35:00	11:15:00	Suporte ref. POS, fechamento, contas a pagar com erro, associado exonerado, troca de matrículas, etc...	12	5	28	3
+371	2015-06-19	17:30:00	18:30:00	Alteração envio e retorno arquivo cfe mudança efetuadas nas matriculas dos associados.	2	3	355	3
+374	2015-06-17	14:00:00	16:30:00	Ligações 	11	11	60	3
+376	2015-06-22	11:30:00	13:30:00	Programação	14	3	308	2
+378	2015-06-22	13:30:00	14:25:00	Sistema OLD - Não havia ticket cadastrado	14	3	356	3
+206	2015-06-03	14:00:00	15:00:00	Credenciamentos	105	9	58	3
+207	2015-06-03	15:00:00	16:00:00	Credenciamentos	105	9	3	3
+208	2015-06-03	16:00:00	17:00:00	Códigos Internos	105	9	28	3
+380	2015-06-18	14:00:00	14:30:00	Problema ao inibir código ECS3000 - recurso exclusivo. abertura T152	9	5	352	3
+382	2015-06-19	11:00:00	11:35:00	explicação periodo de ajustes, datas de encerramento, abertura de ticket, e alteração do periodo..	9	5	353	2
+384	2015-06-22	14:00:00	17:20:00	Indicador e-mail mkt novo conceito	11	11	301	1
+386	2015-06-22	09:15:00	11:45:00	implementação de gravação de logs	1	3	318	2
+388	2015-06-22	09:30:00	09:50:00	Testes / lcts 3000.	2	4	355	3
+390	2015-06-22	14:00:00	15:00:00	testes e alteração da rotina para tratamento ecs 9000 e 9025 cfe arquivo exemplo enviado pelo usuario.	2	4	355	3
+392	2015-06-22	17:20:00	18:20:00	Ligacao ECS atualizacao 	11	5	60	3
+394	2015-06-23	09:00:00	11:30:00	log e relatorio	1	3	318	2
+396	2015-06-23	09:30:00	11:20:00	\N	14	3	358	3
+398	2015-06-23	13:50:00	15:58:00	Alteração dos vinculos com ECS 200	14	3	309	3
+400	2015-06-23	10:10:00	12:15:00	Definição/Esboço DTR	2	6	360	2
+401	2015-06-23	14:30:00	15:20:00	Termino definição esboço DTR	2	6	360	2
+402	2015-06-23	16:00:00	18:00:00	1 - Espelhar ambiente quente na vm-jacare\r\n2 - executar sql para atribuir null no atributo data validade cad ticket\r\nUPDATE ticket SET data_validade=null\r\n3 - Tirar fora o seguinte atributo no cadastro ticket: Data Validade\r\n4 - Adicionar os atributos no cadastro ticket\r\nData Inicio\r\nData Cancelamento\r\nData Encerramento\r\n5 - Acertar tabela de status_ticket	2	3	359	4
+403	2015-06-23	14:00:00	18:00:00	documentação e programação	1	3	310	2
+405	2015-06-24	09:50:00	10:10:00	cadastro de contrato	8	9	28	3
+406	2015-06-23	11:30:00	12:30:00	Alterações Documentos	105	6	100	3
+404	2015-06-24	09:20:00	09:50:00	cadastro de contrato	8	9	34	3
+407	2015-06-24	08:37:00	11:00:00	registro de log	1	3	318	2
+232	2015-06-08	09:00:00	09:30:00	Credenciamento	105	9	28	3
+233	2015-06-08	09:30:00	10:00:00	Credenciamento	105	9	39	3
+234	2015-06-09	09:00:00	10:00:00	Credenciamento	105	9	28	3
+235	2015-06-09	10:00:00	10:30:00	Credenciamento	105	9	39	3
+236	2015-06-09	10:30:00	11:30:00	Credenciamento	105	9	58	3
+237	2015-06-09	11:30:00	12:30:00	Credenciamento	105	9	20	3
+238	2015-06-09	08:50:00	09:20:00	problema pos, testes e informações para realizar a troca..	9	5	56	3
+408	2015-06-24	11:40:00	12:10:00	cadastro de contrato	8	9	36	3
+409	2015-06-24	12:10:00	12:25:00	cadastro de contrato	8	9	15	3
+241	2015-06-09	17:00:00	17:30:00	Credenciamento	105	9	56	3
+242	2015-06-10	09:00:00	09:30:00	Credenciamento	105	9	32	3
+410	2015-06-24	12:25:00	12:40:00	cadastro de contrato	8	1	34	3
+411	2015-06-24	12:40:00	13:00:00	cadastro de contrato	8	9	20	3
+412	2015-06-23	14:00:00	14:30:00	Indicador 	11	11	59	3
+413	2015-06-23	14:30:00	15:00:00	Indicador\r\n	11	11	60	3
+250	2015-06-09	08:00:00	12:00:00	\N	12	5	28	3
+251	2015-06-09	13:00:00	18:59:00	\N	12	5	28	3
+414	2015-06-23	15:00:00	15:30:00	Indocador	11	11	136	3
+261	2015-06-10	17:10:00	18:00:00	importaçao e envio de saldo	11	11	60	3
+268	2015-06-10	18:00:00	18:59:00	LANÇAMENTOS cartao empresarial	11	5	60	3
+271	2015-06-11	10:00:00	11:00:00	indicador de resposta do e-mail mkt	11	11	60	3
+290	2015-06-12	15:00:00	16:45:00	Lançamentos cartao empresarial	11	5	136	3
+298	2015-06-15	10:20:00	11:30:00	gerando limites 	11	5	136	3
+307	2015-06-15	16:30:00	17:30:00	preparaçao e envio de e-mail mkt	11	11	136	3
+311	2015-06-16	09:00:00	11:30:00	Programação	14	3	339	3
+314	2015-06-16	09:30:00	12:15:00	script para backup diario da base de dados	1	3	318	2
+317	2015-06-16	14:45:00	16:00:00	vinculos ecs 9020 etd's	8	9	313	3
+320	2015-06-16	15:00:00	16:00:00	analize do retorno do e-mail para atualizaçao dos dados do ECS	11	11	60	3
+323	2015-06-17	09:10:00	11:30:00	vinculos ecs 9020 etd's	8	9	313	3
+329	2015-06-16	16:00:00	18:10:00	suporte pos - problema pop - troca de configuração	9	5	301	1
+332	2015-06-17	13:45:00	14:00:00	cadastro de contrato	8	9	45	3
+335	2015-06-16	14:40:00	17:30:00	Testes e programação identificação origem no cadastro ticket (ambbiente teste)	2	3	318	2
+326	2015-06-17	08:55:00	12:20:00	Programação	14	3	350	3
+270	2015-06-11	09:00:00	09:30:00	Geração/Envio Arquivo Remessa RH	105	5	28	3
+338	2015-06-17	15:30:00	17:30:00	testes lcto em lote para ecs 3000,9000,9025,9030,1500 oriundos e nao oriundos do fp	2	4	309	3
+340	2015-06-18	09:45:00	10:30:00	Solicitação/Cancelamento Cartões, Log operações.	105	5	28	3
+274	2015-06-11	10:30:00	11:00:00	Credenciamento	105	9	17	3
+343	2015-06-18	14:30:00	15:20:00	Programação	14	3	350	3
+346	2015-06-18	15:51:00	17:17:00	Programação	14	3	350	3
+349	2015-06-15	10:15:00	11:30:00	Suporte ECS	21	5	301	1
+352	2015-06-17	08:30:00	10:20:00	Suporte POS pop ECS	21	5	301	1
+355	2015-06-18	14:00:00	14:30:00	Suporte POS ecs 1789	21	5	301	1
+358	2015-06-19	08:15:00	10:15:00	Publicação e testes de publicação	14	3	313	3
+360	2015-06-19	11:45:00	12:00:00	cadastro de contrato	8	9	20	3
+283	2015-06-11	09:28:00	10:30:00	orientação para geração arquivo de envio de densconto	12	5	28	3
+284	2015-06-11	11:08:00	12:05:00	orientação para confecção de cartão, troca de POS e recurso exclusivo	12	5	14	3
+285	2015-06-11	14:05:00	15:29:00	suporte referente a compra de cartão, sugestão de cliente e NF	12	5	5	3
+286	2015-06-12	09:30:00	10:00:00	Credenciamento	105	9	58	3
+287	2015-06-12	14:30:00	15:30:00	Credenciamento	105	9	36	3
+372	2015-06-22	10:20:00	10:35:00	cadastro de contrato	8	9	34	3
+375	2015-06-19	14:50:00	17:00:00	Ligações	11	11	60	3
+377	2015-06-22	14:05:00	14:20:00	cadastro de contrato	8	9	58	3
+363	2015-06-19	14:25:00	16:25:00	Correção da restrição de bloqueio por período com base no segmento.	14	3	354	2
+379	2015-06-22	14:20:00	14:45:00	cadastro de contrato	8	9	28	3
+381	2015-06-22	16:55:00	17:10:00	cadastro de contrato	8	9	20	3
+297	2015-06-15	09:00:00	10:30:00	Credenciamento	105	9	28	3
+383	2015-06-19	14:00:00	14:40:00	teste pet fez alteração para restrição por segmento, no qual trazia default bloqueavel=não, não respeitando o periodo de bloqueio da ETD.	9	4	353	2
+385	2015-06-22	14:58:00	17:02:00	Programação	14	3	350	3
+387	2015-06-22	14:00:00	18:30:00	ajustes relatorios	1	3	318	2
+389	2015-06-22	10:00:00	11:00:00	Analise do arquivo enviado para CEF cfe email recebido da CEF. Foi orientado ao usuario para re-enviar o arquivo pois este não estava com problema cfe layout SIACC-150. 	2	4	327	3
+391	2015-06-22	15:40:00	17:30:00	Definição / Esboço da DTR -alterações cadastro de Tickets cfe solicitação do Oseias.	2	6	318	2
+393	2015-06-23	10:40:00	11:10:00	INDICADOR E-MAIL MKT	11	11	301	1
+395	2015-06-23	14:30:00	15:00:00	cadastro de contrato	8	9	28	3
+397	2015-06-23	11:20:00	12:50:00	Documentação	14	6	361	3
+308	2015-06-15	17:00:00	17:30:00	Credenciamento	105	9	39	3
+309	2015-06-15	17:30:00	18:00:00	Credenciamento	105	9	21	3
+220	2015-06-08	15:30:00	17:10:00	Fechamento do processo da DTR. Publicação / teste de peiublicação e atualização documento kanban,e DTM08 - Manual Tecnico	2	6	326	2
+175	2015-06-01	13:30:00	14:30:00	publicação e testes	1	3	316	3
+176	2015-06-01	09:15:00	10:00:00	Testes cadastramento Ponto.	2	4	318	2
+177	2015-06-01	14:00:00	14:30:00	Geração do arquivo para testes na CEF cfe ultima resposta (via email) do cliente (ASED/CEF)	2	4	327	3
+178	2015-06-01	14:45:00	15:30:00	Formatação Kanban , DTR Ticket	2	6	326	2
+179	2015-06-01	11:45:00	12:10:00	\N	12	10	328	1
+180	2015-06-01	15:00:00	17:00:00	inclusao de colunas de historicos de suporte e cartao	1	3	311	2
+183	2015-06-01	16:00:00	18:00:00	Testes da versão alterada apos sugetsões do Pablo referente (cache, datas etc)..\r\nFormtação de outras duvidas junto com Gustavo sobre o framework, e enviado ao Pablo	2	4	318	2
+190	2015-06-01	17:00:00	18:00:00	Formtação de outras duvidas junto com Jacare sobre o framework, e enviado ao Pablo	1	4	318	2
+191	2015-06-02	09:00:00	09:30:00	\N	1	3	330	2
+192	2015-06-02	10:00:00	10:30:00	\N	1	3	330	2
+221	2015-06-08	17:00:00	18:15:00	melhorias	1	3	318	2
+222	2015-06-03	14:00:00	18:55:00	TES POS!	21	4	301	1
+223	2015-06-09	09:00:00	12:15:00	melhorias no sistema junto com pablo	1	3	318	2
+224	2015-06-09	09:30:00	12:30:00	Publicação (utilizando GIT)	14	3	340	3
+226	2015-06-09	14:00:00	16:00:00	melhorias sistema atividade	1	3	318	2
+244	2015-06-05	10:05:00	12:00:00	Teste comunicação LYRA, pos UGHINI, BELSHOP.	21	4	301	1
+227	2015-06-09	16:00:00	17:30:00	testes automatizados no selenium	1	4	318	2
+195	2015-06-02	09:35:00	12:00:00	Pesquisa Pessoas alteração cfe solicitação Oseias	2	3	326	2
+196	2015-06-02	14:40:00	16:30:00	Pesquisa avançada Pessoas alteração cfe solicitação Oseias	2	3	326	2
+197	2015-06-02	17:10:00	18:20:00	Pesquisa Pessoas alteração cfe solicitação Oseias	2	3	326	2
+198	2015-06-02	15:00:00	15:30:00	Teste relatorio DTR 011	9	4	311	2
+199	2015-06-02	15:30:00	18:12:00	\N	1	3	318	2
+225	2015-06-09	14:30:00	16:30:00	Publicação (utilizando GIT)	14	3	307	3
+255	2015-06-10	12:00:00	12:20:00	Esboço de dr definição	2	6	342	3
+399	2015-06-22	10:05:00	11:20:00	Suporte ECS	21	5	301	1
+202	2015-06-03	09:30:00	11:30:00	Testes/Configuraçõe VM velocidade de acesso banco externo tecbiz (classes tickets e atividades)	2	4	318	2
+203	2015-06-03	14:30:00	15:40:00	Testes/Configuraçõe VM velocidade de acesso banco externo tecbiz (classes tickets e atividades)	2	4	318	2
+204	2015-06-03	13:30:00	17:30:00	ajustes	1	3	318	2
+205	2015-06-03	14:15:00	14:30:00	Suporte TecBiz autorizador externo	9	5	301	1
+210	2015-06-03	09:20:00	11:50:00	Suporte ECS	21	5	301	1
+211	2015-06-08	15:00:00	16:20:00	Alterações na instruçao de trabalho de acordo com suguestões da Fernanda	11	6	334	1
+212	2015-06-08	13:15:00	16:32:00	Atualização do processo para nova metodologia	12	6	333	1
+213	2015-06-08	11:30:00	12:45:00	Programação	14	3	339	3
+214	2015-06-08	14:10:00	16:55:00	Programação	14	3	339	3
+215	2015-06-08	11:00:00	12:30:00	Melhorias de perfornance	1	3	318	2
+216	2015-06-08	14:00:00	16:00:00	melhorias de layout	1	3	318	2
+217	2015-06-08	16:00:00	17:00:00	publicação, testes e manualização	1	3	311	2
+218	2015-06-08	09:50:00	12:00:00	Alteração pesquisa avançada cadastro Pessoas	2	3	326	2
+219	2015-06-08	14:00:00	15:20:00	Pesquisa Avançada cadastro Pessoas	2	3	326	2
+228	2015-06-09	11:00:00	12:20:00	Revisão das rotinas para publicação	2	6	307	3
+229	2015-06-09	15:00:00	16:40:00	Revisão e geração dp arquivo teste para CEF cfe a ultima validação.	2	4	327	3
+230	2015-06-09	16:40:00	17:20:00	Publicação / teste.	2	4	307	3
+231	2015-06-09	15:00:00	17:30:00	Alteraçao e revisão do documento	11	6	334	1
+240	2015-06-09	15:30:00	16:30:00	Suportes ECS nr. Extratos, Nr.Autorização, reimpressão comprovantes.	105	5	301	1
+245	2015-06-05	12:30:00	12:50:00	Suporte ECS	21	5	301	1
+246	2015-06-05	13:30:00	15:00:00	Suporte POS, UGHINI e contato LYRA	21	4	301	1
+248	2015-06-08	09:20:00	11:30:00	Suporte POS, UGHINI, BELSHOP, MARISUL\r\n	21	4	301	1
+252	2015-06-10	08:50:00	10:30:00	\N	12	10	328	1
+254	2015-06-10	11:40:00	12:00:00	Esboço de dr definição	2	6	343	3
+253	2015-06-10	10:03:00	11:40:00	Teste (publicação) tratamento de matriculas iguais para fpg diferentes arquiovo de retorno	2	4	307	3
+258	2015-06-08	14:05:00	17:05:00	POS Ughini, Belshop, callcenter arbs	21	4	301	1
+263	2015-06-10	09:25:00	12:25:00	relatorios	1	3	318	2
+264	2015-06-10	14:25:00	18:00:00	relatorios	1	3	318	2
+265	2015-06-10	09:00:00	11:40:00	Teste de publicação - Restauração da base, criação de ambiente para testes.	14	3	307	3
+266	2015-06-10	14:15:00	17:35:00	Programação	14	3	345	2
+267	2015-06-10	10:30:00	11:30:00	Suporte ECS	21	5	301	1
+269	2015-06-10	13:30:00	17:00:00	POS TBZ Lyra conexão, e Ughini POS	21	4	301	1
+256	2015-06-10	14:30:00	17:30:00	Teste (publicação) tratamento de matriculas iguais para fpg diferentes arquiovo de retorno	2	4	307	3
+272	2015-06-11	09:00:00	12:00:00	finalização do relatorio	1	3	318	2
+273	2015-06-11	14:00:00	17:00:00	melhorias	1	3	318	2
+275	2015-06-11	09:30:00	11:00:00	Definição de DR	2	6	343	3
+276	2015-06-11	11:00:00	12:00:00	Definição DR	2	6	307	3
+277	2015-06-11	14:30:00	16:00:00	Definição DR	2	6	307	3
+278	2015-06-11	15:00:00	16:00:00	Teste erro relatorio exibicação fonte pagadora fechada juntamente com fpgs abertas..	9	4	347	3
+279	2015-06-11	08:50:00	09:50:00	Descrição do documento	14	6	345	2
+280	2015-06-11	09:50:00	12:30:00	Programação	14	3	345	2
+281	2015-06-11	14:10:00	16:00:00	Correção	14	3	347	3
+282	2015-06-12	08:20:00	09:20:00	Reunião para dúvidas referente a layout	14	8	339	3
+288	2015-06-12	10:00:00	12:30:00	melhorias no ticket	1	3	318	2
+289	2015-06-12	14:00:00	16:00:00	melhorias no ticket	1	3	318	2
+291	2015-06-12	16:00:00	17:00:00	\N	1	3	349	3
+292	2015-06-12	09:40:00	12:40:00	Programação	14	3	341	3
+293	2015-06-12	13:40:00	16:40:00	Programação	14	3	341	3
+294	2015-06-12	10:00:00	10:30:00	DTR definição	2	6	343	3
+295	2015-06-12	10:30:00	11:00:00	DTR - definição	2	6	342	3
+296	2015-06-12	15:00:00	17:00:00	Acerto na numeração de tickets. Desenvolvimento rotina para acertar cadastros tickets,atividades, dtrs.	2	3	318	2
+299	2015-06-15	09:15:00	11:30:00	testes	1	4	349	3
+300	2015-06-15	14:00:00	15:00:00	publicação e testes no servidor quente	1	3	349	3
+301	2015-06-15	09:11:00	12:11:00	Programação 	14	3	339	3
+302	2015-06-15	09:40:00	11:00:00	Geração arquivo quente (Produção na CEF) para teste de real desconto em conta.(Geração de arquivo de Retorno)	2	4	327	3
+303	2015-06-15	14:00:00	16:10:00	Publicação	14	3	309	3
+304	2015-06-15	16:30:00	17:00:00	Teste publicação	14	3	309	3
+305	2015-06-15	17:00:00	17:35:00	Manualização DTM008	14	6	309	3
+306	2015-06-15	14:40:00	17:15:00	Geração script para acerto de numeração de  tickets,atividades,DTrs	2	3	318	2
+312	2015-06-16	12:10:00	12:45:00	cadastro de contrato	8	9	10	3
+315	2015-06-16	14:00:00	17:00:00	script de backup diario da base de dados	1	3	318	2
+318	2015-06-16	17:00:00	17:40:00	vinculos ecs 9020 etd's	8	9	313	3
+321	2015-06-11	09:45:00	12:00:00	Suporte POS - problema pop	21	5	301	1
+247	2015-06-05	15:00:00	15:40:00	POS - Callcenter problema	21	4	2	3
+330	2015-06-17	10:00:00	16:00:00	Documentação POS 	105	6	100	3
+333	2015-06-16	10:00:00	12:00:00	Testes/Desenvolvimento identificação origem do solicitante no cadastramento Ticket	2	3	318	2
+336	2015-06-17	10:00:00	12:00:00	Identificação origem pessoa (solicitante) no cadastro teicket	2	3	318	2
+327	2015-06-17	09:30:00	11:30:00	analise dos relatorios, alteração para incluir data e hora, testes e publicação.	1	3	351	2
+341	2015-06-18	14:00:00	14:30:00	2a.via cartões, cartão dependente	105	5	28	3
+344	2015-06-18	15:20:00	15:45:00	cadastro de contrato	8	9	27	3
+347	2015-06-12	10:00:00	11:20:00	Suporte ECS	21	5	301	1
+350	2015-06-16	10:00:00	12:00:00	SUPORTE POS ecs's	21	5	301	1
+353	2015-06-17	10:30:00	11:35:00	Suporte ECS Belshop 3077 POS	21	5	14	3
+356	2015-06-18	09:40:00	11:40:00	testes finais de publicação, inclusive , recurso exclusivo da Afpuc, FP. lançamento em lote.	2	4	309	3
+361	2015-06-19	09:00:00	12:15:00	biblido phpword	1	3	318	2
+364	2015-06-19	09:00:00	10:30:00	Suporte ECS	21	5	301	1
+367	2015-06-19	10:00:00	11:00:00	Tickets origem pessoa	2	3	318	2
+370	2015-06-19	14:00:00	17:00:00	Tetses origem pessoa Tickets.	2	4	318	2
+373	2015-06-22	10:35:00	11:00:00	cadastro de contrato	8	9	58	3
+415	2015-06-24	09:02:00	11:45:00	Programação	14	3	350	3
+416	2015-06-24	11:00:00	11:30:00	Teste com PET	21	4	350	3
+417	2015-06-24	11:30:00	12:10:00	Criação de tabela para teste	21	4	345	2
+418	2015-06-24	09:00:00	12:00:00	1-Acertar conforme novos atributo das datas e exclusão data validade: \r\n\t1.1 Classe (Control - TicketForm):\r\n\t1.2 Classe (Model - Ticket)	2	3	359	4
+419	2015-06-24	14:15:00	16:00:00	1-Acertar conforme novos atributo das datas e exclusão data validade: \r\n\t1.1 Classe (Control - TicketForm):\r\n\t1.2 Classe (Model - Ticket)	2	3	359	4
+420	2015-06-24	17:20:00	18:00:00	1-Acertar conforme novos atributo das datas e exclusão data validade: \r\n\t1.1 Classe (Control - TicketForm):\r\n\t1.2 Classe (Model - Ticket)	2	3	359	4
+421	2015-06-24	14:00:00	16:00:00	\N	1	3	310	2
+422	2015-06-24	17:00:00	17:30:00	\N	1	3	310	2
+423	2015-06-25	09:00:00	11:50:00	Geração dos arquivos com base em mais de uma compra e diversas parcelas.	14	3	339	3
+424	2015-06-24	14:00:00	15:30:00	pesquisa de aap do mercado com a função de lista de associado	11	5	361	3
+425	2015-06-23	10:40:00	11:40:00	repasse online-conferencia	9	5	36	3
+426	2015-06-25	17:50:00	18:10:00	cadastro de contrato	8	9	15	3
+427	2015-06-25	14:00:00	15:30:00	criando suguestao de tela para app 	11	5	361	3
+429	2015-06-25	14:30:00	16:50:00	Confecção de tabela para realização e controle de testes.	21	4	345	2
+430	2015-06-25	13:50:00	16:20:00	Programação	14	3	350	3
+431	2015-06-25	16:50:00	17:30:00	Programação	14	3	350	3
+432	2015-06-25	09:15:00	12:15:00	\N	1	3	310	2
+433	2015-06-25	14:00:00	18:00:00	\N	1	3	310	2
+434	2015-06-25	09:20:00	11:40:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359	4
+435	2015-06-25	14:30:00	16:30:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359	4
+436	2015-06-26	08:55:00	09:10:00	cadastro de contrato	8	9	28	3
+437	2015-06-25	17:00:00	17:35:00	1 - Definição/Programação/testes regras das datas x status ticket\r\n     1.1 - Desabilitar Status Ticket Para Usuário\r\n     1.2 Ticket cadastrado Novo o : status "Pendente"\r\n     1.3 Ticket Data Inicio : status "Ativo"\r\n     1.4 Ticket data Cancelado Mudar status "Cancelado"\r\n     1.5 Ticket data Encerrado Mudar status para "Encerrado"	2	3	359	4
+438	2015-06-25	15:30:00	16:00:00	Atualizando contato de e-mail mkt	11	5	60	3
+439	2015-06-26	09:40:00	11:40:00	Telas para app	11	5	361	3
+440	2015-06-26	14:30:00	16:30:00	telas app	11	5	361	3
+441	2015-06-26	09:15:00	12:20:00	Revisão dos recursos exclusivos	14	3	350	3
+442	2015-06-26	13:50:00	16:10:00	Revisão dos recursos exclusivos	14	3	350	3
+443	2015-06-26	16:30:00	17:10:00	Eliminação dos recursos exclusivos antigos	14	3	350	3
+444	2015-06-26	09:15:00	12:15:00	\N	1	3	310	2
+445	2015-06-26	14:00:00	17:00:00	testes	1	3	310	2
+446	2015-06-26	10:00:00	12:00:00	Regras Status x Datas : Botão Salvar\r\nClasse: /app/lib/validator/TstatusDatasValidator.class\r\nTDatasTicketValidator.class\r\nPalavra Dr por DTr\r\n1 - menu.xml\r\n2 - \\app\\control\\desenvolvimento\\RequisitoDesenvolvimentoForm.class.php	2	3	359	4
+447	2015-06-26	14:30:00	17:30:00	Regras Status x Datas : Botão Salvar\r\nClasse: /app/lib/validator/TstatusDatasValidator.class\r\nTDatasTicketValidator.class\r\nPalavra Dr por DTr\r\n1 - menu.xml\r\n2 - \\app\\control\\desenvolvimento\\RequisitoDesenvolvimentoForm.class.php	2	3	359	4
+448	2015-06-26	18:00:00	18:20:00	cadastro de contrato	8	9	21	3
+449	2015-06-29	09:20:00	09:50:00	cadastro de contrato	8	9	28	3
+450	2015-06-29	09:50:00	11:30:00	cadastro de contratos	8	9	45	3
+451	2015-06-29	13:50:00	14:30:00	Conclusão do processo DTR010	14	3	316	3
+452	2015-06-26	16:30:00	17:00:00	criando dicumento com telas e regras	11	6	361	3
+453	2015-06-29	14:30:00	16:00:00	alterando fluxo incluindo etapa de lançamento no ECS 500 Repasses	11	6	334	1
+454	2015-06-29	14:00:00	16:00:00	publicação, testes, documentação	1	3	310	2
+455	2015-06-29	14:00:00	15:00:00	Atualização da DTR conforme definição em reunião pela manhã	2	6	342	3
+456	2015-06-29	15:00:00	17:35:00	1- Acertar documento DTR cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342	3
+457	2015-06-30	09:40:00	09:55:00	cadastro de contrato	8	9	45	3
+458	2015-06-29	14:30:00	17:15:00	Preparação da publicação dos tickets T345, T350	14	3	350	3
+459	2015-06-30	09:00:00	11:20:00	analise e importação de ecs vinculos, atualização documentação, testes	1	3	310	2
+460	2015-06-30	09:00:00	09:30:00	alteraçao para solicitaçao de orçamento 	11	6	361	3
+461	2015-06-30	11:20:00	12:15:00	\N	1	3	363	2
+462	2015-06-30	14:00:00	16:00:00	\N	1	3	363	2
+463	2015-06-29	08:00:00	16:48:00	\N	9	10	328	1
+464	2015-06-02	09:30:00	10:10:00	\N	21	10	328	1
+465	2015-06-23	09:45:00	10:10:00	\N	21	10	328	1
+466	2015-06-10	09:00:00	11:00:00	\N	3	10	328	1
+467	2015-06-16	14:30:00	17:30:00	\N	3	10	328	1
+468	2015-06-18	14:00:00	17:00:00	\N	3	10	328	1
+469	2015-06-30	16:00:00	17:00:00	correçoes relatorio	1	3	318	2
+470	2015-06-30	09:43:00	12:30:00	Simulação de publicação para os tickets 345, E 350	14	3	345	2
+471	2015-06-30	14:30:00	15:50:00	Criação documento DTR010	14	6	364	3
+472	2015-06-26	08:30:00	10:30:00	CRIAÇÃO DAS PLANILHAS PARA TESTE.	21	4	345	2
+473	2015-06-26	13:30:00	14:50:00	CRIAÇÃO DE TABELAS PARA TESTE	21	4	345	2
+474	2015-06-29	10:30:00	12:00:00	CRIAÇÃO DA TABELA PARA TESTE	21	4	345	2
+475	2015-06-29	14:00:00	15:00:00	TESTE FINAL 	21	4	345	2
+476	2015-06-29	15:00:00	16:20:00	Suporte processamento de arquivo de retorno.	21	5	28	3
+477	2015-06-29	16:20:00	16:45:00	Esclarecimento de duvidas e arquivo	21	5	32	3
+478	2015-06-29	16:45:00	18:30:00	Suporte ECS	21	5	301	1
+479	2015-06-30	10:00:00	11:00:00	teste	21	4	345	2
+480	2015-06-30	11:30:00	12:30:00	Suporte ECS	21	5	301	1
+481	2015-06-30	14:00:00	15:50:00	suporte ecs	21	5	301	1
+482	2015-06-30	16:30:00	18:00:00	teste planilha	21	4	345	2
+483	2015-06-30	09:50:00	12:00:00	1- Acertar documento DTR 342 cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\n\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh_	2	3	342	3
+484	2015-06-30	14:30:00	17:40:00	1- Acertar documento DTR 342 cfe reunião de hj pela manhã\r\n2 - Aprovar as alrerações do docuemento pessoal da TI\r\n3 - inciar Desenvolvimento das alterações nos scripts retorno RH e Banco\r\n\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh_	2	3	342	3
+485	2015-07-01	08:01:00	10:10:00	Correção da pesquisa de cpf duplo	14	12	326	2
+486	2015-06-29	10:00:00	10:20:00	Cartões, alterações dados bancários.	105	5	28	3
+487	2015-06-30	14:10:00	14:30:00	Número autorização,  Autorização URA, Senha.	105	5	301	1
+488	2015-06-30	14:30:00	15:30:00	Alterações documentação 	105	6	100	3
+489	2015-07-01	08:30:00	11:30:00	exclusão lógica de pessoas e atualização das rotinas que consumiam as pessas (estabelecimento, vinculos, ...)	1	3	318	2
+490	2015-07-01	10:30:00	11:30:00	Melhoria na execução do SQL	14	3	363	2
+491	2015-07-01	10:30:00	12:00:00	gerando limites	11	5	59	3
+493	2015-07-01	15:00:00	16:45:00	LCTO de trasações na ETD 21	11	5	59	3
+494	2015-07-01	10:00:00	12:00:00	auxilio usar fechamento padrão.. não está mais disponível ECS: 3000 p/ lcto em lote. 	9	5	27	3
+495	2015-07-01	17:30:00	18:10:00	Importando dados e gerando envio 	11	11	59	3
+496	2015-07-01	14:30:00	16:30:00	\N	14	12	367	3
+497	2015-07-01	14:45:00	16:00:00	correção consulta conforme avistado por mauricio	1	12	310	2
+498	2015-07-01	16:00:00	18:30:00	ajustes datas inicio, encerramento e cancelamento	1	3	318	2
+499	2015-07-01	09:42:00	10:30:00	Configuração layout arquivo retorno da camara (PMNH) , para tratar matricula com letras\r\n	2	3	5	3
+501	2015-07-01	14:30:00	18:30:00	Retorno bancario tratamento estorno dos lancamentos para uma mesma FPG com bancos diferentes.	2	3	365	3
+492	2015-07-01	12:45:00	13:00:00	cadastro de contrato ecs 948	8	9	28	3
+502	2015-07-02	10:00:00	10:30:00	cadastro contrato ecs 1210	8	9	36	3
+503	2015-07-01	10:00:00	12:00:00	TEF fora do ar!	21	5	301	1
+504	2015-07-01	13:20:00	14:35:00	Suporte sobre o arquivo de retorno no FP	21	5	32	3
+505	2015-07-01	14:50:00	18:20:00	Testes junto com o monti	21	4	365	3
+506	2015-07-02	09:38:00	12:38:00	pesquisa e geração dos dados	11	5	366	1
+507	2015-07-02	09:00:00	12:00:00	validações e publicação alterações das datas	1	3	318	2
+508	2015-07-02	15:00:00	16:00:00	melhorias sistema	1	3	318	2
+509	2015-07-02	16:00:00	17:00:00	correção relatorio	1	12	310	2
+510	2015-07-02	16:00:00	18:20:00	Gerando dados em xlsx	11	5	366	1
+511	2015-07-02	17:00:00	18:00:00	\N	1	3	368	2
+512	2015-07-02	08:38:00	10:00:00	Testes conforme alterações feitas.	2	4	359	4
+513	2015-07-02	14:30:00	17:30:00	reunião Interna com o pessoal da Afpuc.	2	8	9	3
+514	2015-07-02	14:00:00	15:00:00	Alterações documentação	105	6	100	3
+515	2015-07-02	18:00:00	18:30:00	apresentação alterações e levantamentos de requisitos com oseias	1	8	318	2
+516	2015-07-02	14:10:00	18:10:00	\N	12	8	9	3
+517	2015-07-03	08:30:00	10:00:00	alterações solicitadas por oseias	1	3	318	2
+518	2015-07-03	10:00:00	11:00:00	correção listagem de atividades	1	12	318	2
+519	2015-07-03	11:00:00	11:30:00	\N	1	3	368	2
+520	2015-07-02	11:10:00	12:00:00	Suporte ECS	21	5	301	1
+521	2015-07-03	11:30:00	12:20:00	alterações solicitadas por oseias	1	3	363	2
+522	2015-07-03	10:40:00	11:00:00	cadastro de contrato ecs 1212	8	9	28	3
+523	2015-07-02	13:20:00	14:05:00	Suporte ECS	21	5	301	1
+524	2015-07-02	15:00:00	16:30:00	TESTE planilha	21	4	345	2
+525	2015-07-02	17:40:00	18:20:00	teste dos repasses	21	4	368	2
+526	2015-07-03	15:35:00	16:00:00	cadastro contrato ecs 1215	8	9	29	3
+527	2015-07-03	09:30:00	12:30:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342	3
+528	2015-07-03	14:30:00	17:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pgenvio_retorno_planilha , pg_fec_retorno_rh	2	3	342	3
+529	2015-07-03	14:30:00	17:30:00	veirifacao do cadastro das industrias jundo a FIERGS\r\n	11	5	366	1
+530	2015-07-03	10:30:00	11:55:00	Suporte ECS	21	5	301	1
+531	2015-07-03	13:00:00	13:40:00	Suporte ECS	21	5	301	1
+532	2015-07-03	15:30:00	18:15:00	Teste planilha.	21	4	345	2
+533	2015-07-06	10:30:00	11:00:00	LCTO de compra piraju	11	5	136	3
+534	2015-07-06	14:30:00	16:15:00	LCTO de compra piraju	11	5	136	3
+535	2015-07-06	14:28:00	16:28:00	cadastrar bloqueio total apos acessos chegar a 0	1	3	316	3
+536	2015-07-06	16:28:00	17:05:00	\N	1	3	363	2
+537	2015-07-06	16:15:00	16:45:00	envio do e-mail	11	11	371	1
+538	2015-07-06	14:30:00	17:45:00	\N	14	3	364	3
+539	2015-07-06	10:00:00	12:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh	2	3	342	3
+540	2015-07-06	14:30:00	17:00:00	Desenvolvimento das alterações nos scripts retorno RH\r\nRotinas: pg_envio_retorno_planilha , pg_fec_retorno_rh\r\nApos Apresentação do mesmo para Suporte (Fernanda)	2	3	342	3
+541	2015-07-06	17:00:00	17:40:00	Configuração e teste recurso exclusivo da Arco para processar arquivo em lct de lote	2	3	372	3
+542	2015-07-06	10:10:00	10:50:00	Suporte ECS	21	5	301	1
+543	2015-07-06	13:00:00	13:45:00	Suporte ecs	21	5	301	1
+544	2015-07-06	15:50:00	17:05:00	Suporte	21	5	372	3
+545	2015-07-07	09:40:00	12:10:00	atualizando dados	11	5	369	1
+546	2015-07-07	09:30:00	12:00:00	\N	1	3	373	4
+547	2015-07-07	14:00:00	18:15:00	\N	1	3	373	4
+548	2015-07-07	09:00:00	11:45:00	Programação	14	3	364	3
+549	2015-07-07	14:07:00	16:15:00	Programação	14	3	364	3
+550	2015-07-07	16:45:00	17:35:00	Programador	14	3	364	3
+551	2015-07-07	15:10:00	15:25:00	cadastro de contrato ecs 1216	8	9	20	3
+552	2015-07-07	15:50:00	16:05:00	cadastro de contrato ecs 1219	8	9	28	3
+554	2015-07-07	09:45:00	12:00:00	1 - ,pg_ent_login.php / pg_ent_login.html: \r\nSalientar fontes com problema de Encerramento ou Fechamento\r\n2 - pg_envio_retorno_planilha.php pg_envio_retorno.html\r\nGerar palnilha de resumo	2	3	342	3
+555	2015-07-07	14:30:00	17:20:00	 pg_fec_retorno_bco..php pg_fec_retorno_bco.html\r\n     Tratamento retorno maior que envio, planilha resumo definida junto       \r\n      Fernanda.	2	3	342	3
+556	2015-07-07	16:10:00	17:10:00	busca de dados das industrias	11	5	366	1
+557	2015-07-08	09:30:00	10:00:00	Indicador do E-mail mkt	11	11	59	3
 \.
 
 
@@ -925,7 +915,7 @@ COPY atividade (id, data_atividade, hora_inicio, hora_fim, descricao, colaborado
 -- Name: atividade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('atividade_id_seq', 568, true);
+SELECT pg_catalog.setval('atividade_id_seq', 557, true);
 
 
 --
@@ -1126,11 +1116,6 @@ COPY ponto (id, data_ponto, hora_entrada, hora_saida, colaborador_id) FROM stdin
 260	2015-07-07	08:43:00	\N	8
 261	2015-07-07	08:46:00	\N	2
 262	2015-07-08	08:25:00	\N	11
-263	2015-07-08	08:25:00	\N	14
-264	2015-07-09	08:00:00	\N	8
-265	2015-07-09	08:38:00	\N	1
-266	2015-07-08	08:26:00	\N	2
-267	2015-07-09	08:57:00	\N	14
 \.
 
 
@@ -1138,7 +1123,7 @@ COPY ponto (id, data_ponto, hora_entrada, hora_saida, colaborador_id) FROM stdin
 -- Name: ponto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ponto_id_seq', 267, true);
+SELECT pg_catalog.setval('ponto_id_seq', 262, true);
 
 
 --
@@ -1415,61 +1400,21 @@ COPY system_changelog (id, logdate, login, tablename, primarykey, pkvalue, opera
 184	2015-07-08 10:54:52	henrique	ticket	id	374	created	id	\N	374
 185	2015-07-08 10:57:32	henrique	ticket	id	374	changed	data_inicio	2015-07-08	\N
 186	2015-07-08 10:57:32	henrique	ticket	id	374	changed	status_ticket_id	1	2
-187	2015-07-08 12:01:45	henrique	ticket	id	369	changed	solicitacao_descricao	Localizar e atualizar panilha qualita de valores a pagar	Localizar e atualizar panilha qualita de valores a pagar\r\n\r\napartir de junho/15
-188	2015-07-08 12:02:27	henrique	ticket	id	370	changed	titulo	Orçamento novo provedor	Orçamento novo Data Center
-189	2015-07-08 12:02:27	henrique	ticket	id	370	changed	solicitacao_descricao	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL\r\n\r\n- ver com Qualitar 
-190	2015-07-08 14:19:06	marcus	ticket	id	318	created	data_inicio	\N	2015-05-29
-191	2015-07-08 14:19:06	marcus	ticket	id	318	created	data_encerramento	\N	2015-07-03
-192	2015-07-08 14:19:06	marcus	ticket	id	318	changed	status_ticket_id	2	3
-193	2015-07-08 14:19:44	marcus	ticket	id	342	created	data_encerramento	\N	2015-07-03
-194	2015-07-08 14:19:44	marcus	ticket	id	342	changed	status_ticket_id	1	3
-195	2015-07-08 14:19:58	marcus	ticket	id	342	changed	data_encerramento	2015-07-03	\N
-196	2015-07-08 14:19:58	marcus	ticket	id	342	changed	status_ticket_id	3	1
-197	2015-07-08 15:11:51	admin	system_program	id	27	created	id	\N	27
-198	2015-07-08 15:11:51	admin	system_program	id	27	created	name	\N	TicketReport
-199	2015-07-08 15:11:51	admin	system_program	id	27	created	controller	\N	TicketReport
-200	2015-07-08 15:29:15	marcus	ticket	id	373	created	data_encerramento	\N	2015-07-08
-201	2015-07-08 15:29:15	marcus	ticket	id	373	changed	status_ticket_id	1	3
-202	2015-07-08 15:56:05	henrique	ticket	id	366	created	orcamento_horas	\N	4:00:00
-203	2015-07-08 15:56:05	henrique	ticket	id	366	created	valor_total	\N	0.00
-204	2015-07-08 15:57:09	henrique	ticket	id	371	created	orcamento_horas	\N	1:00:00
-205	2015-07-08 15:57:09	henrique	ticket	id	371	created	valor_total	\N	0.00
-206	2015-07-08 15:57:34	henrique	ticket	id	371	changed	data_prevista	\N	2015-07-10
-207	2015-07-08 15:58:41	henrique	ticket	id	370	created	data_prevista	\N	2015-07-10
-208	2015-07-08 15:58:41	henrique	ticket	id	370	created	data_aprovacao	\N	2015-07-06
-209	2015-07-08 16:00:09	henrique	ticket	id	59	created	orcamento_horas	\N	3:00:00
-210	2015-07-08 16:00:09	henrique	ticket	id	59	created	valor_total	\N	0.00
-211	2015-07-08 16:00:31	henrique	ticket	id	60	created	orcamento_horas	\N	3:00:00
-212	2015-07-08 16:00:31	henrique	ticket	id	60	created	valor_total	\N	0.00
-213	2015-07-08 16:00:55	henrique	ticket	id	136	created	orcamento_horas	\N	3:00:00
-214	2015-07-08 16:00:55	henrique	ticket	id	136	created	valor_total	\N	0.00
-215	2015-07-08 18:23:31	henrique	ticket	id	301	created	data_inicio	\N	2015-07-01
-216	2015-07-08 18:23:31	henrique	ticket	id	301	changed	status_ticket_id	2	1
-217	2015-07-08 18:24:14	henrique	ticket	id	136	created	data_inicio	\N	2015-07-01
-218	2015-07-08 18:24:14	henrique	ticket	id	136	changed	status_ticket_id	2	1
-219	2015-07-08 18:24:32	henrique	ticket	id	374	created	data_inicio	\N	2015-07-08
-220	2015-07-08 18:24:32	henrique	ticket	id	374	changed	status_ticket_id	2	1
-221	2015-07-08 18:24:43	henrique	ticket	id	334	created	data_inicio	\N	2015-07-01
-222	2015-07-08 18:24:43	henrique	ticket	id	334	changed	status_ticket_id	2	1
-223	2015-07-08 18:24:54	henrique	ticket	id	60	created	data_inicio	\N	2015-07-01
-224	2015-07-08 18:24:54	henrique	ticket	id	60	changed	status_ticket_id	2	1
-225	2015-07-08 18:25:08	henrique	ticket	id	59	created	data_inicio	\N	2015-07-01
-226	2015-07-08 18:25:08	henrique	ticket	id	59	changed	status_ticket_id	2	1
-227	2015-07-08 18:25:29	henrique	ticket	id	56	created	data_inicio	\N	2015-07-01
-228	2015-07-08 18:25:29	henrique	ticket	id	56	changed	status_ticket_id	2	1
-229	2015-07-09 09:56:29	mauricio	ticket	id	17	created	data_inicio	\N	2015-06-11
-230	2015-07-09 09:56:29	mauricio	ticket	id	17	changed	status_ticket_id	2	1
-231	2015-07-09 10:13:49	mauricio	ticket	id	37	changed	titulo	ETD 037 - AFHDP	ETD 017 - AFHDP
-232	2015-07-09 10:16:25	gustavo	ticket	id	326	created	data_inicio	\N	2015-06-01
-233	2015-07-09 10:16:25	gustavo	ticket	id	326	changed	status_ticket_id	2	1
-234	2015-07-09 10:19:03	peterson	ticket	id	364	created	data_inicio	\N	2015-07-06
-235	2015-07-09 10:19:03	peterson	ticket	id	364	changed	status_ticket_id	2	1
-236	2015-07-09 10:59:59	eunice	ticket	id	34	created	data_inicio	\N	2015-06-11
-237	2015-07-09 10:59:59	eunice	ticket	id	34	changed	status_ticket_id	2	1
-238	2015-07-09 11:15:31	eunice	ticket	id	11	created	data_inicio	\N	2015-06-11
-239	2015-07-09 11:15:31	eunice	ticket	id	11	changed	status_ticket_id	2	1
-240	2015-07-09 11:17:42	eunice	ticket	id	28	created	data_inicio	\N	2015-06-01
-241	2015-07-09 11:17:42	eunice	ticket	id	28	changed	status_ticket_id	2	1
+187	2015-07-08 14:32:58	admin	system_program	id	27	created	id	\N	27
+188	2015-07-08 14:32:58	admin	system_program	id	27	created	name	\N	TicketReport
+189	2015-07-08 14:32:58	admin	system_program	id	27	created	controller	\N	TicketReport
+190	2015-07-14 10:53:19	gustavo	ticket	id	375	created	titulo	\N	teste
+191	2015-07-14 10:53:19	gustavo	ticket	id	375	created	origem	\N	I
+192	2015-07-14 10:53:19	gustavo	ticket	id	375	created	solicitacao_descricao	\N	teste origem
+193	2015-07-14 10:53:19	gustavo	ticket	id	375	created	data_cadastro	\N	2015-07-14
+194	2015-07-14 10:53:19	gustavo	ticket	id	375	created	solicitante_id	\N	73
+195	2015-07-14 10:53:19	gustavo	ticket	id	375	created	tipo_ticket_id	\N	1
+196	2015-07-14 10:53:19	gustavo	ticket	id	375	created	sistema_id	\N	4
+197	2015-07-14 10:53:19	gustavo	ticket	id	375	created	status_ticket_id	\N	2
+198	2015-07-14 10:53:19	gustavo	ticket	id	375	created	prioridade_id	\N	3
+199	2015-07-14 10:53:19	gustavo	ticket	id	375	created	responsavel_id	\N	1
+200	2015-07-14 10:53:19	gustavo	ticket	id	375	created	id	\N	375
+201	2015-07-14 10:53:34	gustavo	ticket	id	371	changed	solicitacao_descricao	Envio e análise de retorno dos e-mails	Envio e análise de retorno dos e-mails teste
 \.
 
 
@@ -1505,27 +1450,28 @@ COPY system_group_program (id, system_group_id, system_program_id) FROM stdin;
 112	3	25
 113	3	26
 114	3	23
-115	2	7
-116	2	8
-117	2	9
-118	2	10
-119	2	11
-120	2	12
-121	2	13
-122	2	14
-123	2	15
-124	2	16
-125	2	17
-126	2	18
-127	2	19
-128	2	20
-129	2	21
-130	2	12
-131	2	22
-132	2	24
-133	2	25
-134	2	23
-135	2	27
+115	3	27
+116	2	7
+117	2	8
+118	2	9
+119	2	10
+120	2	11
+121	2	12
+122	2	13
+123	2	14
+124	2	15
+125	2	16
+126	2	17
+127	2	18
+128	2	19
+129	2	20
+130	2	21
+131	2	12
+132	2	22
+133	2	24
+134	2	25
+135	2	23
+136	2	27
 \.
 
 
@@ -1580,9 +1526,9 @@ COPY system_user (id, name, login, password, email, frontpage_id) FROM stdin;
 1	Administrator	admin	f2b1332aff709790cfa05a6f32ca5e74	admin@admin.net	6
 11	Henrique	henrique	244948ae796768a2cc9259a684ef058b	henriquemorethson@gmail.com	21
 14	Oseias	oseias	8226ac2b36ae53f0c0b5e98a34e06169	oseias@tecbiz.com.br	10
+5	Gustavo Emmel	gustavo	850af92f8d9903e7a4e0559a98ecc857	gustavo@tecbiz.com.br	21
 4	Peterson Nunes Pedroso	peterson	314eea43b4d96799ccc782f6ba0835b3	peterson@tecbiz.com.br	9
 3	Marcus Monti da Silva	marcus	e10adc3949ba59abbe56e057f20f883e	monti@tecbiz.com.br	21
-5	Gustavo Emmel	gustavo	850af92f8d9903e7a4e0559a98ecc857	gustavo@tecbiz.com.br	21
 \.
 
 
@@ -1602,9 +1548,9 @@ COPY system_user_group (id, system_user_id, system_group_id) FROM stdin;
 19	1	1
 23	11	2
 24	14	3
+25	5	2
 26	4	2
 27	3	2
-28	5	2
 \.
 
 
@@ -1630,14 +1576,13 @@ COPY system_user_program (id, system_user_id, system_program_id) FROM stdin;
 15	2	21
 19	11	23
 20	14	23
+21	5	23
+22	5	7
+23	5	26
 24	4	23
 25	4	26
 26	3	23
 27	3	26
-28	5	23
-29	5	7
-30	5	26
-31	5	27
 \.
 
 
@@ -1650,7 +1595,7 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 308	Alterar regra de geração de senha dinâmica.	I	Definir a alterar regra de geração de senha dinâmica.	Alterada a regra de geração da senha quinzenal	\N	\N	\N	\N	\N	\N	\N	2015-05-29	2015-06-22	2015-06-22	\N	14	14	5	2	3	2	\N	2015-05-29	2015-06-22	\N
 338	Acesso anos anteriores - ARCO	E	Cliente solicita acesso aos anos anteriores para consulta.	\N	01:00:00	50.00	\N	50.00	\N	0.00	0.00	2015-06-08	2015-06-08	2015-06-08	\N	96	21	1	3	3	1	LANÇAMENTO: 2650638	2015-06-08	2015-06-08	\N
 340	RELATÓRIO ASSOCIADOS AFPUC	E	 Cliente solicita relatório de associados liberados de todas as fontes pagadoras, no layout a seguir: Matricula / Nome / E-mail	Disponibilizado TecBiz OnLine, na tabela que exibe o resultados da pesquisa de associados.	01:00:00	45.00	0.00	45.00	\N	\N	\N	2015-06-09	2015-06-09	2015-06-09	Inlcuso também os campos CPF, RG e E-mail2	107	12	1	3	3	2	LANÇAMENTO:2624232 MAIO/15	2015-06-09	2015-06-09	\N
-3	ETD 003 - AFUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
+342	Definir forma de tratar retorno a maior que envio	I	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	Definir procedimento e mensagem a ser tratado na rotina de reotrno bancario e rh	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	13	2	4	3	1	2	\N	2015-06-29	\N	\N
 309	Inibir lançamentos para ECS de fechamento	I	 Alterar os módulos de lançamento para associado individual e em lote para não permitir que sejam realizados lançamentos para estabelecimentos de fechamento/cobrança, ex: 3000, 9000, 9020, 1500 e outros.	\N	18:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-01	\N	12	12	1	3	3	2	\N	2015-05-29	2015-08-23	\N
 313	FP - Gerar valores creditos na ECS 9020	I	  Gerar valores de credito do ASSOCIADO em uma ECS especifica (9020)	Alteradas as rotinas para contemplar a nova regra	16:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-19	2015-06-01	\N	12	2	5	3	3	2	\N	2015-05-29	2015-06-19	\N
 327	Alteração Layout CEF arquivo envio banco ASED	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n	Configurar/Parametrizar este layout nas rotinas\r\nlayout_etd_banco e ;pg_fec_envio_banco Tabela :tbz_convenio_banco	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-06-01	2015-06-22	\N	Segue contato do responsável desta alteração por parte da CEF Contato: Humberto: 96536998 	80	2	4	3	1	1	\N	2015-06-01	\N	\N
@@ -1658,8 +1603,6 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 330	Alterações Manutenção Anual	I	No Cadastro ECS em Manutenção Anual  providenciar:\r\nem Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\n	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	2015-06-02	2015-06-01	Item da ATA do dia 01/06	13	1	5	2	3	1	\N	2015-06-02	2015-06-02	\N
 341	Extrato Associado POS	I	As cargas dos POS que possuem a opção "Extrato" não estão funcionando.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	3	1	\N	2015-06-11	2015-06-12	\N
 354	Restrições por segmento - Administrador	I	Em restrições por segmento que traziam por default o campo "bloqueável: não" quando o mesmo não tinha restrição, gerando problema no período de bloqueio da ETD-01	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	9	9	1	2	3	1	\N	2015-06-19	2015-06-19	\N
-5	ETD 005 - GSFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-1	ETD 001 - GSMCB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
 347	Exibição correta lista meses	I	Correção da exibição dos meses nos Ctas a Receber (aberto e fechado) exibindo o ultimo mês fechado da fonte selecionada, para meses fechados, e primeiro mês aberto referente a fonte selecionada para meses abertos.	Alteração realizada conforme constatação do erro.	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-11	2015-06-11	2015-06-11	Construir relatório unificado, independente da situação do mês, onde será informado no resultado (relatório) a situação da fonte no mês selecionado.	9	14	6	3	3	1	\N	2015-06-11	2015-06-11	\N
 349	ESTORNO SENHA PADRÃO	I	Senha padrão não fará extorno no ecs	Quando um usuario de ECS se logar com senha padrão, será gravado na sessão e deverá ser inibido o botão de estorno.\r\nTodas as ações feitas no sistema online utilizando a senha padrão serão gravadas no log com um diferencial (SA) após a descrição da atividade	\N	\N	\N	\N	\N	\N	\N	2015-06-12	2015-06-22	2015-06-22	/tecbiz/logica/controle/senha.php\r\n/tecbiz/logica/log/registro_log_geral.php\r\n/tecbiz/interface/web/acoes/pg_est_estorno_aut.php\r\n/tecbiz/interface/web/acoes/pg_logout.php	12	1	1	3	3	1	\N	2015-06-12	2015-06-15	\N
 351	Data e hora de geração nos relatórios de contas e pagar e receber	I	Inserir no cabecalho e rodapé dos  relatórios de Ctas a pagar e a receber a data e hora da geração dos mesmos.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-17	2015-06-17	\N	\N	13	14	5	2	3	1	\N	2015-06-17	2015-06-17	\N
@@ -1667,66 +1610,30 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 356	AFPUC - Acesso Olds	E	Será disponibilizado 2 dias de acesso grátis dos anos anteriores para a AFPUC. Começando a partir do dia 23/06	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-22	\N	\N	\N	107	13	1	3	3	1	\N	2015-06-22	2015-06-22	\N
 358	ASMV - Duplicidade lançamentos margem F.P	E	ESTORNAR sempre no dia 23 de todo o mês os lançamentos duplicados pela rotina de F.P do operador "DIFERENÇA".	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	58	21	1	3	3	3	\N	2015-06-23	2015-06-23	\N
 365	ASED - RETORNO FECHAMENTO	I	Ao carregar mais de um arquivo de banco nas mesma fonte pagadora, o sistema apaga o ultimo processado.\r\n\r\nExemplo: Ao processar o arquivo da FP 32001 do banco banrisul, e em seguida processar o arquivo da CEF na mesma fonte, o sistema está apagando banrisul como se ele não tivesse tratado o retorno do banrisul. 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-01	\N	\N	\N	113	2	1	3	3	1	\N	2015-07-01	2015-07-01	\N
-2	ETD 002 - ARBS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-4	ETD 004 - ASHCLIN	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-6	ETD 006 - SSPM SAP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-7	ETD 007 - ASSERMIBA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-8	ETD 008 - AFFZB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-10	ETD 010 - ASSOBAND	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-9	ETD 009 - AFPUC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	45	12	1	1	2	2	\N	\N	\N	\N
-58	ETD 058 - AFFIC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	118	12	1	1	2	2	\N	\N	\N	\N
-39	ETD 039 - ASMUT	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-09	\N	\N	\N	90	12	1	1	2	2	\N	\N	\N	\N
-342	Definir forma de tratar retorno a maior que envio	I	Tratamento do arquivo de retorno : definir procedimento quando o valor retornado for maior que o valor enviado. 	Definir procedimento e mensagem a ser tratado na rotina de reotrno bancario e rh	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	13	2	4	3	1	2	\N	2015-06-29	\N	\N
-12	ETD 012 - ASCOM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-13	ETD 013 - SBSHED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-21	ETD 021 - SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-14	ETD 014 - BELSHOP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-32	ETD 032 - ASED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-20	ETD 020 - AFUSC	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-15	ETD 015 - ASMV	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-18	ETD 018 - SIMSOL	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-19	ETD 019 - SPMG	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-22	ETD 022 - AFUSPE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-23	ETD 023 - SIMCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-25	ETD 025 - ASEMARGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-26	ETD 026 - ASSURFRGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-27	ETD 027 - SINDISMAR	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-29	ETD 029 - SIMPASSO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-31	ETD 031 - GSAFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-33	ETD 033 - ASSERJUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-35	ETD 035 - ABOJERIS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-38	ETD 038 - IBCM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
-100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	2	2	\N	\N	\N	\N
 319	Auditoria de lançamentos de controle FP	I	Desenvolver rotina, metodologia e periodicidade de auditoria nos lançamentos de controle gerados pelo Fechamento (FP).	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	4	3	2	2	\N	\N	\N	\N
 320	Contas a pagar	I	 TBZ movimentação contas a pagar encerrado (Avaliar criar tabela com %tx adm alterados): Publicar ADM e OnLine.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	5	3	2	2	\N	\N	\N	\N
+334	Cartão empresarial - Fluxo	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	13	11	8	1	2	1	\N	\N	\N	\N
 311	ETD - Resumo de contas a receber	I	incluir 2 colunas no relatório = Cartão e suporte	Tirar da coluna outros os seguintes históricos:\r\nCartão = Histórico 009;\r\nSuporte= Históricos 018,019;\r\n	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	13	1	4	2	2	1	\N	\N	\N	\N
 314	Cadastro de 2° limite associado 	E	  Cliente solicita a inclusão de um segundo campo de limite no cadastro dos associados referente ao cartão SONAE; \r\n E ao gerar o recurso exclusivo com o limite mensal do cartão da TecBiz, sera feito o abatimento deste limite informado com o valor disponibilizado pelo RH. \r\n \r\n Exemplo: Associado recebe do RH 1500 reais para limite mensal(LimiteRH);\r\n Em seu cadastro o associado utiliza um limite no cartão SONAE de 200 reais(LimiteSONAE);\r\n Ao gerar o recurso exclusivo do sistema da TecBiz será disponivel seu novo LimiteMensal = (LimiteRH - LimiteSONAE) ou seja LimiteMensal (1500 - 200), liberando apenas 1.300 reais de consumo mensal no cartão TBZ.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	85	12	1	3	2	2	\N	\N	\N	\N
 321	Homologação Quero Quero	E	Homologação do TEF Quero-Quero.\r\n \r\n Configuração: "ok" 18/11/2014\r\n Arquivo de Conciliação: "aguardando T.I"	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	1	3	2	2	\N	\N	\N	\N
 317	Listagem de associados inativos	E	Alterar listagem de associados inativos no TecBiz Online para a Entidade poder visualizar os associados cobrados e ter a opção de excluir os que estão inativos a mais de 12 meses.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	74	12	1	3	2	2	\N	\N	\N	\N
 315	Alteração Layout arquivo envio banco 	E	Cliente solicita alteração no Layout do arquivo de envio bancário CEF para o layout: SIACC_150 \r\n  \r\n segue contato do responsável desta alteração por parte da CEF \r\n Contato: Humberto: 96536998 \r\n hvinholesdecarvalho@gmail.com	\N	12:00:00	45.00	\N	540.00	\N	\N	\N	2015-05-29	\N	\N	\N	80	2	1	3	2	2	\N	\N	\N	\N
+318	Modulo Atividades	I	 Modulo de Atividades para controlo Tickets , Ordem de Servi~ço , Atividades Registrada pelo Colaboradores Tercbiz	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	13	2	4	2	2	2	\N	\N	\N	\N
 305	Bloqueio de associado por período	E	Cliente solicita período de bloqueio para associado individual, o bloqueio irá consistir em data início e fim, estará disponível no cadastro do associado e terá desbloqueio automático ao final do período. \r\n Existirá também relatório de associados bloqueados pelo cadastro.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	45	12	1	3	2	2	\N	\N	\N	\N
 306	Lançamento associado individual - melhoria	I	  Alterar o módulo de lançamento para associado individual para inserir os campos forma de pagamento e tipo de crédito, alteração do layout da tela para dar ficar mais compreensível a transação, deixando claro quem será debitado e creditado.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	12	12	3	3	2	2	\N	\N	\N	\N
 322	Editar comprovante	E	 Cliente solicita as seguintes alterações no comprovante: \r\n  \r\n *Aumentar a quantidade de caracteres do campo comprovantes, para registrar acertos \r\n *Ter a opção de imprimir o comprovante com o campo observação, para ser utilizado como documento de negociação e o associado assinar; \r\n *Editar Obs. de autorizações encerradas, para utilizar em caso de renegociações. \r\n  \r\n Data solicitação: 15/09/2014	\N	16:00:00	45.00	\N	720.00	\N	\N	\N	2015-05-29	\N	\N	\N	45	12	1	3	2	2	\N	\N	\N	\N
 367	Mensagem URA Cartão Bloq	I	Correção da mensagem informada pela URA quando o cartão está bloqueado pelo retorno do fechamento	Correção realizada conforme solicitação	02:00:00	\N	\N	0.00	\N	\N	\N	2015-07-02	2015-07-02	2015-07-02	\N	21	14	1	3	3	1	\N	2015-07-02	2015-07-01	\N
-17	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	1	2	\N	2015-06-11	\N	\N
-46	ETD 046 - AFUSPA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	97	12	1	1	2	2	\N	\N	\N	\N
-45	ETD 045 - ARCO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	95	12	1	1	2	2	\N	\N	\N	\N
-44	ETD 044 - COFRS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	94	12	1	1	2	2	\N	\N	\N	\N
-43	ETD 043 - ASPROCERGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	93	12	1	1	2	2	\N	\N	\N	\N
-41	ETD 041 - AGASAI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	92	12	1	1	2	2	\N	\N	\N	\N
-36	ETD 036 - PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	\N	\N	\N	86	12	1	1	2	2	\N	\N	\N	\N
-34	ETD 034 - ASSOCIAMED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	1	2	\N	2015-06-11	\N	\N
-318	Modulo Atividades	I	 Modulo de Atividades para controlo Tickets , Ordem de Servi~ço , Atividades Registrada pelo Colaboradores Tercbiz	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	13	2	4	2	3	2	\N	2015-05-29	2015-07-03	\N
-334	Cartão empresarial - Fluxo	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	13	11	8	1	1	1	\N	2015-07-01	\N	\N
-56	ETD 056 - AFU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	102	12	1	1	1	2	\N	2015-07-01	\N	\N
-37	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	61	12	1	1	2	2	\N	\N	\N	\N
-11	ETD 011 - SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	1	1	2	\N	2015-06-11	\N	\N
 324	Relatório analítico	E	Cliente solicita novo relatório também semanal com as informações conforme o recurso exclusivo já disponivel(a=1e22a9) porém discriminado os valores por associado, exemplo: ASS 1= autorização, data,nome loja, valor total, valor parcelas.	\N	10:00:00	45.00	\N	450.00	\N	\N	\N	2015-05-29	\N	\N	\N	55	12	1	3	2	2	\N	\N	\N	\N
 328	Atestado médico	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	13	12	7	1	2	1	\N	\N	\N	\N
 333	Processo Ticket	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	12	12	8	1	2	1	\N	\N	\N	\N
 323	Arquivo associados bloqueados	E	 Cliente solicita que o arquivo que é enviado mensalmente no dia 1 ref. ao arquivo de bloqueio em lote, seja enviado ou disponibilizado no sistema via excel.\r\n solução:\r\n enviar em arquivo .xlsx(EXCEL) anexado via email no mesmo layout que é enviado via atualmente.\r\n Ticket reenviado dia 03/11/2014	\N	08:00:00	45.00	\N	360.00	\N	\N	\N	2015-05-29	\N	\N	\N	73	12	1	3	2	2	\N	\N	\N	\N
 332	Treinamento - AFPUC	E	Cliente solicita treinamento para funcionários que vão utilizar o sistema TecBiz online.	\N	03:00:00	45.00	\N	135.00	\N	\N	\N	2015-06-03	\N	\N	\N	107	21	1	3	2	1	\N	\N	\N	\N
+366	Cadastro Industrias FIERGS	I	Conseguir cadastro das industrias junto a FIERGS	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-01	2015-07-02	2015-07-01	\N	14	11	1	1	2	1	\N	\N	\N	\N
+301	ECS - Generico	I	XXXX	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	12	12	1	1	2	1	\N	\N	\N	\N
+15	ETD 015 - ASMV	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+18	ETD 018 - SIMSOL	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
 310	ETD 150 – Financeiro TBZ x Rede Conveniada	I	Definir ETD 150 como responsável pelo relacionamento financeiro das TecBiz com os Estabelecimentos comerciais. Definir históricos , relartórios e processos necessários para a administração de pendências e aprovisionamento de valores.	vincular todas ecs com a etd 150 via arquivo em lote.\r\nlançamento em lote para estabelecimento.	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	14	14	4	2	2	2	\N	\N	\N	\N
+326	Alteração Cadastro Pessoas	I	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa \r\nVerificat CPF duplo	Alterar a rotina :  pg_adm_pessoas; pg_adm_pesquisa_pessoas	\N	\N	\N	\N	\N	\N	\N	2015-06-01	2015-06-08	\N	\N	13	2	5	2	2	1	\N	\N	\N	\N
 312	Alteração de e-mails de destino TBZ	I	 Alteração de e-mails de destino da TecBiz:\r\n # Site\r\n Comercial E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br\r\n Rede E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n Usuário E-mails: comercial@tecbiz.com.br, oseias@tecbiz.com.br e atendimento@tecbiz.com.br\r\n \r\n # Sistema\r\n Solicitação de Convênios: credenciamento@tecbiz.com.br\r\n ECS Dados Cadastrais: suporte@tecbiz.com.br, credenciamento@tecbiz.com.br\r\n Questionário T.E.F: atendimento@tecbiz.com.br, suporte@tecbiz.com.br\r\n Contato ECS: suporte@tecbiz.com.br, oseias@tecbiz.combr e atendimento2@hotmail.com\r\n Fale diretoria: oseias@tecbiz.com.br, suporte@tecbiz.com.br\r\n Cartão Empresarial: oseias@tecbiz.com.br, suporte@tecbiz.com.br, henrique@tecbiz.com.br, \r\n \r\n Excluir os Emails Abaixo:\r\n \r\n carla@tecbiz.com.br - INATIVO\r\n cartoes@tecbiz.com.br - INATIVO\r\n clientes@tecbiz.com.br - INATIVO\r\n convenios@tecbiz.com.br - INATIVO (FORM. ALTERAÇÕES CADASTRO DE ECS)\r\n felipe@tecbiz.com.br - INATIVO\r\n tecnologia@tecbiz.com.br - INATIVO.	\N	\N	\N	\N	\N	\N	\N	\N	2015-05-29	\N	\N	\N	12	12	5	3	2	2	\N	\N	\N	\N
 360	Auditoria Sistema Tecbiz	I	Gerar um relatório/planilha identificando discrepâncias, anormalidades, referente ao uso do sistema.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	2015-07-31	\N	\N	13	2	4	2	2	2	\N	\N	\N	\N
 352	Alteração recurso exclusivo AFPUC	E	Após publicação da DTR218 no qual inibi lançamentos de ECS 3000, cliente não consegue realizar os lançamentos via recurso exclusivo, alterar programa para permitir o lançamento quando for oriundo de tratamento de envio/retorno	\N	\N	\N	\N	0.00	\N	\N	\N	2015-06-18	\N	\N	\N	107	9	1	3	2	1	\N	\N	\N	\N
@@ -1734,29 +1641,68 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 353	Periodo de bloqueio e Alteração Encerramento - GSMCB	E	Cliente solicita período de bloqueio de volta do dia 18 ao dia 19 para fonte pagadora 1! E não quer trabalhar com o período de ajuste (Corta e encerra no mesmo dia).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-19	\N	\N	\N	35	21	1	2	2	1	\N	\N	\N	\N
 348	Extrato associado - AFPUC	I	Cliente deseja que apareça o telefone para contato no relatório dos associados. (Telefone/Celular)	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-12	\N	\N	\N	21	12	1	3	2	1	\N	\N	\N	\N
 343	Auditor identificar duplicidade e de lcts, autorizações.	I	Definição e programação script pata auditar lancamentos efetuados no extrato asssociado.	Desenvolvimento de uma rotina a ser disparada apos encerramento da fpg para auditar lancamentos cfe regras:\r\nExecutar esta rotina após o dia de encerramento\r\nMontar array por associado com valor devido conforme seu extrato referente ao ultimo mês encerrado\r\nValor atributo valor_origem (Tbz_envio_retorno) deve ser igual ao valor array\r\nNo extrato atual do associado só poderá haver no maximo 2 lancamentos na ECS 3000\r\nUm  lancamento de debito e um lancamento de credito\r\nO valor do lancamento de debito (3000) + lancamento exedente margem (9000) deve ser igual ao valor do array do associado (vlr devido do ultimo enecerramento)\r\nValor debito lct 3000 deve ser igual ao valo do atributo envio_valor (tbz_envio_retorno)\r\nValor lct execedente margem (9000) deve ser igual ao valor da diferenca entre os  array & envio_valor (tbz_envio_retorno)\r\n	\N	\N	\N	\N	\N	\N	\N	2015-06-10	2015-07-31	\N	\N	13	2	1	3	2	1	\N	\N	\N	\N
+364	ETD Configura nível de acesso exigido para ações	I	Criar forma de configurar por Entidade o nível do operador exigido para executar determinadas ações no sistema TecBiz OnLine, são elas: \r\n- Estorno de Autorização (a=61c2fb);\r\n- Lançamento Individual (a=ab269a);\r\n- Lançamento em Lote (a=b423c9);\r\n- Alteração de Limite (a=f08457);\r\n- Alteração de Limite em lote (a=010fc0);\r\n	\N	20:00:00	\N	\N	0.00	\N	\N	\N	2015-06-30	2015-07-08	\N	\N	14	14	4	3	2	1	\N	\N	\N	\N
 363	Relação vinculos por ETD	I	Incluir colunas no relatório atual e tbém outras formas de classificação.	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-29	\N	2015-06-29	\N	13	1	5	2	2	2	\N	\N	\N	\N
 362	Visita POS ecs: 0020 MERCADO ACCADROLLI	E	Desde o dia 19/06/15 - a máquina não esta funcionando! vamos agendar visita para semana que vem. a partir do dia 30/06/15	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	21	12	1	1	2	1	\N	\N	\N	\N
-59	ETD 059 - Cartão Empresarial SIMUCA	I	\N	\N	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-01	\N	\N	\N	69	11	1	1	1	1	\N	2015-07-01	\N	\N
-366	Cadastro Industrias FIERGS	I	Conseguir cadastro das industrias junto a FIERGS	\N	04:00:00	\N	\N	0.00	\N	\N	\N	2015-07-01	2015-07-02	2015-07-01	\N	14	11	1	1	2	1	\N	\N	\N	\N
-301	ECS - Generico	I	XXXX	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-23	\N	\N	\N	12	12	1	1	1	1	\N	2015-07-01	\N	\N
-60	ETD 060 - Cartao Empresarial SISME	I	\N	\N	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-01	\N	\N	\N	49	11	1	1	1	1	\N	2015-07-01	\N	\N
 331	Dados complementares dependente - AFUMI	E	Cliente solicita que seja inserido dois campos para o cadastro de dependente, são eles a data de nascimento e grau de parentesco (do dependente com o titular).	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-03	\N	\N	\N	75	12	4	3	2	2	\N	\N	\N	\N
 345	Bloqueio ECS para autorizações	I	Cadastro ECS: Manutençao Anual em Status deixar apenas "Isento, recusado" e no bloqueio substituir  "extrato a partir último 3 meses" para "Bloqueado total".\r\nEsta rotina irá alterar status para bloqueado "Manuteção anual"	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	13	14	4	2	3	1	\N	2015-06-10	2015-07-06	\N
-326	Alteração Cadastro Pessoas	I	Pesquisa Avancada trocar os campos para :Codigo,Nome,Celular,Comercial,Email1,Email2,Empresa,Cargo,UF,Cidade.\r\nPesquisa: Trocar Apelido por Empresa \r\nVerificat CPF duplo	Alterar a rotina :  pg_adm_pessoas; pg_adm_pesquisa_pessoas	\N	\N	\N	\N	\N	\N	\N	2015-06-01	2015-06-08	\N	\N	13	2	5	2	1	1	\N	2015-06-01	\N	\N
-136	ETD 0136 - Cartão Empresarial PIRAJU	I	\N	\N	03:00:00	\N	\N	0.00	\N	\N	\N	2015-06-01	\N	\N	\N	86	11	1	1	1	1	\N	2015-07-01	\N	\N
 350	Limitar limites de associado	I	Limitar o valor dos limites (mensal e total) dos associado a 5.000,00 R$ em todos os módulos.\r\n	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-16	2015-06-19	\N	\N	13	14	5	3	2	1	\N	\N	\N	\N
 368	Estorno meses passados	I	a entidade pode estornar lançamentos para meses já encerrados.	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-02	\N	\N	Cancelado pois não houve consenso sobre a alteração. o estorno iria conflitar com outras regras do sistema tecbiz	21	1	6	2	4	1	\N	2015-07-02	\N	2015-07-03
 359	Alterações Cadastro TICKETS	I	Alterar atributos no cadastro de tickets para definição dos indicadores pelo Diretor da Tecbiz	Defini DTR, e Apos aprovada pelo Oseias , desenvolver as alterações no cadsastro de Tickets	\N	\N	\N	\N	\N	\N	\N	2015-06-23	2015-07-03	\N	\N	13	2	5	4	3	2	\N	2015-06-23	2015-07-03	\N
+370	Orçamento novo provedor	I	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-06	\N	\N	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
 316	ECS - Log acesso e banner autorizador externo pendências financeiras	I	 Alterar os sistemas Autorizador Externo ECS, Administrador e TecBiz online para: \r\n  \r\n 1 - Registrar log de acesso por parte dos estabelecimentos comerciais. \r\n 2 - Criar campo no cadastro de ECS para definir quantidade de acessos ao autorizador externo quando o ECS estiver em bloqueio total, este número será verificado em no momento do acesso ao AUTORIZADOR EXTERNO que exibirá uma tela com a mensagem de pendencia financeira e a quantidade de acessos restantes. Quando o mesmo não possuir mais acessos, a tela de aviso não possibilitará realizar autorizações.	\N	30:00:00	\N	\N	0.00	\N	\N	\N	2015-05-29	2015-06-29	2015-06-29	\N	14	14	4	3	3	2	\N	2015-05-31	2015-07-06	\N
+371	Sindicatos Indústrias	I	Envio e análise de retorno dos e-mails teste	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-06	\N	\N	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
 372	ARCO - Configuração recurso exclusivo arquivo retorno	I	Configuração para liberar lançamento no 3000 para reprocessamento arquivo de retorno via recurso exclusivo. 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-06	\N	\N	\N	21	2	1	3	3	1	\N	2015-07-06	2015-07-06	\N
+373	Tickets - Resumo e atividades	I	Relatório de tickets (sintético e analitico) com relação a as atividades dos colaboradores, layout e regras conforma planilha	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-07	\N	\N	\N	13	1	4	4	1	3	\N	2015-07-07	\N	\N
 357	TEF - ECS 1403 - Posto Quadros	I	FABIANA ECS/ CARLOS TEF\r\ntel contato: 3488.2931\r\nTEF: Sitef\r\nObs: Aguardando homologação\r\nvolta de férias apenas começo de agosto.	01/06/2015 - Envio de e-mail para homologação, empresa esta com problemas técnicos. aguardando contato para a configuração e teste	\N	\N	\N	\N	\N	\N	\N	2015-06-22	\N	\N	\N	21	21	1	8	1	1	\N	2015-06-22	\N	\N
-369	Planilha QUALITÁ	I	Localizar e atualizar panilha qualita de valores a pagar\r\n\r\napartir de junho/15	\N	05:00:00	\N	\N	0.00	\N	\N	\N	2015-07-06	2015-07-10	2015-07-06	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
-373	Tickets - Resumo e atividades	I	Relatório de tickets (sintético e analitico) com relação a as atividades dos colaboradores, layout e regras conforma planilha	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-07	\N	\N	\N	13	1	4	4	3	3	\N	2015-07-07	2015-07-08	\N
-371	Sindicatos Indústrias	I	Envio e análise de retorno dos e-mails	\N	01:00:00	\N	\N	0.00	\N	\N	\N	2015-07-06	2015-07-10	\N	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
-370	Orçamento novo Data Center	I	Orçamento servidor dualizado no valor ou mais em conta do que temos hoje na UOL\r\n\r\n- ver com Qualitar 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-06	2015-07-10	2015-07-06	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
-374	Maunal do Cartão Empresarial	I	Criar e padronizar 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-08	\N	\N	\N	13	11	1	1	1	3	\N	2015-07-08	\N	\N
-364	ETD Configura nível de acesso exigido para ações	I	Criar forma de configurar por Entidade o nível do operador exigido para executar determinadas ações no sistema TecBiz OnLine, são elas: \r\n- Estorno de Autorização (a=61c2fb);\r\n- Lançamento Individual (a=ab269a);\r\n- Lançamento em Lote (a=b423c9);\r\n- Alteração de Limite (a=f08457);\r\n- Alteração de Limite em lote (a=010fc0);\r\n	\N	20:00:00	\N	\N	0.00	\N	\N	\N	2015-06-30	2015-07-08	\N	\N	14	14	4	3	1	1	\N	2015-07-06	\N	\N
-28	ETD 028 - AFUMI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	75	12	1	1	1	2	\N	2015-06-01	\N	\N
+369	Planilha QUALITÁ	I	Localizar e atualizar panilha qualita de valores a pagar	\N	05:00:00	\N	\N	0.00	\N	\N	\N	2015-07-06	2015-07-10	2015-07-06	\N	13	11	1	1	1	1	\N	2015-07-06	\N	\N
+374	Maunal do Cartão Empresarial	I	Criar e padronizar 	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-08	\N	\N	\N	13	11	1	1	2	3	\N	\N	\N	\N
+3	ETD 003 - AFUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+5	ETD 005 - GSFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+1	ETD 001 - GSMCB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+2	ETD 002 - ARBS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+4	ETD 004 - ASHCLIN	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+6	ETD 006 - SSPM SAP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+7	ETD 007 - ASSERMIBA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+8	ETD 008 - AFFZB	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+10	ETD 010 - ASSOBAND	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+9	ETD 009 - AFPUC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	45	12	1	3	2	2	\N	\N	\N	\N
+58	ETD 058 - AFFIC	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-08	\N	\N	\N	118	12	1	3	2	2	\N	\N	\N	\N
+39	ETD 039 - ASMUT	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-09	\N	\N	\N	90	12	1	3	2	2	\N	\N	\N	\N
+11	ETD 011 - SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+12	ETD 012 - ASCOM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+13	ETD 013 - SBSHED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+21	ETD 021 - SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+14	ETD 014 - BELSHOP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+32	ETD 032 - ASED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+20	ETD 020 - AFUSC	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+19	ETD 019 - SPMG	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+22	ETD 022 - AFUSPE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+23	ETD 023 - SIMCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+25	ETD 025 - ASEMARGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+26	ETD 026 - ASSURFRGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+27	ETD 027 - SINDISMAR	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+29	ETD 029 - SIMPASSO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+31	ETD 031 - GSAFM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+33	ETD 033 - ASSERJUFE	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+34	ETD 034 - ASSOCIAMED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+35	ETD 035 - ABOJERIS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+38	ETD 038 - IBCM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+17	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
+56	ETD 056 - AFU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	102	12	1	3	2	2	\N	\N	\N	\N
+46	ETD 046 - AFUSPA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	97	12	1	3	2	2	\N	\N	\N	\N
+45	ETD 045 - ARCO	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	95	12	1	3	2	2	\N	\N	\N	\N
+44	ETD 044 - COFRS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	94	12	1	3	2	2	\N	\N	\N	\N
+43	ETD 043 - ASPROCERGS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	93	12	1	3	2	2	\N	\N	\N	\N
+41	ETD 041 - AGASAI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	92	12	1	3	2	2	\N	\N	\N	\N
+36	ETD 036 - PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-02	\N	\N	\N	86	12	1	3	2	2	\N	\N	\N	\N
+37	ETD 037 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	61	12	1	3	2	2	\N	\N	\N	\N
+59	ETD 059 - Cartão Empresarial SIMUCA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	69	11	1	3	2	1	\N	\N	\N	\N
+136	ETD 0136 - Cartão Empresarial PIRAJU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	86	11	1	3	2	1	\N	\N	\N	\N
+60	ETD 060 - Cartao Empresarial SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	49	11	1	3	2	1	\N	\N	\N	\N
+28	ETD 028 - AFUMI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	75	12	1	3	2	2	\N	\N	\N	\N
+375	teste	I	teste origem	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-14	\N	\N	\N	73	1	1	4	2	3	\N	\N	\N	\N
 \.
 
 
@@ -1764,7 +1710,7 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 -- Name: ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ticket_id_seq', 374, true);
+SELECT pg_catalog.setval('ticket_id_seq', 375, true);
 
 
 --

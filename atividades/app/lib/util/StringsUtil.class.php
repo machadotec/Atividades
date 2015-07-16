@@ -51,7 +51,7 @@ class StringsUtil
         $mins = floor(($seconds - ($hours*3600)) / 60);
         $secs = floor($seconds % 60);
         
-        return $hours.':'.$mins.':'.str_pad($secs, 2, "0", STR_PAD_LEFT);
+        return str_pad($hours, 2, "0", STR_PAD_LEFT).':'.str_pad($mins, 2, "0", STR_PAD_LEFT).':'.str_pad($secs, 2, "0", STR_PAD_LEFT);
     }
     
     function array_meses()

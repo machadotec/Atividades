@@ -78,6 +78,8 @@ class AtividadeForm extends TPage
         $colaborador_nome->setValue($logado->pessoa_nome);
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
         
+        $sistema_id                     = new TDBCombo('sistema_id', 'atividade', 'Sistema', 'id', 'nome');
+        
         $criteria = new TCriteria;
         $criteria->add(new TFilter("status_ticket_id", "=", 1));
         $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo', $criteria);
@@ -128,6 +130,7 @@ class AtividadeForm extends TPage
         $tempo_atividade->addValidation('Hora Fim', new THoraFimValidator);
         $tipo_atividade_id->addValidation('Tipo de Atividade', new TRequiredValidator);
         $ticket_id->addValidation('Ticket', new TRequiredValidator);
+        $sistema_id->addValidation('Sistema', new TRequiredValidator);
         
         $sem_atividade = TButton::create('atividade', array($this, 'onSemAtividade'), 'Sem Registro', 'ico_add.png');
         $this->form->addField($sem_atividade);
@@ -144,18 +147,20 @@ class AtividadeForm extends TPage
         $label_atividade->setFontColor('#FF0000');
         $table->addRowSet( $label_ticket = new TLabel('Ticket:'), $ticket_id );
         $label_ticket->setFontColor('#FF0000');
+        $table->addRowSet( $label_sistema = new TLabel('Sistema:'), $sistema_id );
+        $label_sistema->setFontColor('#FF0000');
         $table->addRowSet( new TLabel('Descrição:'), $descricao );   
         $table->addRowSet( new TLabel(''), $id );
         $table->addRowSet( new TLabel(''), $colaborador_id );
         $table->addRowSet( new TLabel(''), $hora_fim );   //esconder
 
-        $this->form->setFields(array($id,$data_atividade,$hora_inicio,$qtde_horas,$qtde_minutos,$hora_fim,$tempo_atividade,$descricao,$colaborador_id,$colaborador_nome,$tipo_atividade_id,$ticket_id));
+        $this->form->setFields(array($id,$data_atividade,$hora_inicio,$qtde_horas,$qtde_minutos,$hora_fim,$tempo_atividade,$descricao,$colaborador_id,$colaborador_nome,$tipo_atividade_id,$ticket_id,$sistema_id));
 
         // create the form actions
         $save_button = TButton::create('save', array($this, 'onSave'), _t('Save'), 'ico_save.png');
         $new_button  = TButton::create('new',  array($this, 'onEdit'), _t('New'),  'ico_new.png');
         $del_button  = TButton::create('delete',  array($this, 'onDelete'), _t('Delete'),  'ico_delete.png');
-        $list_button   = TButton::create('list', array('AtividadeList', 'onClean'), _t('List'), 'ico_datagrid.png');
+        $list_button = TButton::create('list', array('AtividadeList', 'onClean'), _t('List'), 'ico_datagrid.png');
         
         $this->form->addField($save_button);
         $this->form->addField($new_button);
@@ -167,6 +172,8 @@ class AtividadeForm extends TPage
         $buttons_box->add($new_button);
         $buttons_box->add($del_button);
         $buttons_box->add($list_button);
+        
+        
         
         // add a row for the form action
         $row = $table->addRow();
@@ -189,7 +196,7 @@ class AtividadeForm extends TPage
         $obj->tempo_atividade  = '';
         
         
-        TForm::sendData('form_Atividade', $obj);
+        TForm::sendData('form_Atividade', $obj, FALSE, FALSE);
         
     }
 

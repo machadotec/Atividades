@@ -12,6 +12,7 @@ class Atividade extends TRecord
     
     private $tipo_atividade;
     private $ticket;
+    private $sistema;
 
     /**
      * Constructor method
@@ -26,6 +27,7 @@ class Atividade extends TRecord
         parent::addAttribute('colaborador_id');
         parent::addAttribute('tipo_atividade_id');
         parent::addAttribute('ticket_id');
+        parent::addAttribute('sistema_id');
     }
 
     public function retornaTotalAtividadesColaborador($colaborador, $mes, $ano, $tickets)
@@ -103,11 +105,10 @@ class Atividade extends TRecord
         }
         
         $conn = TTransaction::get();
-        $result = $conn->query("select t.sistema_id, s.nome, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a 
-                                inner join ticket as t on a.ticket_id = t.id
-                                inner join sistema as s on t.sistema_id = s.id
+        $result = $conn->query("select a.sistema_id, s.nome, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a 
+                                inner join sistema as s on a.sistema_id = s.id
                                 where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
-                                group by t.sistema_id, s.nome
+                                group by a.sistema_id, s.nome
                                 order by s.nome
                                 ");
         
@@ -210,6 +211,31 @@ class Atividade extends TRecord
         return $this->ticket;
     }
     
+     /**
+     * Method set_sistema
+     * Sample of usage: $ticket->sistema = $object;
+     * @param $object Instance of Sistema
+     */
+    public function set_sistema(Sistema $object)
+    {
+        $this->sistema = $object;
+        $this->sistema_id = $object->id;
+    }
+    
+    /**
+     * Method get_sistema
+     * Sample of usage: $ticket->sistema->attribute;
+     * @returns Sistema instance
+     */
+    public function get_sistema()
+    {
+        // loads the associated object
+        if (empty($this->sistema))
+            $this->sistema = new Sistema($this->sistema_id);
+    
+        // returns the associated object
+        return $this->sistema;
+    }
 
 
 }

@@ -217,13 +217,15 @@ class TicketPessoaSeek extends TWindow
             
             // load the active record
             $pessoa = new Pessoa($key);
-            
-            // closes the transaction
-            TTransaction::close();
+
             
             $object = new StdClass;
             $object->solicitante_id   = $pessoa->pessoa_codigo;
             $object->solicitante_nome = $pessoa->pessoa_nome;
+            $object->origem_nome      = $pessoa->origem_nome;
+
+            // closes the transaction
+            TTransaction::close();
             
             TForm::sendData('form_Ticket', $object);
             parent::closeWindow(); // closes the window
@@ -234,6 +236,7 @@ class TicketPessoaSeek extends TWindow
             $object = new StdClass;
             $object->solicitante_id   = '';
             $object->solicitante_nome = '';
+            $object->origem_nome      = '';
             TForm::sendData('form_Ticket', $object);
             
             // undo pending operations

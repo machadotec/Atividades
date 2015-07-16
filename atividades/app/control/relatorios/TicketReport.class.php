@@ -71,6 +71,8 @@ class TicketReport extends TPage
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
         $colaborador_id                 = new TDBCombo('colaborador_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
         
+        $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
+        
         $tipo                           = new TRadioGroup('tipo');
         $output_type                    = new TRadioGroup('output_type');
 
@@ -104,6 +106,7 @@ class TicketReport extends TPage
         $table->addRowSet( new TLabel('Dt. Atividades inicio:'), array($dataAtividadeInicio, $label_data_fim = new TLabel('Fim:'), $dataAtividadeFinal) );
         $label_data_fim->setSize(48);
         $table->addRowSet( new TLabel('Atividades colaborador:'), $colaborador_id);
+        $table->addRowSet( new TLabel('Tipo atividade:'), $tipo_atividade_id);
         $table->addRowSet( new TLabel('Relatório'), $tipo);
         $table->addRowSet( new TLabel('Output:'), $output_type );
 
@@ -118,6 +121,7 @@ class TicketReport extends TPage
                                      $dataAtividadeInicio,
                                      $dataAtividadeFinal,
                                      $colaborador_id,
+                                     $tipo_atividade_id,
                                      $tipo,
                                      $output_type));
 
@@ -225,7 +229,10 @@ class TicketReport extends TPage
             {
                 $where .= " and a.colaborador_id = {$formdata->colaborador_id} ";
             }
-
+            if ($formdata->tipo_atividade_id)
+            {
+                $where .= " and a.tipo_atividade_id = {$formdata->tipo_atividade_id} ";
+            }
             $format  = $formdata->output_type;
             
             $objects = Ticket::relatorioSintetico($where);

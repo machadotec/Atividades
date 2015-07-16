@@ -196,7 +196,7 @@ class AtividadeReport extends TPage
                 {
                     TTransaction::open('tecbiz');
                     $colaborador = new Pessoa($formdata->colaborador_id);
-                    $titulo = $colaborador->pessoa_nome;
+                    $titulo = utf8_decode($colaborador->pessoa_nome);
                     TTransaction::close();
                 }
                                 

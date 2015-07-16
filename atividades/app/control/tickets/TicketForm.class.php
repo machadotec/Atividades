@@ -100,19 +100,14 @@ class TicketForm extends TPage
         $nome_dtr                       = new TEntry('nome_dtr');
         $nome_dtr->setEditable(FALSE);
         
-        $solicitante_id   = new TSeekButton('solicitante_id');
-        $solicitante_nome = new TEntry('solicitante_nome');
-		$obj = new TicketPessoaSeek;
-        $action = new TAction(array($obj, 'onReload'));
-        $solicitante_id->setAction($action);      
-        $solicitante_nome->setEditable(FALSE);
-		    
+    
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("ativo", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
         $responsavel_id                 = new TDBCombo('responsavel_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
 
+    
         $tipo_ticket_id                 = new TDBCombo('tipo_ticket_id', 'atividade', 'TipoTicket', 'id', 'nome');
         $tipo_ticket_id->setDefaultOption(FALSE);
         $sistema_id                     = new TDBCombo('sistema_id', 'atividade', 'Sistema', 'id', 'nome');
@@ -124,10 +119,17 @@ class TicketForm extends TPage
         $prioridade_id                  = new TDBCombo('prioridade_id', 'atividade', 'Prioridade', 'id', 'nome');
         $prioridade_id->setDefaultOption(FALSE);
         $prioridade_id->setValue(3);
-
+        
+        
+        $combo_tipo_origens             = new TCombo('tipo_origens');
+        $combo_tipo_origens->addItems(array(1 => 'Entidade', 2 => 'Estabelecimento', 3 => 'Empresa') );
+        
+        $combo_codigo_origem            = new TCombo('codigo_cadastro_origem');
+        $combo_solicitante_id           = new TCombo('solicitante_id');
+        
         // define the sizes
         $id->setSize(100);
-        $titulo->setSize(390);
+
         $origem->setSize(200);
         $solicitacao_descricao->setSize(400, 180);
         $data_inicio->setSize(90);
@@ -151,16 +153,21 @@ class TicketForm extends TPage
         $data_aprovacao->setSize(100);
         $observacao->setSize(400, 80);
         $nome_dtr->setSize(400);
-        $solicitante_id->setSize(40);
-        $solicitante_nome->setSize(325);
+
+
         $responsavel_id->setSize(390);
         $tipo_ticket_id->setSize(200);
         $sistema_id->setSize(200);
         $status_ticket_id->setSize(200);
         $prioridade_id->setSize(200);
         
+        
+        $combo_tipo_origens->setSize(135);
+        $combo_codigo_origem->setSize(250);
+        $combo_solicitante_id->setSize(390);
+        
         // validações
-        $solicitante_id->addValidation('Solicitante', new TRequiredValidator);
+
         $titulo->addValidation('Titulo', new TRequiredValidator);
         $responsavel_id->addValidation('Responsável', new TRequiredValidator);
         $sistema_id->addValidation('Sistema', new TRequiredValidator);   
@@ -175,8 +182,12 @@ class TicketForm extends TPage
         // add one row for each form field
         // notebook Cadastramento
         $table->addRowSet( new TLabel('Ticket:'), array ($id,new TLabel('Data Cadastro' ),$data_cadastro) );
-        $table->addRowSet( $label_solicitante = new TLabel('Solicitante:'), array($solicitante_id, $solicitante_nome) );
-        $label_solicitante->setFontColor('#FF0000');
+
+        $table->addRowSet( $label_combo_origem = new TLabel('Origem:'), array($combo_tipo_origens, $combo_codigo_origem) );
+        $label_combo_origem->setFontColor('#FF0000'); 
+        $table->addRowSet(  $label_solicitante = new TLabel('Solicitante:'), $combo_solicitante_id  );
+        $label_solicitante->setFontColor('#FF0000'); 
+        
         $table->addRowSet( $label_responsavel = new TLabel('Responsável:'), $responsavel_id );
         $label_responsavel->setFontColor('#FF0000');       
         $table->addRowSet( $label_titulo = new TLabel('Título:'), $titulo );
@@ -230,7 +241,11 @@ class TicketForm extends TPage
         $page2->addRowSet( new TLabel('Saldo a pagar:'), $valor_saldo);
         
         // Envia campos para o formulario
-        $this->form->setFields(array($id,$titulo,$data_inicio,$data_inicio_oculta,$data_encerramento,$data_cancelamento,$origem,$solicitacao_descricao,$nome_dtr,$providencia,$orcamento_horas,$orcamento_valor_hora,$valor_desconto,$valor_total,$forma_pagamento,$data_ultimo_pgto,$valor_ultimo_pgto,$valor_total_pago,$data_cadastro,$data_prevista,$data_aprovacao,$observacao,$solicitante_id,$solicitante_nome, $tipo_ticket_id,$sistema_id,$status_ticket_id,$prioridade_id,$responsavel_id, $valor_total_parcial, $valor_pagamento, $data_pagamento, $valor_saldo));
+        $this->form->setFields(array($id,$titulo,$data_inicio,$data_inicio_oculta,$data_encerramento,$data_cancelamento,$origem,$solicitacao_descricao,$nome_dtr,
+                                         $providencia,$orcamento_horas,$orcamento_valor_hora,$valor_desconto,$valor_total,$forma_pagamento,$data_ultimo_pgto,
+                                         $valor_ultimo_pgto,$valor_total_pago,$data_cadastro,$data_prevista,$data_aprovacao,$observacao, $tipo_ticket_id,$sistema_id,
+                                         $status_ticket_id,$prioridade_id,$responsavel_id, $valor_total_parcial, $valor_pagamento, $data_pagamento, $valor_saldo,
+                                         $combo_tipo_origens,$combo_codigo_origem,$combo_solicitante_id));
 
         // create the form actions
         $save_button   = TButton::create('save', array($this, 'onSave'), _t('Save'), 'ico_save.png');
@@ -285,6 +300,13 @@ class TicketForm extends TPage
         $change_status = new TAction(array ($this, 'onChangeDataEncerramento'));
         $data_encerramento->setExitAction($change_status);
         
+        $change_origem = new TAction(array ($this, 'onChangeOrigem'));
+        $combo_tipo_origens->setChangeAction($change_origem); 
+        
+        $change_tipo_origem = new TAction(array ($this, 'onChangeTipoOrigem'));
+        $combo_codigo_origem->setChangeAction($change_tipo_origem); 
+       
+        
         $vbox = new TVBox;
         $vbox->add($pretable);
         $vbox->add($notebook);
@@ -293,6 +315,123 @@ class TicketForm extends TPage
         $this->form->add($vbox);
                 
         parent::add($this->form);
+    }
+
+    public static function onChangeTipoOrigem($param)
+    {
+        
+        if($param['tipo_origens'] && $param['codigo_cadastro_origem'])
+        {
+            try
+            {
+                TTransaction::open('tecbiz');
+                
+                
+                $repo = new TRepository('Pessoa');
+                $criteria = new TCriteria;
+                
+                $criteria->add(new TFilter("ativo", "=", 1));
+                
+                $criteria->add(new TFilter('origem', '=', $param['tipo_origens']) );
+                $criteria->add(new TFilter('codigo_cadastro_origem', '=', $param['codigo_cadastro_origem']) );
+                
+                $newparam['order'] = 'pessoa_nome';
+                $newparam['direction'] = 'asc';
+                $criteria->setProperties($newparam); // order, offset
+                
+                $pessoas = $repo->load($criteria);
+                
+                $options [] = '--Selecione--';
+                foreach($pessoas as $pessoa)
+                {
+                    $options [ $pessoa->pessoa_codigo ] = $pessoa->pessoa_nome;
+                }
+                
+                TTransaction::close();
+            
+            }
+            catch(Exception $e)
+            {
+                new TMessage('error', $e->getMessage());
+            }
+        
+        }
+        
+        TCombo::reload('form_Ticket', 'solicitante_id', $options);
+        
+    }
+
+
+    public static function onChangeOrigem($param)
+    {
+        
+        if($param['tipo_origens'])
+        {
+            try
+            {
+                TTransaction::open('tecbiz');
+                
+                if($param['tipo_origens'] == 1)
+                {
+                    $repo = new TRepository('Entidade');
+                    $criteria = new TCriteria;
+                    $criteria->add( new TFilter('enttipent', '=', 1));
+                    $newparam['order'] = 'entcodent';
+                    $newparam['direction'] = 'asc';
+                    $criteria->setProperties($newparam); // order, offset    
+                    $entidades = $repo->load($criteria);
+                    $options [] = '--Selecione--';
+                    foreach($entidades as $etd)
+                    { 
+                        $options [ $etd->entcodent.$selecao ] = str_pad($etd->entcodent, 4, "0", STR_PAD_LEFT).' - '.$etd->entnomfan;
+                    }
+                }
+                
+                if($param['tipo_origens'] == 2)
+                {
+                    $repo = new TRepository('Estabelecimento');
+                    $criteria = new TCriteria;
+                   // $criteria->add( new TFilter('enttipent', '=', 1));
+                    $newparam['order'] = 'lojcodloj';
+                    $newparam['direction'] = 'asc';
+                    $criteria->setProperties($newparam); // order, offset    
+                    $estabelecimentos = $repo->load($criteria);
+                    $options [] = '--Selecione--';
+                    foreach($estabelecimentos as $ecs)
+                    {
+                        $options [ $ecs->lojcodloj ] = str_pad($ecs->lojcodloj, 4, "0", STR_PAD_LEFT).' - '.$ecs->lojnomfan;
+                    }
+                }
+                
+                if($param['tipo_origens'] == 3)
+                {
+                    $repo = new TRepository('Empresa');
+                    $criteria = new TCriteria;
+                   // $criteria->add( new TFilter('enttipent', '=', 1));
+                    $newparam['order'] = 'id';
+                    $newparam['direction'] = 'asc';
+                    $criteria->setProperties($newparam); // order, offset    
+                    $empresas = $repo->load($criteria);
+                    $options [] = '--Selecione--';
+                    foreach($empresas as $emp)
+                    {
+                        $options [ $emp->id ] = str_pad($emp->id, 4, "0", STR_PAD_LEFT).' - '.$emp->razao_social;
+                    }
+                }
+                
+                TTransaction::close();
+            
+            }
+            catch(Exception $e)
+            {
+                new TMessage('error', $e->getMessage());
+            }
+        
+        }
+        
+        TCombo::reload('form_Ticket', 'solicitante_id', $opt);
+        TCombo::reload('form_Ticket', 'codigo_cadastro_origem', $options);
+        
     }
 
     public function onEnviaEmail()
@@ -918,19 +1057,30 @@ class TicketForm extends TPage
                 $object->valor_ultimo_pgto ? $object->valor_ultimo_pgto = number_format($object->valor_ultimo_pgto, 2, ',', '.') : null;
                 $object->valor_total_pago ? $object->valor_total_pago = number_format($object->valor_total_pago, 2, ',', '.') : null;
                 
+                $object->orcamento_horas ? $object->orcamento_horas = strstr($object->orcamento_horas, ':', true) : null;
+              
+                
                 if($object->solicitante_id)
                 {
                     TTransaction::open('tecbiz');
                     
                     $pessoa = new Pessoa($object->solicitante_id);
-                    $object->solicitante_nome = $pessoa->pessoa_nome;
+                    
+                    $vars['tipo_origens']                 = $pessoa->origem;
+                    $vars['codigo_cadastro_origem']       = $pessoa->codigo_cadastro_origem;
+                    
+                    $this->onChangeOrigem($vars);
+                    $this->onChangeTipoOrigem($vars);
+                    
+                    $object->tipo_origens                 = $pessoa->origem;
+                    $object->codigo_cadastro_origem       = $pessoa->codigo_cadastro_origem;
+                    $object->solicitante_id               = $pessoa->pessoa_codigo;
                     
                     TTransaction::close();    
                 }
-                
-                $object->orcamento_horas ? $object->orcamento_horas = strstr($object->orcamento_horas, ':', true) : null;
-                
+                               
                 $this->form->setData($object); // fill the form
+               
                 TTransaction::close(); // close the transaction
             }
             else
