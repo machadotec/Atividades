@@ -338,7 +338,6 @@ class AtividadeList extends TPage
             }
             
             if (TSession::getValue('AtividadeList_filter_solicitante_id')) {
-                
                 $criteria->add(TSession::getValue('AtividadeList_filter_solicitante_id')); // add the session filter
             }
             
@@ -458,12 +457,12 @@ class AtividadeList extends TPage
     {
          
         // clear session filters
-        TSession::setValue('AtividadeList_filter_id',   '');
-        TSession::setValue('AtividadeList_filter_data_atividade',   '');
-        TSession::setValue('AtividadeList_filter_solicitante_id',   '');
-        TSession::setValue('AtividadeList_filter_colaborador_id',   '');
-        TSession::setValue('AtividadeList_filter_tipo_atividade_id',   '');
-        TSession::setValue('AtividadeList_filter_ticket_id',   '');
+        TSession::setValue('AtividadeList_filter_id',                   '');
+        TSession::setValue('AtividadeList_filter_data_atividade',       '');
+        TSession::setValue('AtividadeList_filter_solicitante_id',       '');
+        TSession::setValue('AtividadeList_filter_colaborador_id',       '');
+        TSession::setValue('AtividadeList_filter_tipo_atividade_id',    '');
+        TSession::setValue('AtividadeList_filter_ticket_id',            '');
          
         $this->form->clear();
 

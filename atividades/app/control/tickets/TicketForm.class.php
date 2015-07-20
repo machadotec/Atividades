@@ -120,7 +120,6 @@ class TicketForm extends TPage
         $prioridade_id->setDefaultOption(FALSE);
         $prioridade_id->setValue(3);
         
-        
         $combo_tipo_origens             = new TCombo('tipo_origens');
         $combo_tipo_origens->addItems(array(1 => 'Entidade', 2 => 'Estabelecimento', 3 => 'Empresa') );
         
@@ -317,6 +316,19 @@ class TicketForm extends TPage
         parent::add($this->form);
     }
 
+    public static function onSetarValoresCombo($param)
+    {
+         
+        $obj = new StdClass;
+        
+        $obj->tipo_origens                 = $param['tipo_origens'];     
+    	$obj->codigo_cadastro_origem       = $param['codigo_cadastro_origem'];
+        $obj->solicitante_id               = $param['solicitante_id'];
+        
+        TForm::sendData('form_Ticket', $obj, FALSE, FALSE);
+       
+    }
+
     public static function onChangeTipoOrigem($param)
     {
         
@@ -341,7 +353,7 @@ class TicketForm extends TPage
                 
                 $pessoas = $repo->load($criteria);
                 
-                $options [] = '--Selecione--';
+                $options[] = '--Selecione--';
                 foreach($pessoas as $pessoa)
                 {
                     $options [ $pessoa->pessoa_codigo ] = $pessoa->pessoa_nome;
@@ -380,7 +392,8 @@ class TicketForm extends TPage
                     $newparam['direction'] = 'asc';
                     $criteria->setProperties($newparam); // order, offset    
                     $entidades = $repo->load($criteria);
-                    $options [] = '--Selecione--';
+                    
+                    $options[] = '--Selecione--';
                     foreach($entidades as $etd)
                     { 
                         $options [ $etd->entcodent.$selecao ] = str_pad($etd->entcodent, 4, "0", STR_PAD_LEFT).' - '.$etd->entnomfan;
@@ -396,7 +409,8 @@ class TicketForm extends TPage
                     $newparam['direction'] = 'asc';
                     $criteria->setProperties($newparam); // order, offset    
                     $estabelecimentos = $repo->load($criteria);
-                    $options [] = '--Selecione--';
+                    
+                    $options[] = '--Selecione--';
                     foreach($estabelecimentos as $ecs)
                     {
                         $options [ $ecs->lojcodloj ] = str_pad($ecs->lojcodloj, 4, "0", STR_PAD_LEFT).' - '.$ecs->lojnomfan;
@@ -412,7 +426,8 @@ class TicketForm extends TPage
                     $newparam['direction'] = 'asc';
                     $criteria->setProperties($newparam); // order, offset    
                     $empresas = $repo->load($criteria);
-                    $options [] = '--Selecione--';
+                   
+                    $options[] = '--Selecione--';
                     foreach($empresas as $emp)
                     {
                         $options [ $emp->id ] = str_pad($emp->id, 4, "0", STR_PAD_LEFT).' - '.$emp->razao_social;
@@ -578,6 +593,9 @@ class TicketForm extends TPage
         $this->form->setData($object);
         
     }
+    
+
+    
     
      /**
      * Executed when user leaves the fields
@@ -940,7 +958,7 @@ class TicketForm extends TPage
             }
             
             $this->form->validate(); // form validation
-                  
+            
             $object->store(); // stores the object
             
             $saldo = $object->valor_total - $object->valor_total_pago;
@@ -984,6 +1002,15 @@ class TicketForm extends TPage
             {
                 TButton::enableField('form_Ticket', 'delete');
             }        
+            
+            $vars['tipo_origens']                 = $object->tipo_origens;
+            $vars['codigo_cadastro_origem']       = $object->codigo_cadastro_origem;
+            $vars['solicitante_id']               = $object->solicitante_id;
+                    
+            $this->onChangeOrigem($vars);
+            $this->onChangeTipoOrigem($vars);
+            
+            $this->onSetarValoresCombo($vars);
             
             $this->form->setData($object); // keep form data
             TTransaction::close(); // close the transaction
@@ -1068,18 +1095,17 @@ class TicketForm extends TPage
                     
                     $vars['tipo_origens']                 = $pessoa->origem;
                     $vars['codigo_cadastro_origem']       = $pessoa->codigo_cadastro_origem;
+                    $vars['solicitante_id']               = $pessoa->pessoa_codigo;
                     
                     $this->onChangeOrigem($vars);
                     $this->onChangeTipoOrigem($vars);
-                    
-                    $object->tipo_origens                 = $pessoa->origem;
-                    $object->codigo_cadastro_origem       = $pessoa->codigo_cadastro_origem;
-                    $object->solicitante_id               = $pessoa->pessoa_codigo;
                     
                     TTransaction::close();    
                 }
                                
                 $this->form->setData($object); // fill the form
+                
+                $this->onSetarValoresCombo($vars);
                
                 TTransaction::close(); // close the transaction
             }

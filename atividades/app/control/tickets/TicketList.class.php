@@ -49,6 +49,7 @@ class TicketList extends TPage
         $criteria = new TCriteria;
         $criteria->add( new TFilter('enttipent', '=', 1));
         $entcodent                      = new TDBComboMultiValue('entcodent', 'tecbiz', 'Entidade', 'entcodent', array(0 => 'entcodent', 1 => 'entrazsoc'), 'entcodent', $criteria);
+        $tipo_ticket_id                 = new TDBCombo('tipo_ticket_id', 'atividade', 'TipoTicket', 'id', 'nome');
         $status_ticket_id               = new TDBCombo('status_ticket_id', 'atividade', 'StatusTicket', 'id', 'nome');
         $data_ultimo_pgto               = new TDate('data_ultimo_pgto');
         $data_ultimo_pgto->setMask('dd/mm/yyyy');
@@ -61,6 +62,7 @@ class TicketList extends TPage
         $solicitante_nome->setSize(200);
         $entcodent->setSize(274);
         $status_ticket_id->setSize(100);
+        $tipo_ticket_id->setSize(200);
         $data_ultimo_pgto->setSize(100);
         $prioridade_id->setSize(100);
 
@@ -69,11 +71,12 @@ class TicketList extends TPage
         $table->addRowSet( new TLabel('Titulo:'), $titulo );
         $table->addRowSet( new TLabel('Cliente:'), array($solicitante_id, $solicitante_nome) );
         $table->addRowSet( new TLabel('Entidade:'), $entcodent );
+        $table->addRowSet( new TLabel('Tipo Ticket:'), $tipo_ticket_id );
         $table->addRowSet( new TLabel('Data Pgto:'), $data_ultimo_pgto );
         $table->addRowSet( new TLabel('Status:'), $status_ticket_id );
         $table->addRowSet( new TLabel('Prioridade:'), $prioridade_id );
 
-        $this->form->setFields(array($id,$titulo,$solicitante_id,$solicitante_nome,$entcodent,$status_ticket_id,$data_ultimo_pgto,$prioridade_id));
+        $this->form->setFields(array($id,$titulo,$solicitante_id,$solicitante_nome,$entcodent,$status_ticket_id,$tipo_ticket_id,$data_ultimo_pgto,$prioridade_id));
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Ticket_filter_data') );
@@ -230,6 +233,7 @@ class TicketList extends TPage
         TSession::setValue('TicketList_filter_solicitante_id',   NULL);
         TSession::setValue('TicketList_filter_entidade_id',   NULL);
         TSession::setValue('TicketList_filter_status_ticket_id',   NULL);
+        TSession::setValue('TicketList_filter_tipo_ticket_id',   NULL);
         TSession::setValue('TicketList_filter_data_ultimo_pgto',   NULL);
         TSession::setValue('TicketList_filter_prioridade_id',   NULL);
 
@@ -272,6 +276,10 @@ class TicketList extends TPage
             TSession::setValue('TicketList_filter_status_ticket_id',   $filter); // stores the filter in the session
         }
 
+        if (isset($data->tipo_ticket_id) AND ($data->tipo_ticket_id)) {
+            $filter = new TFilter('tipo_ticket_id', '=', "$data->tipo_ticket_id"); // create the filter
+            TSession::setValue('TicketList_filter_tipo_ticket_id',   $filter); // stores the filter in the session
+        }
 
         if (isset($data->data_ultimo_pgto) AND ($data->data_ultimo_pgto)) {
             $filter = new TFilter('data_ultimo_pgto', '>=', "$data->data_ultimo_pgto"); // create the filter
@@ -348,6 +356,10 @@ class TicketList extends TPage
 
             if (TSession::getValue('TicketList_filter_status_ticket_id')) {
                 $criteria->add(TSession::getValue('TicketList_filter_status_ticket_id')); // add the session filter
+            }
+            
+            if (TSession::getValue('TicketList_filter_tipo_ticket_id')) {
+                $criteria->add(TSession::getValue('TicketList_filter_tipo_ticket_id')); // add the session filter
             }
 
             if (TSession::getValue('TicketList_filter_data_ultimo_pgto')) {
@@ -467,6 +479,7 @@ class TicketList extends TPage
         TSession::setValue('TicketList_filter_solicitante_id',   NULL);
         TSession::setValue('TicketList_filter_entidade_id',   NULL);
         TSession::setValue('TicketList_filter_status_ticket_id',   NULL);
+        TSession::setValue('TicketList_filter_tipo_ticket_id',   NULL);
         TSession::setValue('TicketList_filter_data_ultimo_pgto',   NULL);
         TSession::setValue('TicketList_filter_prioridade_id',   NULL);
          

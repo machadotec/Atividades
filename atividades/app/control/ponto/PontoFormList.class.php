@@ -138,7 +138,7 @@ class PontoFormList extends TPage
         else
         {
         
-            $dataLimite = date('Y-m-d', strtotime("-5 days"));
+            $dataLimite = date('Y-m-d', strtotime("-125 days"));
             
             if(strtotime($dataLimite) > strtotime($data2))
             {

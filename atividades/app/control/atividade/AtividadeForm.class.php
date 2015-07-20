@@ -82,7 +82,9 @@ class AtividadeForm extends TPage
         
         $criteria = new TCriteria;
         $criteria->add(new TFilter("status_ticket_id", "=", 1));
-        $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo', $criteria);
+        $ticket_id                      = new TDBComboMultiValue('ticket_id', 'atividade', 'Ticket', 'id', array(0 => 'id', 1 => 'titulo'), 'id', $criteria);
+       
+        //$ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo', $criteria);
                                    
         $horario = explode(':', $hora_padrao);
 
@@ -110,6 +112,9 @@ class AtividadeForm extends TPage
         $qtde_horas->setChangeAction($change_action);
         $qtde_minutos->setChangeAction($change_action);
         
+        $change_ticket_action = new TAction(array($this, 'onTrocaTicket'));
+        $ticket_id->setChangeAction($change_ticket_action);
+        
         // define the sizes
         $id->setSize(100);
         $data_atividade->setSize(100);
@@ -121,10 +126,11 @@ class AtividadeForm extends TPage
         $descricao->setSize(300, 80);
         $colaborador_id->setSize(200);
         $tipo_atividade_id->setSize(200);
-        $ticket_id->setMinLength(0);
-        $ticket_id->setMaxSize(1);
         $ticket_id->setSize(300);
-        $ticket_id->setOperator('ilike');
+      //  $ticket_id->setMinLength(0);
+      //  $ticket_id->setMaxSize(1);
+      //  $ticket_id->setSize(300);
+      //  $ticket_id->setOperator('ilike');
         
         // validações
         $tempo_atividade->addValidation('Hora Fim', new THoraFimValidator);
@@ -181,6 +187,31 @@ class AtividadeForm extends TPage
         $row->addCell($buttons_box)->colspan = 2;
         
         parent::add($this->form);
+    }
+    
+    public static function onTrocaTicket($param)
+    {
+        $obj = new StdClass;
+        $obj->sistema_id = '';
+        if($param['ticket_id'])
+        {   
+            try
+            {
+                TTransaction::open('atividade');
+                
+                $ticket = new Ticket($param['ticket_id']);
+                $obj->sistema_id = $ticket->sistema_id;
+                
+                TTransaction::close();
+            }
+            catch(Exception $e)
+            {
+                new TMessage('error', $e->getMessage());
+            }
+        }
+        
+        TForm::sendData('form_Atividade', $obj, FALSE, FALSE); 
+        
     }
     
     public static function onSemAtividade($param)
@@ -254,9 +285,9 @@ class AtividadeForm extends TPage
 
             $object->data_atividade ? $object->data_atividade = $string->formatDate($object->data_atividade) : null;
             
-            $arraySwap = $object->ticket_id; 
+          //  $arraySwap = $object->ticket_id; 
                         
-            $object->ticket_id = key($object->ticket_id);           
+          //  $object->ticket_id = key($object->ticket_id);           
                         
             $this->form->validate(); // form validation
             $object->store(); // stores the object
@@ -300,7 +331,7 @@ class AtividadeForm extends TPage
                 
                 $atividade = new Atividade($key);
                 
-                $atividade->ticket_id = array($atividade->ticket_id => $atividade->ticket->titulo);
+                //$atividade->ticket_id = array($atividade->ticket_id => $atividade->ticket->titulo);
                 
                 // criar metodo de preenchimento de horas
                 $HoraEntrada = new DateTime($atividade->hora_inicio);
