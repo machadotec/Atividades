@@ -33,7 +33,7 @@ class AtividadeReport extends TPage
         $table->addRowSet( new TLabel('Indicadores por colaborador'), '' )->class = 'tformtitle';
         
         // cria array para popular as combos
-        TTransaction::open('tecbiz');
+        TTransaction::open('atividade');
            
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
@@ -145,15 +145,8 @@ class AtividadeReport extends TPage
             $tickets = null;
             if($formdata->cliente_id > 0)
             {
-                
-                TTransaction::open('tecbiz');
                 $cliente = Pessoa::getPessoasEntidade($formdata->cliente_id);
-                TTransaction::close();
-                
-                TTransaction::open('atividade');
                 $retorno = Ticket::getTicketsCliente($cliente);
-                TTransaction::close();
-           
                 $tickets = implode(",",$retorno);
             }
             
@@ -194,11 +187,10 @@ class AtividadeReport extends TPage
                 $titulo = 'TODOS COLABORADORES';
                 if($formdata->colaborador_id > 0)
                 {
-                    TTransaction::open('tecbiz');
                     $colaborador = new Pessoa($formdata->colaborador_id);
                     $titulo = utf8_decode($colaborador->pessoa_nome);
-                    TTransaction::close();
                 }
+                
                                 
                 // report description
                 $tr->addRow();
@@ -240,8 +232,37 @@ class AtividadeReport extends TPage
                 $tr->addRow();
                 $tr->addCell($break, 'center', 'datai', 4);
                 
-                $objects = Atividade::retornaAtividadesSistemaColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
+                //ATESTADOS MEDICOS
                 
+                $objects = Atividade::retornaAtestadosMedicos($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade);
+                // add a header row
+                $tr->addRow();
+                $tr->addCell('', 'center', 'header');
+                $tr->addCell(utf8_decode('Atestado Médico'), 'center', 'header');
+                $tr->addCell('Horas', 'center', 'header');
+                $tr->addCell('', 'center', 'header');   
+                // controls the background filling
+                $colour= FALSE;
+                $seq = 1;
+                // data rows
+                foreach ($objects as $row)
+                {
+                    $style = $colour ? 'datap' : 'datai';
+                    $tr->addRow();
+                    $tr->addCell($seq, 'center', $style);
+                    $tr->addCell('Horas atestado', 'left', $style);
+                    $tr->addCell($row['total'], 'right', $style);
+                    $tr->addCell('', 'right', $style);
+                    
+                    $seq++;                    
+                    $colour = !$colour;
+                }
+                
+                // division row
+                $tr->addRow();
+                $tr->addCell($break, 'center', 'datai', 4);
+                
+                $objects = Atividade::retornaAtividadesSistemaColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
                 // add a header row
                 $tr->addRow();
                 $tr->addCell('', 'center', 'header');
@@ -275,7 +296,6 @@ class AtividadeReport extends TPage
                 $tr->addCell($break, 'center', 'datai', 4);
                 
                 $objects = Atividade::retornaAtividadesClienteColaborador($formdata->colaborador_id, $formdata->mes_atividade, $formdata->ano_atividade, $tickets);
-                TTransaction::open('tecbiz');
                 foreach ($objects as $row)
                 {
                     $cliente = new Pessoa($row['solicitante_id']);  
@@ -320,7 +340,6 @@ class AtividadeReport extends TPage
                     $seq++;                    
                     $colour = !$colour;
                 }
-                TTransaction::close();
                 
                 // footer row
                 $tr->addRow();

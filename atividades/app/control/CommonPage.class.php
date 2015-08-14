@@ -5,21 +5,63 @@ class CommonPage extends TPage
     {
         parent::__construct();
         
-        TTransaction::open('tecbiz');
         
-        $repository = new TRepository('Pessoa');
-        $repo = $repository->load();
+        //exec("php /var/www/html/atividades/atualizacao.php");
+
         
-           
-        foreach ($repo as $row)
-        {
-            $pessoa[$row->pessoa_codigo] = $row->pessoa_nome;
+        /*
+        TTransaction::open('atividade');
+        
+        //atualiza pessoas
+        $file = "http://192.168.1.2/tecbiz/tecbiz.php?a=21f7b2&acs=1";
+        $json = file_get_contents($file);
+        $lista = json_decode($json, true);
+        foreach ($lista as $value) {
+            
+            $pessoa = new Pessoa;
+            $pessoa->fromArray($value);
+            $pessoa->store();
+            
         }
         
-        print_r($pessoa);
+        //atualiza empresas
+        $file = "http://192.168.1.2/tecbiz/tecbiz.php?a=21f7b2&acs=2";
+        $json = file_get_contents($file);
+        $lista = json_decode($json, true);
+        foreach ($lista as $value) {
+            
+            $empresa = new Empresa;
+            $empresa->fromArray($value);
+            $empresa->store();
+            
+        }
+        
+        //atualiza entidades
+        $file = "http://192.168.1.2/tecbiz/tecbiz.php?a=21f7b2&acs=3";
+        $json = file_get_contents($file);
+        $lista = json_decode($json, true);
+        foreach ($lista as $value) {
+            
+            $entidade = new Entidade;
+            $entidade->fromArray($value);
+            $entidade->store();
+            
+        }
+        
+        //atualiza entidades
+        $file = "http://192.168.1.2/tecbiz/tecbiz.php?a=21f7b2&acs=4";
+        $json = file_get_contents($file);
+        $lista = json_decode($json, true);
+        foreach ($lista as $value) {
+            
+            $estabelecimento = new Estabelecimento;
+            $estabelecimento->fromArray($value);
+            $estabelecimento->store();
+            
+        }
         
         TTransaction::close();
-        
+        */
         parent::add(new TLabel('Common page'));
     }
 }

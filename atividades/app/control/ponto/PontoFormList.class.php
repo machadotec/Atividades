@@ -35,7 +35,7 @@ class PontoFormList extends TPage
         $qtde_horas                     = new TCombo('qtde_horas');
         $qtde_minutos                   = new TCombo('qtde_minutos');
         $colaborador_id                 = new THidden('colaborador_id');
-        TTransaction::open('tecbiz');
+        TTransaction::open('atividade');
         $logado = Pessoa::retornaUsuario();
         TTransaction::close();
         $colaborador_id->setValue($logado->pessoa_codigo);
@@ -188,13 +188,10 @@ class PontoFormList extends TPage
         $string = new StringsUtil;
         try
         {
-            
-            TTransaction::open('tecbiz');
-            $logado = Pessoa::retornaUsuario();            
-            TTransaction::close();
-            
             // open a transaction with database 'atividade'
             TTransaction::open('atividade');
+
+            $logado = Pessoa::retornaUsuario();            
                        
             // creates a repository for Ponto
             $repository = new TRepository('Ponto');
@@ -339,11 +336,12 @@ class PontoFormList extends TPage
         $string = new StringsUtil;
         try
         {
+            TTransaction::open('atividade'); // open a transaction with the database
             if (isset($param['key']))
             {
                 
                 $key=$param['key']; // get the parameter $key
-                TTransaction::open('atividade'); // open a transaction with the database
+
                 $object = new Ponto($key); // instantiates the Active Record
              
                 $ultimoPonto = Ponto::retornaUltimoPonto($object->colaborador_id);
@@ -369,7 +367,7 @@ class PontoFormList extends TPage
                 $object->qtde_minutos = $horario[1];
                 
                 $this->form->setData($object); // fill the form with the active record data
-                TTransaction::close(); // close the transaction
+
             }
             else
             {
@@ -378,6 +376,7 @@ class PontoFormList extends TPage
                 $object->colaborador_nome = $param['colaborador_nome'];
                 $this->form->setData($object);
             }
+            TTransaction::close(); // close the transaction
         }
         catch (Exception $e) // in case of exception
         {

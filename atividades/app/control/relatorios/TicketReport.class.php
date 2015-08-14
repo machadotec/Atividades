@@ -47,11 +47,11 @@ class TicketReport extends TPage
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("ativo", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
-        $responsavel_id                 = new TDBCombo('responsavel_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
+        $responsavel_id                 = new TDBCombo('responsavel_id', 'atividade', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
         
         $criteria = new TCriteria;
         $criteria->add( new TFilter('enttipent', '=', 1));
-        $entcodent                      = new TDBComboMultiValue('entcodent', 'tecbiz', 'Entidade', 'entcodent', array(0 => 'entcodent', 1 => 'entrazsoc'), 'entcodent', $criteria);
+        $entcodent                      = new TDBComboMultiValue('entcodent', 'atividade', 'Entidade', 'entcodent', array(0 => 'entcodent', 1 => 'entrazsoc'), 'entcodent', $criteria);
         
         $status_ticket_id               = new TDBCombo('status_ticket_id', 'atividade', 'StatusTicket', 'id', 'nome');
         $prioridade_id                  = new TDBCombo('prioridade_id', 'atividade', 'Prioridade', 'id', 'nome');
@@ -69,7 +69,7 @@ class TicketReport extends TPage
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("ativo", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
-        $colaborador_id                 = new TDBCombo('colaborador_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
+        $colaborador_id                 = new TDBCombo('colaborador_id', 'atividade', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
         
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
         
@@ -167,7 +167,6 @@ class TicketReport extends TPage
        
     }
 
-
     /**
      * method onGenerate()
      * Executed whenever the user clicks at the generate button
@@ -177,9 +176,8 @@ class TicketReport extends TPage
         try
         {
             $string = new StringsUtil;
-            
-            // open a transaction with database 'atividade'
             TTransaction::open('atividade');
+            // open a transaction with database 'atividade'
             
             // get the form data into an active record
             $formdata = $this->form->getData();
@@ -199,10 +197,8 @@ class TicketReport extends TPage
             }
             if ($formdata->entcodent)
             {
-                TTransaction::open('tecbiz');
                 $solicitantes = Pessoa::getPessoasEntidade($formdata->entcodent);
                 $comma_separated = implode(",", $solicitantes);
-                TTransaction::close();
                 $where .= " and t.solicitante_id in ( {$comma_separated} )";
             }
             if ($formdata->status_ticket_id)
@@ -219,15 +215,15 @@ class TicketReport extends TPage
             }
             if ($formdata->data_atividade_inicio)
             {
-                $where .= " and a.data_atividade >= '{$string->formatDate($formdata->data_atividade_inicio)}' ";
+                $whereJoin .= " and a.data_atividade >= '{$string->formatDate($formdata->data_atividade_inicio)}' ";
             }
             if ($formdata->data_atividade_final)
             {
-                $where .= " and a.data_atividade <= '{$string->formatDate($formdata->data_atividade_final)}' ";
+                $whereJoin .= " and a.data_atividade <= '{$string->formatDate($formdata->data_atividade_final)}' ";
             }
             if ($formdata->colaborador_id)
             {
-                $where .= " and a.colaborador_id = {$formdata->colaborador_id} ";
+                $whereJoin .= " and a.colaborador_id = {$formdata->colaborador_id} ";
             }
             if ($formdata->tipo_atividade_id)
             {
@@ -235,7 +231,7 @@ class TicketReport extends TPage
             }
             $format  = $formdata->output_type;
             
-            $objects = Ticket::relatorioSintetico($where);
+            $objects = Ticket::relatorioSintetico($where, $whereJoin);
             
             if ($objects)
             {
@@ -296,8 +292,6 @@ class TicketReport extends TPage
                 // controls the background filling
                 $colour= FALSE;
                 
-                TTransaction::open('tecbiz');
-                
                 $repository = new TRepository('Pessoa');
                 $repo = $repository->load();
                 foreach ($repo as $row)
@@ -344,9 +338,7 @@ class TicketReport extends TPage
                     if($formdata->tipo == 'a')
                     {
                         
-                        TTransaction::open('atividade');
-                        
-                        $atividades = Ticket::relatorioAnalitico($object['id'], $where);
+                        $atividades = Ticket::relatorioAnalitico($object['id'], $where, $whereJoin);
                         
                         if($atividades)
                         {
@@ -389,14 +381,11 @@ class TicketReport extends TPage
                         
                         $tr->addRow();
                         $tr->addCell('&nbsp; ', 'center', $style, 16);
-                        
-                        TTransaction::close();
+
                     }
                     
                     $colour = !$colour;
                 }
-                
-                TTransaction::close();
                 
                 // footer row
                 
@@ -417,8 +406,7 @@ class TicketReport extends TPage
                 $tr->addCell($totalOrcado, 'right', 'footer');
                 $tr->addCell($totalPago, 'right', 'footer');
                 $tr->addCell($totalSaldo, 'right', 'footer');
-                
-                
+                                
                 $tr->addRow();
                 $tr->addCell(date('d/m/Y H:i:s'), 'center', 'footer', 16);
                 // stores the file
@@ -436,6 +424,7 @@ class TicketReport extends TPage
                 
                 // shows the success message
                 new TMessage('info', 'Relatorio gerado. Por favor, habilite popups no navegador (somente para web).');
+
             }
             else
             {

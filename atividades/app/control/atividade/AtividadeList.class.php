@@ -17,7 +17,7 @@ class AtividadeList extends TPage
     public function __construct()
     {
         parent::__construct();
-        
+
         // creates the form
         $this->form = new TForm('form_search_Atividade');
         $this->form->class = 'tform'; // CSS class
@@ -39,7 +39,7 @@ class AtividadeList extends TPage
         $criteria = new TCriteria;
         $criteria->add(new TFilter("origem", "=", 1));
         $criteria->add(new TFilter("codigo_cadastro_origem", "=", 100));
-        $colaborador_id                 = new TDBCombo('colaborador_id', 'tecbiz', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
+        $colaborador_id                 = new TDBCombo('colaborador_id', 'atividade', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
         $ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo');
         
@@ -48,7 +48,7 @@ class AtividadeList extends TPage
         $newparam['order'] = 'pessoa_nome';
         $newparam['direction'] = 'asc';
         $criteria->setProperties($newparam); // order, offset
-        $solicitante_id                 = new TDBSeekButton('solicitante_id', 'tecbiz','form_search_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
+        $solicitante_id                 = new TDBSeekButton('solicitante_id', 'atividade','form_search_Ticket','Pessoa','pessoa_nome','solicitante_id', 'solicitante_nome', $criteria);
         $solicitante_nome               = new TEntry('solicitante_nome');
         $solicitante_nome->setEditable(FALSE);
                 
@@ -100,19 +100,22 @@ class AtividadeList extends TPage
         $this->datagrid->setHeight(320);
                 
         // creates the datagrid columns
-        $data_atividade      = new TDataGridColumn('data_atividade', 'Data', 'right', 75);
-        $hora_inicio         = new TDataGridColumn('hora_inicio', 'Inicio', 'right', 80);
-        $hora_fim            = new TDataGridColumn('hora_fim', 'Fim', 'right', 80);
-        $hora_qte            = new TDataGridColumn('hora_qte', 'Qtde', 'right', 80);
-        $colaborador_id      = new TDataGridColumn('colaborador_id', 'Colaborador', 'right', 200);
-        $tipo_atividade_id   = new TDataGridColumn('tipo_atividade->nome', 'Atividade', 'right', 100); //get_tipo_atividade()->nome
-        $ticket_id           = new TDataGridColumn('ticket_id', 'Ticket', 'right', 200); // get_ticket()->titulo
+        $data_atividade      = new TDataGridColumn('data_atividade', 'Data', 'right', 40);
+        $hora_inicio         = new TDataGridColumn('hora_inicio', 'Inicio', 'right', 20);
+        $hora_fim            = new TDataGridColumn('hora_fim', 'Fim', 'right', 20);
+        $hora_qte            = new TDataGridColumn('hora_qte', 'Qtde', 'right', 20);
+        $colaborador_id      = new TDataGridColumn('pessoa->pessoa_nome', 'Colaborador', 'left', 50);
+        $tipo_atividade_id   = new TDataGridColumn('tipo_atividade->nome', 'Atividade', 'left', 100); //get_tipo_atividade()->nome
+        $sistema_id          = new TDataGridColumn('sistema->nome', 'Sistema', 'left', 100);
+        $ticket_id           = new TDataGridColumn('ticket->titulo', 'Ticket', 'left', 200); // get_ticket()->titulo
         
         // transformers
         $colaborador_id->setTransformer(array($this, 'retornaPessoa'));
-        $ticket_id->setTransformer(array($this, 'retornaTicket'));
         $hora_qte->setTransformer(array($this, 'calculaDiferenca'));
         $data_atividade->setTransformer(array('StringsUtil', 'formatDateBR'));
+        $hora_inicio->setTransformer(array('StringsUtil', 'retira_segundos'));
+        $hora_fim->setTransformer(array('StringsUtil', 'retira_segundos'));
+        
         //exemplo de uso de classe para jogar funcoes
         
         // add the columns to the DataGrid
@@ -122,6 +125,7 @@ class AtividadeList extends TPage
         $this->datagrid->addColumn($hora_qte);
         $this->datagrid->addColumn($colaborador_id);
         $this->datagrid->addColumn($tipo_atividade_id);
+        $this->datagrid->addColumn($sistema_id);
         $this->datagrid->addColumn($ticket_id);
         
         // creates the datagrid column actions  
@@ -130,12 +134,16 @@ class AtividadeList extends TPage
         $data_atividade->setAction($order_data_atividade);
         
         $order_colaborador_id= new TAction(array($this, 'onReload'));
-        $order_colaborador_id->setParameter('order', 'colaborador_id');
+        $order_colaborador_id->setParameter('order', 'pessoa->pessoa_nome');
         $colaborador_id->setAction($order_colaborador_id);
         
         $order_tipo_atividade_id= new TAction(array($this, 'onReload'));
         $order_tipo_atividade_id->setParameter('order', 'tipo_atividade->nome');
         $tipo_atividade_id->setAction($order_tipo_atividade_id);
+        
+        $order_sistema_id= new TAction(array($this, 'onReload'));
+        $order_sistema_id->setParameter('order', 'sistema->nome');
+        $sistema_id->setAction($order_sistema_id);
         
         $order_ticket_id= new TAction(array($this, 'onReload'));
         $order_ticket_id->setParameter('order', 'ticket->titulo');
@@ -297,7 +305,7 @@ class AtividadeList extends TPage
                       
             // creates a repository for Atividade
             $repository = new TRepository('Atividade');
-            $limit = 10;
+            $limit = 15;
             // creates a criteria
             $criteria = new TCriteria;
             
@@ -306,10 +314,20 @@ class AtividadeList extends TPage
             {
                 $newparam['order'] = '(select titulo from ticket where ticket_id = id)';
             }
+
+            if (isset($newparam['order']) AND $newparam['order'] == 'pessoa->pessoa_nome')
+            {
+                $newparam['order'] = '(select pessoa_nome from tbz_pessoas where pessoa_codigo = colaborador_id)';
+            }
             
             if (isset($newparam['order']) AND $newparam['order'] == 'tipo_atividade->nome')
             {
                 $newparam['order'] = '(select nome from tipo_atividade where tipo_atividade_id = id)';
+            }
+            
+            if (isset($newparam['order']) AND $newparam['order'] == 'sistema->nome')
+            {
+                $newparam['order'] = '(select nome from tipo_atividade where sistema_id = id)';
             }
                         
             // default order
@@ -360,8 +378,6 @@ class AtividadeList extends TPage
             
              try
              {
-                TTransaction::open('tecbiz');
-             
                 if ($objects)
                 {
                     // iterate the collection of active records
@@ -371,8 +387,6 @@ class AtividadeList extends TPage
                         $this->datagrid->addItem($object);
                     }
                 }
-                
-                TTransaction::close();
              }
              catch(Exception $e)
              {
@@ -470,27 +484,9 @@ class AtividadeList extends TPage
          
     }
     
-    public function retornaTicket($campo, $object, $row)
-    {
-        TTransaction::open('atividade');
-        
-        $ticket = new Ticket($object->ticket_id);
-        $titulo = $ticket->titulo;
-        
-        return $titulo;
-        
-        TTransaction::close();
-    
-    }
-    
     public function retornaPessoa($campo, $object, $row)
     {
-        
-        $cliente = new Pessoa($object->colaborador_id);
-        $campo = $cliente->pessoa_nome;
-            
-        return $campo;
-         
+        return substr($campo,0,10);         
     }
     
     public function calculaDiferenca($campo, $object, $row)
@@ -498,7 +494,12 @@ class AtividadeList extends TPage
         // criar metodo de preenchimento de horas
         $HoraEntrada = new DateTime($object->hora_inicio);
         $HoraSaida   = new DateTime($object->hora_fim);
-        $campo = $HoraSaida->diff($HoraEntrada)->format('%H:%I:%S');
+        $campo = $HoraSaida->diff($HoraEntrada)->format('%H:%I');
+        
+        $row->popover = 'true';
+        $row->popcontent = "<table class='popover-table' border='0'><tr><td>".str_replace('"', '', $object->descricao)."</td></tr></table>";
+        $row->poptitle = 'DESCRIÇÃO';
+        
                     
         return $campo;     
     }

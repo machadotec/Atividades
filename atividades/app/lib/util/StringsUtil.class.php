@@ -89,6 +89,11 @@ class StringsUtil
         return $dias;
     }
     
+    function retira_segundos($horario)
+    {
+        return substr($horario, 0, -3);
+    }
+    
 }
 
 ?>

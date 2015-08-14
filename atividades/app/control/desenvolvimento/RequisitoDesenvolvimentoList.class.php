@@ -190,19 +190,16 @@ class RequisitoDesenvolvimentoList extends TPage
             TSession::setValue('RequisitoDesenvolvimentoList_filter_id',   $filter); // stores the filter in the session
         }
 
-
         if (isset($data->titulo) AND ($data->titulo)) {
             $filter = new TFilter('titulo', 'like', "%{$data->titulo}%"); // create the filter
             TSession::setValue('RequisitoDesenvolvimentoList_filter_titulo',   $filter); // stores the filter in the session
         }
-
 
         if (isset($data->data_cadastro) AND ($data->data_cadastro)) {
             $filter = new TFilter('data_cadastro', '>=', "$data->data_cadastro"); // create the filter
             TSession::setValue('RequisitoDesenvolvimentoList_filter_data_cadastro',   $filter); // stores the filter in the session
         }
 
-        
         // fill the form with data again
         $this->form->setData($data);
         
@@ -241,8 +238,8 @@ class RequisitoDesenvolvimentoList extends TPage
             // default order
             if (empty($newparam['order']))
             {
-                $newparam['order'] = 'titulo';
-                $newparam['direction'] = 'asc';
+                $newparam['order'] = 'id';
+                $newparam['direction'] = 'desc';
             }
             $criteria->setProperties($newparam); // order, offset
             $criteria->setProperty('limit', $limit);

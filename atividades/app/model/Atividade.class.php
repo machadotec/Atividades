@@ -13,6 +13,7 @@ class Atividade extends TRecord
     private $tipo_atividade;
     private $ticket;
     private $sistema;
+    private $pessoa;
 
     /**
      * Constructor method
@@ -49,7 +50,7 @@ class Atividade extends TRecord
         $conn = TTransaction::get();
         
         $result = $conn->query("select sum((a.hora_fim - a.hora_inicio)) as total from atividade as a
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}");
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.ticket_id <> 328 {$col} {$tic}");
         
         foreach ($result as $row)
         {
@@ -79,12 +80,31 @@ class Atividade extends TRecord
         $conn = TTransaction::get();
         $result = $conn->query("select a.tipo_atividade_id,t.nome, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a
                                 inner join tipo_atividade as t on a.tipo_atividade_id = t.id
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.ticket_id <> 328 {$col} {$tic}
                                 group by tipo_atividade_id, nome
                                 order by nome
                                 ");
         
         return $result;
+        
+    }
+    
+    public function retornaAtestadosMedicos($colaborador, $mes, $ano)
+    {
+        
+        $col = "";
+        if($colaborador > 0)
+        {
+            $col = " and a.colaborador_id = {$colaborador} ";
+ 
+        }
+        
+        $conn = TTransaction::get();
+        $result = $conn->query("select sum((a.hora_fim - a.hora_inicio)) as total from atividade as a
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.ticket_id = 328 {$col} ");
+        
+        return $result;    
+        
         
     }
     
@@ -107,7 +127,7 @@ class Atividade extends TRecord
         $conn = TTransaction::get();
         $result = $conn->query("select a.sistema_id, s.nome, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a 
                                 inner join sistema as s on a.sistema_id = s.id
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.ticket_id <> 328 {$col} {$tic}
                                 group by a.sistema_id, s.nome
                                 order by s.nome
                                 ");
@@ -135,7 +155,7 @@ class Atividade extends TRecord
         $conn = TTransaction::get();
         $result = $conn->query("select t.solicitante_id, sum((a.hora_fim - a.hora_inicio)) as total from atividade as a 
                                 inner join ticket as t on a.ticket_id = t.id
-                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} {$col} {$tic}
+                                where extract('month' from a.data_atividade) = {$mes} and extract('year' from a.data_atividade) = {$ano} and a.ticket_id <> 328 {$col} {$tic}
                                 group by solicitante_id
                                 ");
         
@@ -235,6 +255,32 @@ class Atividade extends TRecord
     
         // returns the associated object
         return $this->sistema;
+    }
+    
+     /**
+     * Method set_pessoa
+     * Sample of usage: $ticket->pessoa = $object;
+     * @param $object Instance of Pessoa
+     */
+    public function set_pessoa(Pessoa $object)
+    {
+        $this->pessoa = $object;
+        $this->colaborador_id = $object->pessoa_codigo;
+    }
+    
+    /**
+     * Method get_pessoa
+     * Sample of usage: $ticket->pessoa->pessoa_nome;
+     * @returns Pessoa instance
+     */
+    public function get_pessoa()
+    {
+        // loads the associated object
+        if (empty($this->pessoa))
+            $this->pessoa = new Pessoa($this->colaborador_id);
+    
+        // returns the associated object
+        return $this->pessoa;
     }
 
 

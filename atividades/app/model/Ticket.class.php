@@ -14,6 +14,7 @@ class Ticket extends TRecord
     private $sistema;
     private $status_ticket;
     private $prioridade;
+    private $pessoa;
 
     /**
      * Constructor method
@@ -48,7 +49,7 @@ class Ticket extends TRecord
         parent::addAttribute('data_encerramento');
     }
 
-    public function relatorioAnalitico($ticket_id, $where)
+    public function relatorioAnalitico($ticket_id, $where, $whereJoin)
     {
         $conn = TTransaction::get();
         $result = $conn->query("select 
@@ -63,14 +64,15 @@ class Ticket extends TRecord
                                 inner join ticket as t on t.id = a.ticket_id
                                 inner join tipo_atividade as ta on a.tipo_atividade_id = ta.id
                                 where a.ticket_id = {$ticket_id}
-                                {$where}
+                                {$where} {$whereJoin}
                                 order by a.data_atividade, a.hora_inicio");
-         
+        
+      
         return $result;
     
     }
 
-    public function relatorioSintetico($where)
+    public function relatorioSintetico($where, $whereJoin)
     {
         $conn = TTransaction::get();
         
@@ -91,7 +93,7 @@ class Ticket extends TRecord
                                        coalesce(t.valor_total_pago,0) as valor_total_pago,
                                        (coalesce(t.valor_total,0) - coalesce(t.valor_total_pago,0)) as saldo
                                 from ticket as t
-                                left join atividade as a on t.id = a.ticket_id
+                                left join atividade as a on t.id = a.ticket_id {$whereJoin}
                                 inner join status_ticket as s on t.status_ticket_id = s.id
                                 inner join prioridade as p on t.prioridade_id = p.id
                                 where t.id = t.id
@@ -135,7 +137,10 @@ class Ticket extends TRecord
             
         foreach ($tickets as $row)
         {
-            $retorno[] = $row->id;
+            if($row->id <> 328)
+            {
+                $retorno[] = $row->id;
+            }
         }
             
         return $retorno; 
@@ -234,6 +239,57 @@ class Ticket extends TRecord
         return $this->sistema;
     }
     
+    /**
+     * Method set_pessoa
+     * Sample of usage: $ticket->pessoa = $object;
+     * @param $object Instance of Pessoa
+     */
+    public function set_pessoa_solicitante(Pessoa $object)
+    {
+        $this->pessoa = $object;
+        $this->solicitante_id = $object->pessoa_codigo;
+    }
+    
+    /**
+     * Method get_pessoa
+     * Sample of usage: $ticket->pessoa->pessoa_nome;
+     * @returns Pessoa instance
+     */
+    public function get_pessoa_solicitante()
+    {
+        // loads the associated object
+        if (empty($this->pessoa))
+            $this->pessoa = new Pessoa($this->solicitante_id);
+    
+        // returns the associated object
+        return $this->pessoa;
+    }
+    
+    /**
+     * Method set_pessoa
+     * Sample of usage: $ticket->pessoa = $object;
+     * @param $object Instance of Pessoa
+     */
+    public function set_pessoa_responsavel(Pessoa $object)
+    {
+        $this->pessoa = $object;
+        $this->responsavel_id = $object->pessoa_codigo;
+    }
+    
+    /**
+     * Method get_pessoa
+     * Sample of usage: $ticket->pessoa->pessoa_nome;
+     * @returns Pessoa instance
+     */
+    public function get_pessoa_responsavel()
+    {
+        // loads the associated object
+        if (empty($this->pessoa))
+            $this->pessoa = new Pessoa($this->responsavel_id);
+    
+        // returns the associated object
+        return $this->pessoa;
+    }
     
     /**
      * Method set_status_ticket

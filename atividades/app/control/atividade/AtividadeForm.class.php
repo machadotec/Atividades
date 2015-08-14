@@ -35,17 +35,11 @@ class AtividadeForm extends TPage
         // busca dados do banco        
         try
         {
-            TTransaction::open('tecbiz');
-            $logado = Pessoa::retornaUsuario();
-            TTransaction::close();
-            
             TTransaction::open('atividade');
+            $logado = Pessoa::retornaUsuario();
             $data_padrao = $string->formatDateBR(Ponto::retornaUltimaData($logado->pessoa_codigo, 1));
-
-            $hora_padrao = Ponto::retornaHoraInicio($string->formatDate($data_padrao), $logado->pessoa_codigo);            
-            
+            $hora_padrao = Ponto::retornaHoraInicio($string->formatDate($data_padrao), $logado->pessoa_codigo);   
             TTransaction::close();
-            
         }
         catch(Exception $e)
         {
@@ -80,12 +74,14 @@ class AtividadeForm extends TPage
         
         $sistema_id                     = new TDBCombo('sistema_id', 'atividade', 'Sistema', 'id', 'nome');
         
+        $ticket_id                      = new TCombo('ticket_id');
         $criteria = new TCriteria;
-        $criteria->add(new TFilter("status_ticket_id", "=", 1));
-        $ticket_id                      = new TDBComboMultiValue('ticket_id', 'atividade', 'Ticket', 'id', array(0 => 'id', 1 => 'titulo'), 'id', $criteria);
-       
-        //$ticket_id                      = new TDBMultiSearch('ticket_id', 'atividade', 'Ticket', 'id', 'titulo', 'titulo', $criteria);
-                                   
+        $criteria->add(new TFilter("status_ticket_id", "IN", array(1, 5)));
+        $newparam['order'] = 'id';
+        $newparam['direction'] = 'asc';
+        $criteria->setProperties($newparam); // order, offset
+        $this->onComboTicket($criteria);
+        
         $horario = explode(':', $hora_padrao);
 
         // cria combos de horas e minutos
@@ -127,10 +123,6 @@ class AtividadeForm extends TPage
         $colaborador_id->setSize(200);
         $tipo_atividade_id->setSize(200);
         $ticket_id->setSize(300);
-      //  $ticket_id->setMinLength(0);
-      //  $ticket_id->setMaxSize(1);
-      //  $ticket_id->setSize(300);
-      //  $ticket_id->setOperator('ilike');
         
         // validações
         $tempo_atividade->addValidation('Hora Fim', new THoraFimValidator);
@@ -179,14 +171,52 @@ class AtividadeForm extends TPage
         $buttons_box->add($del_button);
         $buttons_box->add($list_button);
         
-        
-        
         // add a row for the form action
         $row = $table->addRow();
         $row->class = 'tformaction'; // CSS class
         $row->addCell($buttons_box)->colspan = 2;
         
         parent::add($this->form);
+    }
+    
+    public static function onSetarValoresCombo($param)
+    {
+         
+        $obj = new StdClass;
+        
+        $obj->ticket_id         = $param;     
+        
+        TForm::sendData('form_Atividade', $obj, FALSE, FALSE);
+       
+    }
+    
+    public static function onComboTicket($criteria)
+    {
+        
+        try
+        {
+            TTransaction::open('atividade');
+            
+            $repo = new TRepository('Ticket');
+            
+            $tickets = $repo->load($criteria);
+             
+            $options[null] = null;
+            foreach($tickets as $ticket)
+            {
+                $options [ $ticket->id ] = $ticket->id.' - '.$ticket->titulo;
+            }
+            
+            TTransaction::close();
+        
+        }
+        catch(Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+        }
+        
+        TCombo::reload('form_Atividade', 'ticket_id', $options);
+        
     }
     
     public static function onTrocaTicket($param)
@@ -252,10 +282,10 @@ class AtividadeForm extends TPage
             new TMessage('error', 'Hora final menor que a Hora inicial!');
             TButton::disableField('form_Atividade', 'save');
             
-                $horario = explode(':', $param['hora_inicio']);
+            $horario = explode(':', $param['hora_inicio']);
            
-              $obj->qtde_horas = $horario[0];
-              $obj->qtde_minutos = $horario[1];
+            $obj->qtde_horas = $horario[0];
+            $obj->qtde_minutos = $horario[1];
             
         }
         else
@@ -285,10 +315,8 @@ class AtividadeForm extends TPage
 
             $object->data_atividade ? $object->data_atividade = $string->formatDate($object->data_atividade) : null;
             
-          //  $arraySwap = $object->ticket_id; 
-                        
-          //  $object->ticket_id = key($object->ticket_id);           
-                        
+            $this->onSetarValoresCombo($object->ticket_id);
+                                        
             $this->form->validate(); // form validation
             $object->store(); // stores the object
 
@@ -320,18 +348,21 @@ class AtividadeForm extends TPage
         $string = new StringsUtil;
         try
         {
-            TTransaction::open('tecbiz');
+            TTransaction::open('atividade'); // open a transaction
             $logado = Pessoa::retornaUsuario();
-            TTransaction::close();
             
             if (isset($param['key']))
             {
                 $key=$param['key'];  // get the parameter $key
-                TTransaction::open('atividade'); // open a transaction
-                
+    
                 $atividade = new Atividade($key);
                 
-                //$atividade->ticket_id = array($atividade->ticket_id => $atividade->ticket->titulo);
+                $criteria = new TCriteria;
+                $newparam['order'] = 'id';
+                $newparam['direction'] = 'asc';
+                $criteria->setProperties($newparam); // order, offset
+                $this->onComboTicket($criteria);
+                $this->onSetarValoresCombo($atividade->ticket_id);
                 
                 // criar metodo de preenchimento de horas
                 $HoraEntrada = new DateTime($atividade->hora_inicio);
@@ -360,9 +391,7 @@ class AtividadeForm extends TPage
                 
                 $atividade->data_atividade ? $atividade->data_atividade = $string->formatDateBR($atividade->data_atividade) : null;
                 
-                TTransaction::open('tecbiz');
                 $colaborador = new Pessoa($atividade->colaborador_id);
-                TTransaction::close();
                 
                 $atividade->colaborador_nome = $colaborador->pessoa_nome;
                 
@@ -375,7 +404,6 @@ class AtividadeForm extends TPage
                 TButton::disableField('form_Atividade', 'atividade');
                 
                 $this->form->setData($atividade); // fill the form
-                TTransaction::close(); // close the transaction
             }
             else
             {
@@ -384,6 +412,7 @@ class AtividadeForm extends TPage
                 $object->colaborador_nome = $logado->pessoa_nome;
                 $this->form->setData($object);
             }
+            TTransaction::close(); // close the transaction
         }
         catch (Exception $e) // in case of exception
         {

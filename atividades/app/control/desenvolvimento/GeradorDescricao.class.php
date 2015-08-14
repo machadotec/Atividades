@@ -30,17 +30,13 @@ class GeradorDescricao extends TPage
             
             $cliente_id         = $desenvolvimento->ticket->solicitante_id;
             $responsavel_id     = $desenvolvimento->ticket->responsavel_id;
-            
-            TTransaction::open('tecbiz');
 
             $pessoa = new Pessoa($cliente_id);
             $cliente = $pessoa->pessoa_nome;
             
             $pessoa = new Pessoa($responsavel_id);
             $responsavel = $pessoa->pessoa_nome;
-            
-            TTransaction::close();
-            
+
             $string = new StringsUtil;
             
             $data = $desenvolvimento->data_cadastro;
@@ -63,7 +59,6 @@ class GeradorDescricao extends TPage
             $designer->replace('{TITULO}', $desenvolvimento->titulo);
             $designer->replace('{SOLICITANTE}', $cliente);
             $designer->replace('{RESPONSAVEL}', $responsavel);
-
             
             $designer->generate();
             
@@ -94,16 +89,12 @@ class GeradorDescricao extends TPage
             
             $cliente_id         = $desenvolvimento->ticket->solicitante_id;
             $responsavel_id     = $desenvolvimento->ticket->responsavel_id;
-            
-            TTransaction::open('tecbiz');
 
             $pessoa = new Pessoa($cliente_id);
             $cliente = $pessoa->pessoa_nome;
             
             $pessoa = new Pessoa($responsavel_id);
             $responsavel = $pessoa->pessoa_nome;
-            
-            TTransaction::close();        
                 
             if (!class_exists('PHPRtfLite_Autoloader'))
             {
@@ -142,7 +133,6 @@ Cliente: '.$cliente.' Solicitante/Dpto: '.$responsavel;
             
             $tr->addRow();
             $tr->addCell('<br /><b>Saida: </b><br />'.$desenvolvimento->saida, 'left', 'datap');
-
             
             $nome = 'DTR010 '.$desenvolvimento->id .' - '.$data[0].' - '.$desenvolvimento->titulo;
             

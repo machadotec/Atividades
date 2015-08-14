@@ -72,7 +72,7 @@ class TDBComboMultiValue extends TCombo
                     {
                         if($k == 0)
                         {
-                            $items[$object->$key] = $object->$v;
+                            $items[$object->$key] = str_pad($object->$v, 3, 0, STR_PAD_LEFT);
                         }
                         else
                         {

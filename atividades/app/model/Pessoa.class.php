@@ -38,7 +38,8 @@ class Pessoa extends TRecord
         parent::addAttribute('observacao');
         parent::addAttribute('cidade_id');
         parent::addAttribute('tipo_pessoa_id');
-        parent::addAttribute('user');
+        parent::addAttribute('usuario');
+        parent::addAttribute('ativo');
         
     }
    
@@ -72,7 +73,7 @@ class Pessoa extends TRecord
             if($this->origem > 0)
             {
                 $origens = array(1 => 'Entidade', 2 => 'Estabelecimento', 3 => 'Empresa');
-                $campos  = array(1 => 'entrazsoc', 2 => 'lojrazsoc', 3 => 'razao_social');
+                $campos  = array(1 => 'entnomfan', 2 => 'lojnomfan', 3 => 'razao_social');
                 $origen  = new $origens[$this->origem]($this->codigo_cadastro_origem);
                 $this->origem_nome = $origen->$campos[$this->origem]; 
             }

@@ -147,7 +147,7 @@ class TicketPessoaSeek extends TWindow
         try
         {
             // start database transaction
-            TTransaction::open('tecbiz');
+            TTransaction::open('atividade');
             
             // create a repository for City table
             $repository = new TRepository('Pessoa');
@@ -213,7 +213,7 @@ class TicketPessoaSeek extends TWindow
         try
         {
             $key = $param['key'];
-            TTransaction::open('tecbiz');
+            TTransaction::open('atividade');
             
             // load the active record
             $pessoa = new Pessoa($key);
