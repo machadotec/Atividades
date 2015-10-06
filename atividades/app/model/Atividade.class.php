@@ -31,6 +31,13 @@ class Atividade extends TRecord
         parent::addAttribute('sistema_id');
     }
 
+    public function retornaDiasAtividades($dataInicial, $dataFinal)
+    {
+        $conn = TTransaction::get();
+        $result = $conn->query("select distinct(data_ponto) as dias from ponto where data_ponto between '{$dataInicial}' and '{$dataFinal}' order by 1");
+        return $result;    
+    }
+
     public function retornaTotalAtividadesColaborador($colaborador, $mes, $ano, $tickets)
     {
         
@@ -172,6 +179,24 @@ class Atividade extends TRecord
         foreach ($result as $row)
         {
             $data = $row['id'];
+        }
+        
+        return $data;
+        
+    }
+    
+    public function retornaHoraUltimaAtividade($user, $data)
+    {
+        
+        $conn = TTransaction::get();
+        $result = $conn->query("SELECT hora_fim FROM atividade 
+                                    WHERE colaborador_id = {$user} 
+                                    and data_atividade = (SELECT data_ponto FROM ponto WHERE colaborador_id = {$user} and data_atividade = '{$data}' and hora_saida is null order by data_ponto desc limit 1)
+                                    order by data_atividade desc, id desc limit 1");
+        
+        foreach ($result as $row)
+        {
+            $data = $row['hora_fim'];
         }
         
         return $data;

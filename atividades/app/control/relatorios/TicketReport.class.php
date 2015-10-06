@@ -31,7 +31,7 @@ class TicketReport extends TPage
         // define the form title
         $row = $table->addRow();
         $row->class = 'tformtitle'; // CSS class
-        $row->addCell( new TLabel('Tickets - Resumo e atividades') )->colspan = 3;
+        $row->addCell( new TLabel('Resumo de Tickets e Atividades') )->colspan = 3;
         
         // create the form fields
         $ticket                         = new TEntry('ticket_id');
@@ -55,6 +55,14 @@ class TicketReport extends TPage
         
         $status_ticket_id               = new TDBCombo('status_ticket_id', 'atividade', 'StatusTicket', 'id', 'nome');
         $prioridade_id                  = new TDBCombo('prioridade_id', 'atividade', 'Prioridade', 'id', 'nome');
+        $tipo_ticket_id                 = new TDBCombo('tipo_ticket_id', 'atividade', 'TipoTicket', 'id', 'nome');
+        $ticket_sistema_id              = new TDBCombo('ticket_sistema_id', 'atividade', 'Sistema', 'id', 'nome');
+        $atividade_sistema_id           = new TDBCombo('atividade_sistema_id', 'atividade', 'Sistema', 'id', 'nome');
+        
+        $saldo                          = new TCombo('saldo');
+        $combo_saldo                    = array();
+        $combo_saldo['c']               = 'Com saldo';
+        $saldo->addItems($combo_saldo);
         
         $data_prevista                  = new TDate('data_prevista');
         $data_prevista->setMask('dd/mm/yyyy');
@@ -72,7 +80,7 @@ class TicketReport extends TPage
         $colaborador_id                 = new TDBCombo('colaborador_id', 'atividade', 'Pessoa', 'pessoa_codigo', 'pessoa_nome', 'pessoa_nome', $criteria);
         
         $tipo_atividade_id              = new TDBCombo('tipo_atividade_id', 'atividade', 'TipoAtividade', 'id', 'nome', 'nome');
-        
+                
         $tipo                           = new TRadioGroup('tipo');
         $output_type                    = new TRadioGroup('output_type');
 
@@ -85,6 +93,10 @@ class TicketReport extends TPage
         $entcodent->setSize(300);
         $status_ticket_id->setSize(100);
         $prioridade_id->setSize(100);
+        $tipo_ticket_id->setSize(200);
+        $ticket_sistema_id->setSize(200);
+        $atividade_sistema_id->setSize(200);
+        $saldo->setSize(100);
         $data_prevista->setSize(100);
         $dataAtividadeInicio->setSize(100);
         $dataAtividadeFinal->setSize(100);
@@ -96,17 +108,47 @@ class TicketReport extends TPage
         $output_type->addValidation('Output', new TRequiredValidator);
 
         // add one row for each form field
-        $table->addRowSet( new TLabel('Ticket inicial:'), $ticket );
-        $table->addRowSet( new TLabel('Solicitante:'), array($solicitante_id, $solicitante_nome)  );
-        $table->addRowSet( new TLabel('Responsável:'), $responsavel_id );
-        $table->addRowSet( new TLabel('Cliente:'), $entcodent );
-        $table->addRowSet( new TLabel('Status:'), $status_ticket_id );
-        $table->addRowSet( new TLabel('Prioridade:'), $prioridade_id );
-        $table->addRowSet( new TLabel('Dt. Prevista limite:'), $data_prevista );
-        $table->addRowSet( new TLabel('Dt. Atividades inicio:'), array($dataAtividadeInicio, $label_data_fim = new TLabel('Fim:'), $dataAtividadeFinal) );
+        // creates a frame
+        $frame = new TFrame;
+        $frame->oid = 'frame-measures';
+        $frame->setLegend('Tickets:');
+        
+        $row=$table->addRow();
+        $cell=$row->addCell($frame);
+        $cell->colspan=2;
+        
+        $frame1 = new TTable;
+        $frame->add($frame1);
+        
+        $frame1->addRowSet( new TLabel('Ticket inicial:'), $ticket );
+        $frame1->addRowSet( new TLabel('Solicitante:'), array($solicitante_id, $solicitante_nome)  );
+        $frame1->addRowSet( new TLabel('Responsável:'), $responsavel_id );
+        $frame1->addRowSet( new TLabel('Cliente:'), $entcodent );
+        $frame1->addRowSet( new TLabel('Tipo:'), $tipo_ticket_id );
+        $frame1->addRowSet( new TLabel('Sistema:'), $ticket_sistema_id );
+        $frame1->addRowSet( new TLabel('Status:'), $status_ticket_id );
+        $frame1->addRowSet( new TLabel('Prioridade:'), $prioridade_id );
+        $frame1->addRowSet( new TLabel('Saldo:'), $saldo );
+        $frame1->addRowSet( new TLabel('Dt. Prevista limite:'), $data_prevista );
+
+        // creates a frame
+        $frame = new TFrame;
+        $frame->oid = 'frame-measures';
+        $frame->setLegend('Atividades:');
+        
+        $row=$table->addRow();
+        $cell=$row->addCell($frame);
+        $cell->colspan=2;
+        
+        $frame2 = new TTable;
+        $frame->add($frame2);
+
+        $frame2->addRowSet( new TLabel('Dt. Atividades inicio:'), array($dataAtividadeInicio, $label_data_fim = new TLabel('Fim:'), $dataAtividadeFinal) );
         $label_data_fim->setSize(48);
-        $table->addRowSet( new TLabel('Atividades colaborador:'), $colaborador_id);
-        $table->addRowSet( new TLabel('Tipo atividade:'), $tipo_atividade_id);
+        $frame2->addRowSet( new TLabel('Atividades colaborador:'), $colaborador_id);
+        $frame2->addRowSet( new TLabel('Tipo atividade:'), $tipo_atividade_id);
+        $frame2->addRowSet( new TLabel('Sistema:'), $atividade_sistema_id );
+        
         $table->addRowSet( new TLabel('Relatório'), $tipo);
         $table->addRowSet( new TLabel('Output:'), $output_type );
 
@@ -117,11 +159,15 @@ class TicketReport extends TPage
                                      $entcodent,
                                      $status_ticket_id,
                                      $prioridade_id,
+                                     $saldo,
+                                     $tipo_ticket_id,
+                                     $ticket_sistema_id,
                                      $data_prevista,
                                      $dataAtividadeInicio,
                                      $dataAtividadeFinal,
                                      $colaborador_id,
                                      $tipo_atividade_id,
+                                     $atividade_sistema_id,
                                      $tipo,
                                      $output_type));
 
@@ -178,7 +224,7 @@ class TicketReport extends TPage
             $string = new StringsUtil;
             TTransaction::open('atividade');
             // open a transaction with database 'atividade'
-            
+           
             // get the form data into an active record
             $formdata = $this->form->getData();
             
@@ -215,23 +261,40 @@ class TicketReport extends TPage
             }
             if ($formdata->data_atividade_inicio)
             {
-                $whereJoin .= " and a.data_atividade >= '{$string->formatDate($formdata->data_atividade_inicio)}' ";
+                $where .= " and a.data_atividade >= '{$string->formatDate($formdata->data_atividade_inicio)}' ";
             }
             if ($formdata->data_atividade_final)
             {
-                $whereJoin .= " and a.data_atividade <= '{$string->formatDate($formdata->data_atividade_final)}' ";
+                $where .= " and a.data_atividade <= '{$string->formatDate($formdata->data_atividade_final)}' ";
             }
             if ($formdata->colaborador_id)
             {
-                $whereJoin .= " and a.colaborador_id = {$formdata->colaborador_id} ";
+                $where .= " and a.colaborador_id = {$formdata->colaborador_id} ";
             }
             if ($formdata->tipo_atividade_id)
             {
                 $where .= " and a.tipo_atividade_id = {$formdata->tipo_atividade_id} ";
             }
+            if ($formdata->saldo)
+            {
+                $where .= " and (coalesce(t.valor_total,0) - coalesce(t.valor_total_pago,0)) > 0 ";
+            }
+            if ($formdata->ticket_sistema_id)
+            {
+                $where .= " and t.sistema_id = {$formdata->ticket_sistema_id} ";
+            }
+            if ($formdata->atividade_sistema_id)
+            {
+                $where .= " and a.sistema_id = {$formdata->atividade_sistema_id} ";
+            }
+            if ($formdata->tipo_ticket_id)
+            {
+                $where .= " and t.tipo_ticket_id = {$formdata->tipo_ticket_id} ";
+            }
+            
             $format  = $formdata->output_type;
             
-            $objects = Ticket::relatorioSintetico($where, $whereJoin);
+            $objects = Ticket::relatorioSintetico($where);
             
             if ($objects)
             {
@@ -303,7 +366,9 @@ class TicketReport extends TPage
                 $totalOrcado             = 0;
                 $totalPago               = 0;
                 $totalSaldo              = 0;
-                
+                $totalHorasOrcadas       = 0;
+                $totalHorasAtividades    = 0;
+                $totalHorasSaldo         = 0;
                 // data rows
                 foreach ($objects as $object)
                 {
@@ -312,6 +377,26 @@ class TicketReport extends TPage
                     $cliente     = new Pessoa($object['solicitante_id']);
                                         
                     $style = $colour ? 'datap' : 'datai';
+                    $horasStyle = $style;
+                    $dias = '';
+                    $dataStyle  = $style;
+                    if($object['orcamento_horas']){
+                        if(substr($object['horas_saldo'], 0, 1) == '-'){
+                            $horasStyle = 'valneg';
+                        }else{
+                            $horasStyle = 'valpos'; 
+                        }
+                    }
+                    
+                    if($object['data_prevista']){
+                        $dias = $string->subtrair_datas(date('Y-m-d'), $object['data_prevista'] );
+                        if(substr($dias, 0, 1) == '-'){
+                            $dataStyle = 'valneg';                           
+                        }else{
+                            $dataStyle = 'valpos';
+                        }
+                    }
+                    
                     $tr->addRow();
                     $tr->addCell($seq++, 'center', $style);
                     $tr->addCell($object['id'], 'center', $style);
@@ -319,9 +404,9 @@ class TicketReport extends TPage
                     $tr->addCell(substr($object['prioridade'], 0, 1), 'center', $style);
                     $tr->addCell(substr($object['orcamento_horas'], 0, -3), 'center', $style);
                     $tr->addCell(substr($object['horas_atividade'], 0, -3), 'center', $style);
-                    $tr->addCell(substr($object['horas_saldo'], 0, -3), 'center', substr($object['horas_saldo'], 0, 1) == '-' ? 'valneg' : 'valpos');
+                    $tr->addCell(substr($object['horas_saldo'], 0, -3), 'center', $horasStyle);
                     $tr->addCell($object['data_prevista'] ? $data_prevista = $string->formatDateBR($object['data_prevista']) : null, 'center', $style);
-                    $tr->addCell($object['data_prevista'] ? $dias = $string->subtrair_datas(date('Y-m-d'), $object['data_prevista']) : null, 'center', substr($dias, 0, 1) == '-' ? 'valneg' : 'valpos');                    
+                    $tr->addCell($dias, 'center', $dataStyle);                    
                     $tr->addCell(utf8_decode($object['titulo']), 'left', $style);
                     $tr->addCell(utf8_decode($pessoa[$object['responsavel_id']]), 'left', $style);
                     $tr->addCell($object['origem'], 'center', $style);
@@ -334,11 +419,14 @@ class TicketReport extends TPage
                     $totalOrcado           += $object['valor_total'];
                     $totalPago             += $object['valor_total_pago'];
                     $totalSaldo            += $object['saldo'];
+                    $totalHorasOrcadas     += $string->time_to_sec($object['orcamento_horas']);
+                    $totalHorasAtividades  += $string->time_to_sec($object['horas_atividade']);
+                    $totalHorasSaldo       += $string->time_to_sec($object['horas_saldo']);
                     
                     if($formdata->tipo == 'a')
                     {
                         
-                        $atividades = Ticket::relatorioAnalitico($object['id'], $where, $whereJoin);
+                        $atividades = Ticket::relatorioAnalitico($object['id'], $where);
                         
                         if($atividades)
                         {
@@ -373,30 +461,25 @@ class TicketReport extends TPage
                                 $tr->addCell(utf8_decode($atividade['tipo_atividade']), 'left', $stylea);
                                 $tr->addCell('', 'right', $stylea);
                                 $tr->addCell('', 'right', $stylea);
-                                $tr->addCell('', 'right', $stylea);
-                                
+                                $tr->addCell('', 'right', $stylea);            
                             }
-                        
                         }
-                        
-                        $tr->addRow();
-                        $tr->addCell('&nbsp; ', 'center', $style, 16);
-
                     }
+                    $tr->addRow();
+                    $tr->addCell('&nbsp; ', 'center', $style, 16);
                     
                     $colour = !$colour;
                 }
                 
                 // footer row
-                
                 $tr->addRow();
                 $tr->addCell('Totais:', 'center', 'footer', 4);
                 //$tr->addCell('', 'center', 'footer');
                 //$tr->addCell('', 'center', 'footer');
                 //$tr->addCell('', 'center', 'footer');
-                $tr->addCell('', 'center', 'footer');
-                $tr->addCell('', 'center', 'footer');
-                $tr->addCell('', 'center', 'footer');
+                $tr->addCell(substr($string->sec_to_time($totalHorasOrcadas), 0, -3), 'center', 'footer');
+                $tr->addCell(substr($string->sec_to_time($totalHorasAtividades), 0, -3), 'center', 'footer');
+                $tr->addCell(substr($string->sec_to_time($totalHorasSaldo), 0, -3), 'center', 'footer');
                 $tr->addCell('', 'center', 'footer');
                 $tr->addCell('', 'center', 'footer');                    
                 $tr->addCell('', 'left', 'footer');

@@ -6,6 +6,7 @@
 class RequisitoDesenvolvimentoForm extends TPage
 {
     protected $form; // form
+    private $string;
     
     /**
      * Class constructor
@@ -19,6 +20,8 @@ class RequisitoDesenvolvimentoForm extends TPage
         $this->form = new TForm('form_RequisitoDesenvolvimento');
         $this->form->class = 'tform'; // CSS class
         $this->form->style = 'width: 500px';
+        
+        $this->string = new StringsUtil;
         
         // add a table inside form
         $table = new TTable;
@@ -119,7 +122,6 @@ class RequisitoDesenvolvimentoForm extends TPage
      */
     function onSave()
     {
-        $string = new StringsUtil;
         
         try
         {
@@ -128,12 +130,12 @@ class RequisitoDesenvolvimentoForm extends TPage
             // get the form data into an active record RequisitoDesenvolvimento
             $object = $this->form->getData('RequisitoDesenvolvimento');
             
-            $object->data_cadastro ? $object->data_cadastro = $string->formatDate($object->data_cadastro) : null;
+            $object->data_cadastro ? $object->data_cadastro = $this->string->formatDate($object->data_cadastro) : null;
             
             $this->form->validate(); // form validation
             $object->store(); // stores the object
             
-            $object->data_cadastro ? $object->data_cadastro = $string->formatDateBR($object->data_cadastro) : null;
+            $object->data_cadastro ? $object->data_cadastro = $this->string->formatDateBR($object->data_cadastro) : null;
             
             $this->form->setData($object); // keep form data
             TTransaction::close(); // close the transaction
@@ -160,7 +162,6 @@ class RequisitoDesenvolvimentoForm extends TPage
     function onEdit($param)
     {
         
-        $string = new StringsUtil;
         try
         {
             TButton::enableField('form_RequisitoDesenvolvimento', 'save');
@@ -173,7 +174,7 @@ class RequisitoDesenvolvimentoForm extends TPage
                 TButton::enableField('form_RequisitoDesenvolvimento', 'gerar_dtr');
                 TButton::enableField('form_RequisitoDesenvolvimento', 'gerar_kanban');
                 
-                $object->data_cadastro ? $object->data_cadastro = $string->formatDateBR($object->data_cadastro) : null;
+                $object->data_cadastro ? $object->data_cadastro = $this->string->formatDateBR($object->data_cadastro) : null;
                 
                 $object->ticket_titulo = $object->ticket->titulo;
                 
@@ -196,6 +197,26 @@ class RequisitoDesenvolvimentoForm extends TPage
         {
             new TMessage('error', '<b>Error</b> ' . $e->getMessage()); // shows the exception error message
             TTransaction::rollback(); // undo all pending operations
+        }
+    }
+    
+    function onBuscaDTR($param)
+    {
+        try
+        {  
+            TTransaction::open('atividade');
+            $ticket = new Ticket($param['key']);            
+            $dtrs = $ticket->getRequisitoDesenvolvimentos();
+            foreach ($dtrs as $dtr)
+            {
+                $param['key'] = $dtr->id;
+            }
+            TTransaction::close();   
+            $this->onEdit($param);
+        }
+        catch(Exception $e)
+        {
+            new TMessage('error', $e->getMessage);
         }
     }
     
@@ -226,19 +247,17 @@ class RequisitoDesenvolvimentoForm extends TPage
             $tr->addStyle('title', 'Arial', '10', 'BI', '#000000', '#ffffff');
             $tr->addStyle('datap', 'Arial', '10', '',   '#000000', '#ffffff');
             
-            $string = new StringsUtil;
-            
             $data = $desenvolvimento->data_cadastro;
             $data = explode('-', $data);
             
             $data_prevista = '___/___/___';
             if($desenvolvimento->ticket->data_prevista)
             {
-                $data_prevista = $string->formatDateBR($desenvolvimento->ticket->data_prevista);
+                $data_prevista = $this->string->formatDateBR($desenvolvimento->ticket->data_prevista);
             }
             
             $cabecalho = 'DTR010 - Solicitação de Desenvolvimento
-Número: '.$desenvolvimento->ticket_id.'/'.$data[0].' Data: '.$string->formatDateBR($desenvolvimento->data_cadastro).' Prazo de entrega: '.$data_prevista.' Qtde de Horas: '.strstr($desenvolvimento->ticket->orcamento_horas, ':', true).' Ticket: '.$desenvolvimento->ticket_id.'
+Número: '.$desenvolvimento->ticket_id.'/'.$data[0].' Data: '.$this->string->formatDateBR($desenvolvimento->data_cadastro).' Prazo de entrega: '.$data_prevista.' Qtde de Horas: '.strstr($desenvolvimento->ticket->orcamento_horas, ':', true).' Ticket: '.$desenvolvimento->ticket_id.'
 Benefício: ( )+Receita ( )-Despesa ( )+Eficiência ( )-NDA
 Título: '.$desenvolvimento->titulo.'
 Sistema: '.$desenvolvimento->ticket->sistema->nome.'      Módulo:                                   Rotina: '.$desenvolvimento->rotina.'
@@ -268,7 +287,12 @@ Cliente: '.$cliente.' Solicitante/Dpto: '.$responsavel;
             TButton::enableField('form_RequisitoDesenvolvimento', 'save');
             $this->form->setData($object);
             
-            new TMessage('info', 'DTR gerado com sucesso!');
+            // define the onEdit action
+            $action = new TAction(array($this, 'onEdit'));
+            $param['key'] = $object->id;
+            $action->setParameters($param); // pass the key parameter ahead
+            
+            new TMessage('info', 'DTR gerado com sucesso!', $action);
             
             TTransaction::close();
             
@@ -299,21 +323,19 @@ Cliente: '.$cliente.' Solicitante/Dpto: '.$responsavel;
             $pessoa = new Pessoa($responsavel_id);
             $responsavel = $pessoa->pessoa_nome;
             
-            $string = new StringsUtil;
-            
             $data = $desenvolvimento->data_cadastro;
             $data = explode('-', $data);
             
             $data_prevista = '___/___/___';
             if($desenvolvimento->ticket->data_prevista)
             {
-                $data_prevista = $string->formatDateBR($desenvolvimento->ticket->data_prevista);
+                $data_prevista = $this->string->formatDateBR($desenvolvimento->ticket->data_prevista);
             }    
             
             $designer = new TPDFDesigner;
             $designer->fromXml('app/reports/kanban.pdf.xml');
             $designer->replace('{ID_DTR}', $desenvolvimento->ticket_id.'/'.$data[0]);
-            $designer->replace('{CADASTRO}', $string->formatDateBR($desenvolvimento->data_cadastro));
+            $designer->replace('{CADASTRO}', $this->string->formatDateBR($desenvolvimento->data_cadastro));
             $designer->replace('{INICIO}', date('d/m/Y'));
             $designer->replace('{PREVISTA}', $data_prevista);
             $designer->replace('{SISTEMA}', utf8_decode($desenvolvimento->ticket->sistema->nome));
@@ -334,7 +356,12 @@ Cliente: '.$cliente.' Solicitante/Dpto: '.$responsavel;
             TButton::enableField('form_RequisitoDesenvolvimento', 'save');
             $this->form->setData($object);
             
-            new TMessage('info', 'Cartão kambam gerado com sucesso!');
+             // define the onEdit action
+            $action = new TAction(array($this, 'onEdit'));
+            $param['key'] = $object->id;
+            $action->setParameters($param); // pass the key parameter ahead
+            
+            new TMessage('info', 'Cartão kambam gerado com sucesso!', $action);
             
             TTransaction::close();
             

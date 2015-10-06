@@ -37,7 +37,17 @@ class AtividadeForm extends TPage
         {
             TTransaction::open('atividade');
             $logado = Pessoa::retornaUsuario();
-            $data_padrao = $string->formatDateBR(Ponto::retornaUltimaData($logado->pessoa_codigo, 1));
+            
+            $ultimoPonto = Ponto::retornaUltimoPonto($logado->pessoa_codigo);
+            $ponto = new Ponto($ultimoPonto);
+            
+            if($ponto->hora_saida)
+            {
+                $action = new TAction(array('PontoFormList', 'onReload'));
+                new TMessage('error', 'Não existe ponto com horario em aberto!', $action);
+            }
+            
+            $data_padrao = $string->formatDateBR($ponto->data_ponto);
             $hora_padrao = Ponto::retornaHoraInicio($string->formatDate($data_padrao), $logado->pessoa_codigo);   
             TTransaction::close();
         }
@@ -181,13 +191,9 @@ class AtividadeForm extends TPage
     
     public static function onSetarValoresCombo($param)
     {
-         
         $obj = new StdClass;
-        
-        $obj->ticket_id         = $param;     
-        
+        $obj->ticket_id         = $param;  
         TForm::sendData('form_Atividade', $obj, FALSE, FALSE);
-       
     }
     
     public static function onComboTicket($criteria)
@@ -196,19 +202,14 @@ class AtividadeForm extends TPage
         try
         {
             TTransaction::open('atividade');
-            
             $repo = new TRepository('Ticket');
-            
             $tickets = $repo->load($criteria);
-             
             $options[null] = null;
             foreach($tickets as $ticket)
             {
                 $options [ $ticket->id ] = $ticket->id.' - '.$ticket->titulo;
             }
-            
             TTransaction::close();
-        
         }
         catch(Exception $e)
         {
@@ -216,7 +217,6 @@ class AtividadeForm extends TPage
         }
         
         TCombo::reload('form_Atividade', 'ticket_id', $options);
-        
     }
     
     public static function onTrocaTicket($param)

@@ -37,21 +37,35 @@ class StringsUtil
     }
     
     function time_to_sec($time) 
-    {
+    {       
+        $neg = '';
+        if(substr($time, 0, 1) == '-'){
+            $time = substr($time, 1);
+            $neg = '-';
+        }
+        
         $hours = substr($time, 0, -6);
         $minutes = substr($time, -5, 2);
         $seconds = substr($time, -2);
     
-        return $hours * 3600 + $minutes * 60 + $seconds;
+        $total = $hours * 3600 + $minutes * 60 + $seconds;        
+        return $neg.$total;
     }
     
     function sec_to_time($seconds)
     {
+        $neg = '';
+        if(substr($seconds, 0, 1) == '-'){
+            $seconds = substr($seconds, 1);
+            $neg = '-';
+        }
+        
         $hours = floor($seconds / 3600);
         $mins = floor(($seconds - ($hours*3600)) / 60);
         $secs = floor($seconds % 60);
         
-        return str_pad($hours, 2, "0", STR_PAD_LEFT).':'.str_pad($mins, 2, "0", STR_PAD_LEFT).':'.str_pad($secs, 2, "0", STR_PAD_LEFT);
+        $total = str_pad($hours, 2, "0", STR_PAD_LEFT).':'.str_pad($mins, 2, "0", STR_PAD_LEFT).':'.str_pad($secs, 2, "0", STR_PAD_LEFT);
+        return $neg.$total;
     }
     
     function array_meses()

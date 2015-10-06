@@ -61,9 +61,13 @@
                 <icon>fa:fa fa-line-chart fa-fw</icon>
                 <action>AtividadeReport</action>
             </menuitem>    
-            <menuitem label='Tickets'>
+            <menuitem label='Relatorio Tickets'>
                 <icon>fa:fa fa-tachometer fa-fw</icon>
                 <action>TicketReport</action>
+            </menuitem>
+            <menuitem label='Indicador Produtividade'>
+                <icon>fa:fa fa-users fa-fw</icon>
+                <action>PontoReport</action>
             </menuitem>    
             <menuitem label='Log Alterações'>
                 <icon>fa:user fa-film</icon>

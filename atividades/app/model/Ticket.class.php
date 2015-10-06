@@ -49,7 +49,7 @@ class Ticket extends TRecord
         parent::addAttribute('data_encerramento');
     }
 
-    public function relatorioAnalitico($ticket_id, $where, $whereJoin)
+    public function relatorioAnalitico($ticket_id, $where)
     {
         $conn = TTransaction::get();
         $result = $conn->query("select 
@@ -64,15 +64,14 @@ class Ticket extends TRecord
                                 inner join ticket as t on t.id = a.ticket_id
                                 inner join tipo_atividade as ta on a.tipo_atividade_id = ta.id
                                 where a.ticket_id = {$ticket_id}
-                                {$where} {$whereJoin}
+                                {$where}
                                 order by a.data_atividade, a.hora_inicio");
-        
-      
+         
         return $result;
     
     }
-
-    public function relatorioSintetico($where, $whereJoin)
+ 		 
+    public function relatorioSintetico($where)
     {
         $conn = TTransaction::get();
         
@@ -93,7 +92,7 @@ class Ticket extends TRecord
                                        coalesce(t.valor_total_pago,0) as valor_total_pago,
                                        (coalesce(t.valor_total,0) - coalesce(t.valor_total_pago,0)) as saldo
                                 from ticket as t
-                                left join atividade as a on t.id = a.ticket_id {$whereJoin}
+                                left join atividade as a on t.id = a.ticket_id
                                 inner join status_ticket as s on t.status_ticket_id = s.id
                                 inner join prioridade as p on t.prioridade_id = p.id
                                 where t.id = t.id
@@ -104,26 +103,7 @@ class Ticket extends TRecord
          return $result;
     
     }
-    
-    public function getDesenvolvimentoTicket($ticket_id)
-    {
-        $criteria = new TCriteria;
-        $criteria->add(new TFilter('ticket_id', '=', $ticket_id));
-        
-        $repo = new TRepository('RequisitoDesenvolvimento');
-        $DRs   = $repo->load($criteria);
-        
-        $retorno = '';
-        
-        foreach ($DRs as $dr)
-        {
-            $retorno = $dr->titulo;
-        }
-        
-        return $retorno;
-        
-    }
-
+   
     public function getTicketsCliente($cliente)
     {
         

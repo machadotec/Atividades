@@ -161,13 +161,19 @@ class TicketForm extends TPage
         $combo_solicitante_id->addValidation('Solicitante', new TRequiredValidator);
         $responsavel_id->addValidation('Responsável', new TRequiredValidator);
         $sistema_id->addValidation('Sistema', new TRequiredValidator);   
-        $gerar_dr = TButton::create('gerar_dr', array('RequisitoDesenvolvimentoForm', 'onEdit'), 'Gerar DTR', 'ico_add.png');
-        $editar_dr = TButton::create('editar_dr', array('RequisitoDesenvolvimentoForm', 'onEdit'), 'Editar DTR', 'ico_edit.png');
-        $this->form->addField($gerar_dr);
-        $this->form->addField($editar_dr);
         
-        TButton::disableField('form_Ticket', 'gerar_dr');  
-        TButton::disableField('form_Ticket', 'editar_dr');   
+        
+        $gerar_dr = TButton::create('gerar_dr', array('RequisitoDesenvolvimentoForm', 'onEdit'), 'Gerar DTR', 'ico_add.png');
+        $link_dtr = new TButton('link_dtr');
+        $link_dtr->setImage('bs:edit green');
+        $link_dtr->setLabel('ir para DTR');
+        $link_dtr->addFunction("__adianti_load_page('index.php?class=RequisitoDesenvolvimentoForm&method=onBuscaDTR&key=$_REQUEST[key]');");
+
+        $this->form->addField($gerar_dr);
+        $this->form->addField($link_dtr);
+        
+        TButton::disableField('form_Ticket', 'gerar_dr');     
+        TButton::disableField('form_Ticket', 'link_dtr');
         
         // add one row for each form field
         // notebook Cadastramento
@@ -193,7 +199,7 @@ class TicketForm extends TPage
         $label_sistema->setFontColor('#FF0000');
         $table->addRowSet( new TLabel('Descrição Solicitação:'), $solicitacao_descricao );
         $table->addRowSet( new TLabel('DR.:'), $nome_dtr );
-        $table->addRowSet( new TLabel(''),  $gerar_dr );
+        $table->addRowSet( new TLabel(''),  array($gerar_dr , $link_dtr) );
         $table->addRowSet( new TLabel(''),  $data_inicio_oculta );
         
         // notebook Pagamento
@@ -444,7 +450,9 @@ class TicketForm extends TPage
     public function onSincronizarContatos()
     {
         
-        exec("php /var/www/vhosts/tecbiz.com.br/httpdocs/atividades/atualizacao.php");
+        $caminho = $_SERVER['DOCUMENT_ROOT'].'/atividades/atualizacao.php';
+        
+        exec("php $caminho");
         
         new TMessage('info', 'Contatos Sincronizados!');
         
@@ -1016,8 +1024,14 @@ class TicketForm extends TPage
             $object->valor_ultimo_pgto ? $object->valor_ultimo_pgto = number_format($object->valor_ultimo_pgto, 2, ',', '.') : null;
             $object->valor_total_pago ? $object->valor_total_pago = number_format($object->valor_total_pago, 2, ',', '.') : null;
             
-            $dtr = Ticket::getDesenvolvimentoTicket($object->id);
-            if(!$dtr)
+            $ticket = new Ticket($object->id);
+            $dtrs = $ticket->getRequisitoDesenvolvimentos();
+            foreach ($dtrs as $dtr)
+            {
+                $titulo = $dtr->titulo;
+            }
+            
+            if(!$titulo)
             {
                 if($object->tipo_ticket_id == 4 or $object->tipo_ticket_id == 5 or $object->tipo_ticket_id == 6)
                 {
@@ -1027,7 +1041,7 @@ class TicketForm extends TPage
             }
             else
             {
-                TButton::enableField('form_Ticket', 'editar_dr');
+                TButton::enableField('form_Ticket', 'link_dtr');
             }
             
             TButton::disableField('form_Ticket', 'delete');
@@ -1073,12 +1087,17 @@ class TicketForm extends TPage
                 $key=$param['key'];  // get the parameter $key
 
                 $object = new Ticket($key); // instantiates the Active Record
-                $object->nome_dtr = Ticket::getDesenvolvimentoTicket($key);
                 
+                $dtrs = $object->getRequisitoDesenvolvimentos();
+                foreach ($dtrs as $dtr)
+                {
+                    $object->nome_dtr = $dtr->titulo;
+                }
+                                
                 if($object->nome_dtr)
                 {
                     TButton::disableField('form_Ticket', 'gerar_dr');
-                    TButton::enableField('form_Ticket', 'editar_dr');
+                    TButton::enableField('form_Ticket', 'link_dtr');
                 }
                 
                 if($object->tipo_ticket_id == 4 or $object->tipo_ticket_id == 5 or $object->tipo_ticket_id == 6)

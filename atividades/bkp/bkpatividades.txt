@@ -1415,6 +1415,61 @@ COPY system_changelog (id, logdate, login, tablename, primarykey, pkvalue, opera
 199	2015-07-14 10:53:19	gustavo	ticket	id	375	created	responsavel_id	\N	1
 200	2015-07-14 10:53:19	gustavo	ticket	id	375	created	id	\N	375
 201	2015-07-14 10:53:34	gustavo	ticket	id	371	changed	solicitacao_descricao	Envio e análise de retorno dos e-mails	Envio e análise de retorno dos e-mails teste
+202	2015-07-16 13:55:15	gustavo	ticket	id	100	created	data_inicio	\N	2015-06-29
+203	2015-07-16 13:55:15	gustavo	ticket	id	100	changed	status_ticket_id	2	1
+204	2015-07-16 13:55:15	gustavo	ticket	id	100	changed	solicitante_id	12	0
+205	2015-07-17 08:59:33	gustavo	ticket	id	376	created	titulo	\N	teste
+206	2015-07-17 08:59:34	gustavo	ticket	id	376	created	origem	\N	I
+207	2015-07-17 08:59:34	gustavo	ticket	id	376	created	data_cadastro	\N	2015-07-17
+208	2015-07-17 08:59:34	gustavo	ticket	id	376	created	tipo_ticket_id	\N	1
+209	2015-07-17 08:59:34	gustavo	ticket	id	376	created	sistema_id	\N	2
+210	2015-07-17 08:59:34	gustavo	ticket	id	376	created	status_ticket_id	\N	2
+211	2015-07-17 08:59:34	gustavo	ticket	id	376	created	prioridade_id	\N	3
+212	2015-07-17 08:59:34	gustavo	ticket	id	376	created	responsavel_id	\N	1
+213	2015-07-17 08:59:34	gustavo	ticket	id	376	created	solicitante_id	\N	22
+214	2015-07-17 08:59:34	gustavo	ticket	id	376	created	id	\N	376
+215	2015-07-17 09:36:29	gustavo	ticket	id	377	created	titulo	\N	teste
+216	2015-07-17 09:36:29	gustavo	ticket	id	377	created	origem	\N	I
+217	2015-07-17 09:36:29	gustavo	ticket	id	377	created	data_cadastro	\N	2015-07-17
+218	2015-07-17 09:36:29	gustavo	ticket	id	377	created	tipo_ticket_id	\N	1
+219	2015-07-17 09:36:29	gustavo	ticket	id	377	created	sistema_id	\N	4
+220	2015-07-17 09:36:29	gustavo	ticket	id	377	created	status_ticket_id	\N	2
+221	2015-07-17 09:36:29	gustavo	ticket	id	377	created	prioridade_id	\N	3
+222	2015-07-17 09:36:29	gustavo	ticket	id	377	created	responsavel_id	\N	12
+223	2015-07-17 09:36:29	gustavo	ticket	id	377	created	solicitante_id	\N	36
+224	2015-07-17 09:36:29	gustavo	ticket	id	377	created	id	\N	377
+225	2015-07-17 09:38:22	gustavo	ticket	id	378	created	titulo	\N	teste
+226	2015-07-17 09:38:22	gustavo	ticket	id	378	created	origem	\N	I
+227	2015-07-17 09:38:22	gustavo	ticket	id	378	created	data_cadastro	\N	2015-07-17
+228	2015-07-17 09:38:22	gustavo	ticket	id	378	created	tipo_ticket_id	\N	1
+229	2015-07-17 09:38:22	gustavo	ticket	id	378	created	sistema_id	\N	3
+230	2015-07-17 09:38:22	gustavo	ticket	id	378	created	status_ticket_id	\N	2
+231	2015-07-17 09:38:22	gustavo	ticket	id	378	created	prioridade_id	\N	3
+232	2015-07-17 09:38:22	gustavo	ticket	id	378	created	responsavel_id	\N	1
+233	2015-07-17 09:38:22	gustavo	ticket	id	378	created	solicitante_id	\N	32
+234	2015-07-17 09:38:22	gustavo	ticket	id	378	created	id	\N	378
+235	2015-07-17 09:39:36	gustavo	ticket	id	379	created	titulo	\N	jaf teste
+236	2015-07-17 09:39:36	gustavo	ticket	id	379	created	origem	\N	I
+237	2015-07-17 09:39:36	gustavo	ticket	id	379	created	data_cadastro	\N	2015-07-17
+238	2015-07-17 09:39:36	gustavo	ticket	id	379	created	tipo_ticket_id	\N	1
+239	2015-07-17 09:39:36	gustavo	ticket	id	379	created	sistema_id	\N	4
+240	2015-07-17 09:39:36	gustavo	ticket	id	379	created	status_ticket_id	\N	2
+241	2015-07-17 09:39:36	gustavo	ticket	id	379	created	prioridade_id	\N	3
+242	2015-07-17 09:39:36	gustavo	ticket	id	379	created	responsavel_id	\N	1
+243	2015-07-17 09:39:36	gustavo	ticket	id	379	created	solicitante_id	\N	32
+244	2015-07-17 09:39:36	gustavo	ticket	id	379	created	id	\N	379
+245	2015-07-17 10:52:25	gustavo	ticket	id	380	created	titulo	\N	teste ultimate
+246	2015-07-17 10:52:25	gustavo	ticket	id	380	created	origem	\N	I
+247	2015-07-17 10:52:25	gustavo	ticket	id	380	created	data_cadastro	\N	2015-07-17
+248	2015-07-17 10:52:25	gustavo	ticket	id	380	created	tipo_ticket_id	\N	1
+249	2015-07-17 10:52:25	gustavo	ticket	id	380	created	sistema_id	\N	4
+250	2015-07-17 10:52:25	gustavo	ticket	id	380	created	status_ticket_id	\N	2
+251	2015-07-17 10:52:25	gustavo	ticket	id	380	created	prioridade_id	\N	3
+252	2015-07-17 10:52:25	gustavo	ticket	id	380	created	responsavel_id	\N	1
+253	2015-07-17 10:52:25	gustavo	ticket	id	380	created	solicitante_id	\N	42
+254	2015-07-17 10:52:25	gustavo	ticket	id	380	created	id	\N	380
+255	2015-07-17 11:35:28	gustavo	ticket	id	380	created	data_inicio	\N	2015-07-17
+256	2015-07-17 11:35:28	gustavo	ticket	id	380	changed	status_ticket_id	2	1
 \.
 
 
@@ -1688,7 +1743,6 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 34	ETD 034 - ASSOCIAMED	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
 35	ETD 035 - ABOJERIS	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
 38	ETD 038 - IBCM	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
-100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
 17	ETD 017 - AFHDP	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	12	12	1	3	2	2	\N	\N	\N	\N
 56	ETD 056 - AFU	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-10	\N	\N	\N	102	12	1	3	2	2	\N	\N	\N	\N
 46	ETD 046 - AFUSPA	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	97	12	1	3	2	2	\N	\N	\N	\N
@@ -1703,6 +1757,11 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 60	ETD 060 - Cartao Empresarial SISME	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	49	11	1	3	2	1	\N	\N	\N	\N
 28	ETD 028 - AFUMI	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-01	\N	\N	\N	75	12	1	3	2	2	\N	\N	\N	\N
 375	teste	I	teste origem	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-14	\N	\N	\N	73	1	1	4	2	3	\N	\N	\N	\N
+100	ETD 100 - TECBIZ	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-06-11	\N	\N	\N	0	12	1	3	1	2	\N	2015-06-29	\N	\N
+376	teste	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-17	\N	\N	\N	22	1	1	2	2	3	\N	\N	\N	\N
+377	teste	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-17	\N	\N	\N	36	12	1	4	2	3	\N	\N	\N	\N
+379	jaf teste	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-17	\N	\N	\N	32	1	1	4	2	3	\N	\N	\N	\N
+380	teste ultimate	I	\N	\N	\N	\N	\N	\N	\N	\N	\N	2015-07-17	\N	\N	\N	42	1	1	4	1	3	\N	2015-07-17	\N	\N
 \.
 
 
@@ -1710,7 +1769,7 @@ COPY ticket (id, titulo, origem, solicitacao_descricao, providencia, orcamento_h
 -- Name: ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ticket_id_seq', 375, true);
+SELECT pg_catalog.setval('ticket_id_seq', 380, true);
 
 
 --
