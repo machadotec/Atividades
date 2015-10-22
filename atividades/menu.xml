@@ -68,8 +68,12 @@
             <menuitem label='Indicador Produtividade'>
                 <icon>fa:fa fa-users fa-fw</icon>
                 <action>PontoReport</action>
+            </menuitem>
+            <menuitem label='Log de acessos'>
+                <icon>fa:user fa-film</icon>
+                <action>RegistroLoginReport</action>
             </menuitem>    
-            <menuitem label='Log Alterações'>
+            <menuitem label='Log Alterações Ticket'>
                 <icon>fa:user fa-film</icon>
                 <action>SystemChangeLogView</action>
             </menuitem>

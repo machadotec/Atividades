@@ -79,6 +79,33 @@ class LoginForm extends TPage
         parent::add($this->form);
     }
 
+
+    function onRegistroLogin($user)
+    {
+        
+        try
+        {
+            TTransaction::open('atividade');
+            $registroLogin = new RegistroLogin();
+            
+            $registroLogin->name         = $user->name;
+            $registroLogin->login        = $user->login;
+            $registroLogin->data_ponto   = date('Y-m-d');
+            $registroLogin->hora_inicial = date('H:i:s');
+            
+            $registroLogin->store();
+            
+            TSession::setValue('id_login', $registroLogin->id);
+            
+            TTransaction::close();
+        }
+        catch (Exception $e)
+        {            
+            new TMessage('error',$e->getMessage());
+        }
+        
+    }
+    
     /**
      * Autenticates the User
      */
@@ -103,6 +130,8 @@ class LoginForm extends TPage
             {
                 $programs = $user->getPrograms();
                 $programs['LoginForm'] = TRUE;
+                
+                $this->onRegistroLogin($user);
                 
                 TSession::setValue('logged', TRUE);
                 TSession::setValue('login', $data->login);
@@ -138,6 +167,25 @@ class LoginForm extends TPage
      */
     public static function onLogout()
     {
+        if(TSession::getValue('id_login'))
+        {
+
+            try
+            {
+                TTransaction::open('atividade');
+            
+                $registroLogin = new RegistroLogin(TSession::getValue('id_login'));
+                $registroLogin->hora_final = date('H:i:s');
+                $registroLogin->store();
+                
+                TTransaction::close();
+            }
+            catch (Exception $e)
+            {            
+                new TMessage('error',$e->getMessage());
+            }
+                
+        }
         TSession::freeSession();
         TApplication::gotoPage('LoginForm', '');
     }
